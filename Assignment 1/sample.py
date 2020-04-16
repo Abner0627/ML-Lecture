@@ -10,7 +10,8 @@ Created on Wed Apr 15 14:38:39 2020
 import sys
 import numpy as np
 import pandas as pd
-import csv
+import math
+# import csv
 
 # In[2]:
 # Read in training set
@@ -56,7 +57,6 @@ for i in range(len(x)): #12 * 471
 x
 
 # In[5]:
-import math
 x_train_set = x[: math.floor(len(x) * 0.8), :]
 y_train_set = y[: math.floor(len(y) * 0.8), :]
 x_validation = x[math.floor(len(x) * 0.8): , :]
@@ -111,6 +111,7 @@ w = np.load('weight.npy')
 ans_y = np.dot(test_x, w)
 ans_y
 
+'''
 # In[9]:
 # Save Prediction to CSV File
 with open('submit.csv', mode='w', newline='') as submit_file:
@@ -122,3 +123,4 @@ with open('submit.csv', mode='w', newline='') as submit_file:
         row = ['id_' + str(i), ans_y[i][0]]
         csv_writer.writerow(row)
         print(row)
+'''
