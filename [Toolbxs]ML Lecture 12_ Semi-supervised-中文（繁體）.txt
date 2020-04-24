@@ -1,0 +1,2515 @@
+有一件事情是這樣子的
+
+本來預計今天要公告作業四
+
+但我想說，我們改到下周再公告好了
+
+那你就先專心把作業三
+
+做完，然後下周再開始做作業四
+
+如果沒有意外的話，下周也會同時公告
+
+final project
+
+那我們先來講一下 Semi-supervised learning
+
+就是我們作業三，要請大家稍微做一下的東西
+
+因為如果只做 CIFAR-10 的辨識太簡單
+
+去網路上 call 個 script，按個 enter，應該就可以得到結果
+
+所以，我們增加一些挑戰性
+
+那甚麼是 Semi-supervised learning
+
+Supervised learning 大家都知道
+
+在 Supervised learning 裡面
+
+你就是有一大堆的 training data
+
+這些 training data 的組成
+
+是一個 function 的 input 跟 function 的 output 的 pair
+
+假設你有 R 筆 training data
+
+每一筆 training data 裡面
+
+都有一個 x^r 代表 function 的 input
+
+都有一個 y^r\head 代表 function 的 output
+
+這個 x^r 代表是一張
+
+舉例來說，在 homework 3 裡面
+
+x^r 是一張 image
+
+y^r\head 是 class 的 label
+
+那所謂的 Semi-supervised learning 是甚麼呢
+
+Semi-supervised learning 是說
+
+在 labeled data 上面，我們有另外一組
+
+unlabeled 的 data
+
+那這一組 unlabeled 的 data，我們這邊
+
+寫成 x^u
+
+那在這些 unlabeled 的 data，它就只有 function 的 input
+
+它沒有 output，在這邊呢
+
+有 U 筆 unlabeled 的 data
+
+通常我們在做 Semi-supervised learning 的時候
+
+我們期待常見的 scenario 是
+
+unlabeled 的數量遠大於 labeled 的數量
+
+也就這邊的 U
+
+是遠大於 R 的
+
+那其實 Semi-supervised learning 可以分成兩種
+
+一種叫做 Transductive learning
+
+一種叫做 Inductive learning
+
+那 Transductive learning 跟 Inductive learning
+
+我認為最簡單的分法就是
+
+在做 Transductive learning 的時候
+
+你的 unlabeled data 就是你的 testing set
+
+這樣大家懂我意思嗎
+
+有人會說，這不是用了 testing set，這不是 cheating 嗎
+
+其實不是，你用了 testing set 的
+
+label 才是 cheating
+
+你用了 testing set 的 feature
+
+不是 cheating，這樣大家懂我意思嗎？
+
+因為，那筆 testing set 的 feature
+
+本來就在那邊了，所以
+
+你是可以用它的
+
+所以，如果你用了 testing set 的 feature 的話
+
+這個叫做 Transductive learning
+
+我已經跟助教確認過了
+
+其實，只要在 Kaggle 上面載下來的 data 都是可以用的
+
+所以，你其實可以用 testing set 的 image
+
+你只是不能夠去找它的 label 出來而已
+
+這樣大家了解我的意思嗎
+
+那 Inductive learning 呢，Inductive learning 是說
+
+我們不把 testing set 考慮進來
+
+假設我們在 training 的時候
+
+我們還不知道 testing set 會長什麼樣子
+
+所以我沒有辦法事先跟據 testing set 去做任何事
+
+那我們必須要先 learn 好一個 model
+
+在  testing set 進來的時候
+
+再去 classify 它
+
+至於要用 Transductive learning 還是 Inductive learning
+
+現在 testing set 是不是已經有給你了
+
+有些比賽裡面，testing set 已經有給你了
+
+你就確實可能可以用它了
+
+不過還是跟主辦單位確認一下比較好
+
+但是。在很多時候你是
+
+你手上沒有那個 testing set 的
+
+你要先 learn 好 model 以後
+
+尤其是在真正你要用
+
+machine learning 的 application 的時候
+
+你並沒有 testing set 在你手上阿
+
+你要先 learn 好 model 以後，再等 testing set 進來
+
+這個時候你就只能做 Inductive learning
+
+有人會說 Transductive learning 
+不算是 Semi-supervised learning
+
+不過，我覺得這個也算是一種 Semi-supervised learning
+
+只是跟 Inductive learning 很不一樣就是了
+
+為什麼做 Semi-supervised learning 呢
+
+因為有人常會說我們沒有 data
+
+其實，我們不會沒有 data
+
+我們從來都不缺 data，我們只是
+
+缺有 labeled 的 data
+
+比如說，你要收集 image
+
+其實是很容易的
+
+我就放一個機器人每天在路上走來走去
+
+一直拍照，它就收集到一大堆的image
+
+只是這些 image 是沒有 label的
+
+只有非常少量的 image
+
+你才有可能僱人去 label
+
+所以，labeled data 很少，unlabeled data 會很多
+
+所以，Semi-supervised learning 如果你可以利用這些
+
+unlabeled data 來做某些事的話
+
+會是很有價值的
+
+但事實上，對人類來說
+
+我們人類可能也是一直在做 Semi-supervised learning
+
+我們會從，比如說，小孩子會從父母那邊
+
+得到一點點的 supervised
+
+小孩在路上看到一條狗
+
+他問他爸那是什麼，然後
+
+他爸說是狗，他就認得說這個東西是狗
+
+之後，他會再看到其他的東西
+
+有狗啊、有貓啊，但是沒有人會告訴他其他的動物是什麼
+
+他在他往後的人生裡面，看過很多其他奇奇怪怪的動物
+
+那沒有人會去 label 那些動物
+
+他必須要自己把它學出來
+
+所以，對人類來說
+
+我們也是在做 Semi-supervised learning
+
+那為甚麼 Semi-supervised learning 有可能
+
+會帶來幫助呢
+
+假設我們現在要做一個分類的 task
+
+我們要建一個貓跟狗的 classifier
+
+我們同時，有一大堆有關貓跟狗的圖片
+
+那這些圖片呢
+
+是沒有 label 的，並不知道哪些是貓，哪些是狗
+
+今天，假設我們只考慮這個
+
+貓跟狗有 label 的 data 的話
+
+假設你今天要畫一個 boundary
+
+把貓跟狗的 training data 分開的話
+
+你可能會想說，就畫在這邊
+
+但是，假如那些 unlabeled data 的分布
+
+是像灰色的點，這個樣子的話
+
+這可能就會影響你的決定
+
+unlabeled data，雖然它只告訴我們 function 的 input
+
+但，unlabeled data 它的分布
+
+可以告訴我們某一些事
+
+比如說，在這個 example 裡面，你可能很直覺的
+
+就會覺得說 boundary 應該切成這樣
+
+但是，Semi-supervised learning
+
+使用 unlabeled 的方式，往往伴隨著一些假設
+
+所以，Semi-supervised learning 有沒有用就取決於
+
+你這個假設符不符合實際
+
+你這個假設精不精確，因為
+
+你可能覺得說這個是貓吧
+
+誰知道呢，搞不好這個是狗
+
+它們看起來很像，是因為背景都是綠的
+
+所以 Semi-supervised learning 有沒有用
+
+不見得永遠都是有用
+
+那 depend on 你現在的假設是不是合理的
+
+我們這邊要講 4 件事，第一個我們會講說
+
+在 Generative model 的時候
+
+我們要怎麼用 Semi-supervised learning
+
+然後，我們會講兩個還蠻通用的假設
+
+一個是 Low-density 的 Separation Assumption
+
+一個是 Smoothness Assumption
+
+最後，我們會說 Semi-supervised learning 還有一招就是
+
+找一個比較好的 Representation
+
+這個我們會等到講 Supervised learning 的時候再講
+
+我們來講一下在 Generative model 裡面
+
+你怎麼做 Semi-supervised learning
+
+我們都已經看過 
+Supervised learning 的 Generative model
+
+在 Supervised learning 裡面呢
+
+你有一堆 training 的 example
+
+你知道它們分別屬於 class 1
+
+還是屬於 class 2
+
+那你會去估測 class 1 和 class 2 的 prior probability
+
+你會去估測 P(C1)、P(C2)
+
+然後，你會去估測 P(x|C1)、P(x|C2)
+
+比如說，我假設你假設每一個 class
+
+它的分佈都是一個 Gaussian distribution 的話
+
+那你會估測說，這個 class 1
+
+是從這個 mean 是 μ^1
+
+covariance 是 Σ 的 Gaussian 估測出來的
+
+那 class 2 是從 mean 是 μ^2
+
+covariance matrix 也是 Σ 的 Gaussian 所估測出來的
+
+之前講過說，如果你 share Gaussian
+
+你的 performance 可能會是比較好的
+
+那現在有了這些 prior probability
+
+有了這些 mean，有了這些 covariance matrix
+
+你就可以估測 given 一個新的 data
+
+它是屬於 C1 的 posterior probability
+
+然後，你就可以
+
+看一筆 data 就做一些 classification
+
+那你會決定一個 boundary 的位置在哪裡
+
+但是，如果今天給了我們一些 unlabeled data
+
+它就會影響你的決定
+
+舉例來說，如果我們看這一筆 data
+
+假設這些綠色的其實是 unlabeled data 的話
+
+那如果你的 mean 跟 variance
+
+是 μ^1, μ^2 跟 Σ，顯然就是不合理
+
+今天這個 Σ，顯然可能
+
+應該要比較接近圓圈
+
+或許你在 sample 的時候有一些問題
+
+所以，你 sample 到比較奇怪的 distribution
+
+或許它應該比較接近圓形
+
+而這個 class 2 的 μ 呢，或許不應該在這邊
+
+它或許應該在其他的地方，或許應該在更下面，等等
+
+如果你看這個 prior 的話
+
+那 prior 可能也會受到影響，比如說，我們本來覺得說
+
+positive，這兩個的 labeled data 是一樣多的
+
+但是，看了這些 unlabeled data 以後
+
+你或許會覺得 class 2 的 data 其實是比較多的
+
+它的 prior probability 應該是比較大的
+
+總之，看了這些 unlabeled data 以後
+
+會影響你對 prior probability
+
+對 mean，還有對 covariance 的估測
+
+影響了這些估測
+
+就影響了你 posterior probability 的式子
+
+然後，就影響了你的 decision boundary
+
+這個是，在直覺上是這麼做的
+
+但是，實際上在 formulation 上怎麼做呢
+
+我們先講操作的方式
+
+然後再稍微講它的原理
+
+這邊會講稍微比較快帶過去，因為
+
+我猜在這個作業，你大概用不上
+
+因為你也不是用 Generative model 做
+
+那 step 1，step 1 是怎麼樣呢
+
+我們先計算每一筆 unlabeled data 的
+
+posterior probability
+
+對每一筆 unlabeled data,  x^u
+
+我們都去計算，我們要先初始化一組參數
+
+先初始化兩個，假設我們做 binary classification 的話
+
+先初始化 class 1 和 class 2 的 prior 的機率
+
+先初始化 μ^1、μ^2 跟  Σ
+
+那你說初始化這個值怎麼來
+
+你可以 random 來，你可以用已經有 labeled 的 data
+
+先估測一個值
+
+總之，你就得到一組初始化的參數
+
+我們把這些 prior probability、class dependent 的
+
+μ^1、μ^2、Σ 統稱為參數 θ
+
+那根據我們現在有的 θ
+
+你可以估算每一筆 unlabeled data 屬於 class 1 的機率
+
+當然這個機率算出來怎樣，是跟你的 model 的值有關的
+
+算出這個機率以後，你就可以去
+
+update 你的 model
+
+這個是 update 的式子非常的直覺
+
+怎麼個直覺法呢
+
+現在 C1 的 prior probability 怎麼算呢？
+
+原來如果沒有 unlabeled data 的時候
+
+你的計算方法可能是
+
+這個 N 是所有的 example
+
+N1 是被標註為 C1 的 example
+
+如果你要算 C1 的 prior probability，這些事情太直覺了
+
+如果不考慮 unlabeled data 的話，感覺就是 N1/N
+
+但是，我們現在需要考慮 unlabeled data
+
+我們需要考慮 unlabeled data
+
+根據 unlabeled data 告訴我們的資訊
+
+C1 出現的次數是多少呢
+
+C1 出現的次數就是
+
+所有 unlabeled data
+
+它是 C1 的 posterior probability 的和
+
+所以，unlabeled data 並不是
+
+hard design，它一定要屬於 C1 或 C2
+
+根據它的 posterior probability 決定
+
+它有百分之多少是屬於 C1，它有百分之多少是屬於 C2
+
+那你就得到 C1 的 prior probability
+
+根據 unsupervised data 影響你對 C1 的估測
+
+那 μ^1 怎麼算呢
+
+如果不考慮 unlabeled data 的時候，所謂的 μ^1
+
+就是把所有屬於 C1 的 labeled data
+
+都平均起來，就結束了，這個很直覺
+
+如果今天要加上 unlabeled data 怎麼做呢
+
+其實就只是把
+
+unlabeled data 的那每一筆 data, x^u
+
+根據它的 posterior probability
+
+做 weighted sum
+
+如果這個 x^u，它比較偏向 class1、C1 的話
+
+它對 class 1 的影響就大一點，反之，就小一點
+
+你就把所有 unlabeled data 根據它是
+
+這個 C1 的 posterior probability 做 weighted sum
+
+然後，再除掉所有 weight 的 和
+
+做一個 normalization，就結束了
+
+這件事情你幾乎不用解釋 ，因為太直覺了
+
+直覺就是這麼做的
+
+跟這個 C2 的 prior probability 阿
+
+μ^1、μ^2、Σ
+
+也都用同樣的方式算出來
+
+接下來，你有了新的 model
+
+你就會 Back to step 1
+
+有了新的 model 以後
+
+你的這個機率就不一樣
+
+你這個機率就不一樣，在 step 2
+
+你的 model 算出來就不一樣
+
+接下來，你又可以去 update 你的機率
+
+所以，就反覆地繼續下去
+
+在理論上這個方法會收斂
+
+可以保證它會收斂
+
+但是，它的初始值
+
+它就跟 Gradient Descent 一樣
+
+初始值會影響你最後收斂的結果
+
+事實上，這個 step 1
+
+如果你聽過 EM algorithm 的話
+
+這個 step 1 就是 E step
+
+這個 step 2 就是 M step
+
+我們來解釋一下
+
+為什麼這個 algorithm 是這樣子做的
+
+雖然這件事情實在是很直覺
+
+但是它背後的理論，它為什麼要這樣做呢
+
+這個想法是這樣子的
+
+原來假設我們只有 labeled data 的時候
+
+我們只有 labeled data 的時候
+
+我們要做的事情
+
+是要去 maximize 一個 likelihood 對不對
+
+或者是 maximize Log 的 likelihood
+
+這個意思是一樣的
+
+那每一筆 training data
+
+它的 likelihood，我們是可以算出來的
+
+如果你給一個 θ
+
+每一筆 training data、每一筆 labeled data 的 likelihood
+
+我們是可以算出來的
+
+每一筆 data 的 likelihood
+
+就是 P(y^r\head)
+
+那個 label、那個 class 出現的 prior
+
+跟根據那個 class，generate 那筆 data 的機率
+
+所以，給一個 θ，你可以把那個 likelihood 算出來
+
+把所有的 labeled data
+
+的這個 log likelihood 加起來
+
+就是你的 total log likelihood
+
+然後，你要去找一個 θ 去 maximize 它
+
+那個 solution，是很直覺的
+
+它有 Closed-form solution
+
+代個式子，你就可以把它解出來
+
+現在如果有 unlabeled data 的時候
+
+式子有什麼不一樣呢
+
+我有一個地方寫錯了，就是這邊
+
+應該要有 y^r\head，就是這一項
+
+是要考慮 labeled data，所以這一項
+
+跟前面這個部分是一樣的
+
+但是，unlabeled data 怎麼辦呢
+
+unlabeled data 我們並不知道
+
+它是來自於哪一個 class 阿
+
+我們怎麼估測它的機率呢
+
+那我們說一筆 unlabeled data, x^u
+
+它出現的機率
+
+因為我不知道它是從 C1 還是從 C2 來的
+
+所以，它就是 C1、C2 都有可能
+
+所以，一筆 unlabeled data 出現的機率
+
+就是它在 C1 的 prior probability
+
+跟 C1 這個 class 產生這筆 unlabeled data 的機率
+
+加上 C2 的 prior probability
+
+乘上C2 這個 class 產生這筆 unlabeled data 的機率
+
+把他們通通合起來
+
+就是這筆 unlabeled data 出現的機率
+
+你問 x^u，它可以從 C1 來，它可以從 C2 來
+
+我不知道它從哪裡來
+
+所以，你就說它兩個都有可能
+
+接下來，你要做的事情
+
+就是要去 maximize 這個式子
+
+不幸的是，這個式子它不是 convex
+
+所以，你解它的時候呢
+
+你變成要用 EM algorithm 解
+
+其實，你就是要用，要 iterative 的去 solve 它
+
+所以，我們剛才做的那個步驟
+
+我在前一頁投影片裡面的那個 algorithm
+
+它做的事情就是，在每一次循環的時候
+
+你做完 step1，你做完 step 2
+
+你就可以讓這個 Log likelihood
+
+增加一點，然後跑到最後呢
+
+它會收斂在一個 local minimum 的地方
+
+那這個是 Generative 的 model
+
+那我們等一下會講
+
+我們接下來要講一個，比較 general 的方式
+
+這邊基於的假設
+
+是 Low-density 的 Separation
+
+也就是說，這個世界是非黑即白的
+
+什麼是非黑即白呢
+
+非黑即白，意思就是說
+
+假設我們現在，有一大堆的 data
+
+有 labeled data、有 unlabeled data
+
+在兩個 class 之間呢
+
+它們會有一個非常明顯的鴻溝
+
+就是說，如果現在給你這些 labeled data
+
+給你這些 labeled data
+
+你可以說，我的 boundary 要切在這邊也可以
+
+我的 boundary 要切在這邊也可以
+
+你就可以把這兩個 class 分開
+
+它們在 training data 上的正確率都是100%
+
+但是，如果你考慮 unlabeled data 的話
+
+或許這一個 boundary 是比較好的
+
+這個 boundary 是比較不好的
+
+為什麼呢？因為今天基於的假設就是
+
+這是一個非黑即白的世界
+
+在這兩個 class 之間呢
+
+會有一個很明顯的楚河漢界，會有一個鴻溝
+
+會有一個地方
+
+它之所以叫 Low-density Separation
+
+意思就是說，在這兩個 class 的交界處
+
+它的 density 是低的
+
+這兩個 class 的交界處
+
+data 量是很少，不會出現 data 的
+
+所以，這個 boundary 可能就是比較合理的
+
+那 Low-density Separation 最具代表性、最簡單的方法
+
+就是 Self-training，但是 Self-training 太直覺了
+
+我覺得這個沒什麼好講的
+
+我相信大家都是秒 implement 這樣
+
+我們就很快地講過去，Self-training 就是說
+
+我們有一些 labeled data
+
+有一些 unlabeled data
+
+接下來，先從 labeled data 去
+
+train 一個 model，這個 model 叫做 f*
+
+那這邊其實，你的這個 training 的方法
+
+Self-training 其實是一個很 general 的方法
+
+你用什麼方法得到你的 f*
+
+你用 neural network 是
+
+用 Deep 的方法、是用 Shallow 的方法
+
+還是用其他 machine learning 的方法
+
+都可以，反正你就是 train 出一個 model, f*
+
+根據這個 f*，你去 label 你的 unlabeled data
+
+你就把 x^u 丟進 f*
+
+看它吐出來的 y^u 是什麼
+
+那就是你的 labeled data
+
+這個東西，叫做 Pseudo-label
+
+接下來呢
+
+你要從你的 unlabeled data set 裡面拿出一些 data
+
+把它加到 labeled data set 裡面
+
+至於哪些 data 會被加進去
+
+這就是 open question，你要自己
+
+design 一些 heuristic 的 rule，自己想個辦法來解決
+
+你甚至可以給每一筆 unlabeled data provide weight
+
+那有一些比較 confidence
+
+有一些 Pseudo-label 比較 confident
+
+有一些 Pseudo-label 比較不 confident
+
+那有了更多的 labeled data 以後
+
+現在 labeled data 從 unlabeled data 那邊
+
+得到額外的 data
+
+你就可以回頭再去 train 你的 model, f*
+
+這件事情，非常的直覺
+
+那 Self-training 這麼簡單
+
+你可能覺得自己非常的懂
+
+那我來問大家一個問題
+
+以下這個 process
+
+如果我們用在 Regression 上面
+
+會怎樣呢？
+
+當然你永遠可以把 Regression 用在這邊，沒有什麼問題
+
+程式也不會 segmentation fault
+
+那問題就是
+
+這一招在 Regression 上面
+
+你覺得有可能會有用嗎
+
+我們給大家5秒鐘想一下
+
+你覺得這一招在 Regression 上
+
+有可能會有用的，舉手一下
+
+你覺得這一招在 Regression 上
+
+一定沒有用的，舉手一下
+
+那都沒有人舉手
+
+你仔細想想看
+
+你覺得這一招在 Regression 上會有用嗎？
+
+Regression 大家知道，就是 output 一個數字
+
+就是 output 一個 real number，那你有一個
+
+x^u，然後，你 output 一個 real number
+
+你把這筆 data 加到你的 data 裡面再 train
+
+你會影響 f* 嗎？
+
+其實不會影響 f*，對不對
+
+所以，Regression 其實不能用這一招的
+
+這樣大家有問題嗎？
+
+那其實是這樣子的
+
+你可能會覺得剛才這個 Self-training
+
+它很像是，我們剛才在 Generative model 裡面
+
+用的那個方法
+
+它們唯一的差別是在
+
+做 Self-training 的時候
+
+你用的是Hard label
+
+在做 Generative model 的時候，你用的是Soft label
+
+在做 Self-training 的時候，我們會強制 assign
+
+一筆 training data，它一定是屬於某一個 class
+
+但是，在 Generative model 的時候
+
+我們是說，根據它的 posterior probability
+
+你可能有部分屬於 class 1，有部分屬於 class 2
+
+所以，Self-training 是 Hard label
+
+Generative model 的時候，我們用的是Soft label
+
+那到底哪一個比較好呢
+
+如果我們今天考慮的是
+
+neural network 的話
+
+你可以比較看看，到底哪一個方法比較好
+
+假設我們用的是 neural network
+
+那你從你的 labeled data，得到一組 network 的參數、θ*
+
+那現在有一筆 unlabeled data，x^u
+
+然後呢，你說
+
+根據我們現在手上的參數，θ*
+
+我把它分成兩類
+
+它有 0.7 的機率屬於 class a
+
+有 0.3 的機率屬於 class b
+
+屬於 class 2
+
+如果是 Hard label 的話，你就把它直接 label 成 class 1
+
+然後你就說，因為它變成 class 1 了
+
+所以，x^u 的新的 target
+
+就是你拿 x^u 在 train neural network 的時候
+
+它的 target 就是第一維是 1
+
+第二維是 0
+
+或是，你就把這個東西
+
+跟你 neural network 的 output 去算 cross entropy
+
+如果是做 soft 的話
+
+那你就是說 70% 屬於 class 1
+
+30% 屬於 class 2
+
+然後你就說，新的 target 就是
+
+0.7 跟 0.3
+
+你覺得，如果我們今天用的是 neural network 的話
+
+上面跟下面哪一個方法，有可能是有用的呢
+
+你覺得下面這個方法
+
+有可能有用的同學舉手一下
+
+手放下
+
+如果你覺得，下面這個方法完全不可能有用的舉手
+
+手放下
+
+比較多人覺得它完全不會有用
+
+為什麼它完全不會有用呢
+
+你仔細想想看
+
+你現在 model 的 output 在這些 unlabeled data 上
+
+用這個值，參數 output 是 0.7, 0.3
+
+你說你把它的 target 又設成 0.7, 0.3
+
+那不就是同一組參數可以做到一樣的事情嗎
+
+所以如果你是做 neural network 的時候
+
+你用一個 Soft label
+
+結果是沒有用的
+
+所以，這邊你一定要用 Hard label
+
+那我們用 Hard label 是什麼意思呢
+
+我們用  Hard label 的時候
+
+我們用的就是 Low-density Separation 的概念
+
+也就是說，今天我們看 x^u
+
+它屬於 class 1 的機率只是比較高而已
+
+我們沒有很確定，它一定是屬於 class 1
+
+但是這是一個非黑即白的世界
+
+所以，如果你看起來有點像 class 1
+
+那你就一定是 class 1
+
+所以，本來根據我的 model 是說
+
+機率是 0.7 是 class 1
+
+0.3 是 class 2
+
+那用 Hard label
+
+用 Low-density Separation Assumption
+
+就改成說，它這邊是 class 1 的機率是 1
+
+你就把它往 class 1 那邊推過去
+
+它就完全不可能是屬於 class 2
+
+那下面這個方法不會 work
+
+我之前還有看過有 paper propose 就是
+
+propose 在做 neural network 的時候
+
+用一個甚麼 soft 的方法
+
+那果然 performance 不 work
+
+不用做，我就知道結果會怎樣
+
+那剛才這一招
+
+有一個進階版
+
+叫做 Entropy-based Regularization
+
+你可能會覺得說
+
+直接看它有點像 class 1 就變 1
+
+直接看它有點像 class 2 就變 2
+
+有點太武斷了
+
+那你可以用 Entropy-based 的這個方法
+
+Entropy-based 這個方法是說
+
+如果你用 neural network 的時候，你的 output
+
+是一個 distribution
+
+那我們不要限制說這個 output 一定要是
+
+class 1，一定要是 class 2
+
+但是，我們做的假設是這樣
+
+這個 output 的 distribution
+
+它一定要很集中
+
+因為這是一個非黑即白的世界
+
+所以，output 的 distribution 一定要很集中
+
+也就是說你 output，假設我們現在做 5 個 class 的分類
+
+那如果你的 output 都是
+
+在 class 1 的機率很大，在其他 class 的機率很小
+
+這個是好的
+
+因為是 unlabeled data，所以我不知道它的 label 是什麼
+
+但是，如果你的 model
+
+可以讓這筆 data，在 class 1 的機率很大
+
+在其他的機率很小，那是好的
+
+如果它在 class 5 的機率很大
+
+其他的機率都很小
+
+這個也是好的
+
+因為我也不知道它是 class 1 還是 class 5
+
+所以，這樣是好的
+
+甚麼狀況不好呢
+
+如果今天分布是很平均的話
+
+這樣是不好的，因為這是一個非黑即白的世界
+
+這樣子不符合 Low-density Separation 的假設
+
+但是，現在的問題就是我們要怎麼
+
+用數值的方法來evaluate
+
+這個 distribution 到底是好的還是不好
+
+這個 distribution是集中的還是不集中的呢
+
+這邊要用的東西 ，叫做Entropy
+
+你就去算一個 distribution 的 Entropy
+
+這個 distribution 的 Entropy 呢
+
+告訴你說，這個 distribution 它到底是集中還是不集中
+
+我們用一個值來表示，這個 distribution 是集中還是分散
+
+這個怎麼算呢
+
+其實就算你沒有修過 information theory 之類的
+
+我相信你也是聽得懂的
+
+就記一下它的式子
+
+它的式子是這樣
+
+某一個 distribution，它的 entropy 呢
+
+就是負的
+
+它對每一個 class 的機率
+
+有 5 個 class，就 summation 1到 5
+
+它對每一個 class 的機率
+
+乘上 log(那一個 class 的機率)
+
+如果我們今天把
+
+這一個、第一個 distribution 的機率
+
+代到這裡面去，它只有一個是 1
+
+其他都是 0
+
+那你得到的 entropy 是多少呢
+
+你得到的 entropy
+
+算出來會是 0
+
+因為 1*ln1 是 0
+
+0*ln0 也是 0，所以
+
+這個就是 0，這沒有甚麼特別好講的
+
+這個也是 0
+
+那下面這個呢
+
+這邊每一個機率
+
+也就是這一邊每一個 (y 上標 u, 下標 m) 都是 1/5
+
+所以，你就把這些值代進去
+
+你就把這些 1/5 的值都代進去
+
+你算出來就是 1- ln(1/5)
+
+也就是 ln5，所以
+
+它的 entropy 比較大，它是散佈比較開的
+
+所以，它 entropy 比較大
+
+它是散佈比較窄的
+
+所以，它的 entropy 比較小
+
+所以，我們需要做的事情是
+
+我們希望這個 model 的 output
+
+當然在 labeled data 上，它的分類要正確
+
+但是在 unlabeled data 上，
+
+它的 output、entropy 要越小越好
+
+所以，根據這個假設
+
+你就可以去重新設計你的 loss function
+
+我們原來的 loss function 是說
+
+我希望，找一組參數
+
+讓我現在在 labeled data 上的 model 的 output
+
+跟正確的 model 的 output
+
+它的距離越近越好
+
+你用 cross entropy 來 evaluate 它們之間的距離
+
+這個是 labeled data 的部分
+
+在 unlabeled data 的部分呢
+
+你會加上每一筆 unlabeled data
+
+它的 output distribution 的 entropy
+
+那你會希望這些 unlabeled data 的 entropy
+
+越小越好，那在這兩項中間呢
+
+你其實可以乘一個 weight 來考慮說
+
+你要偏向 unlabeled data 多一點
+
+還是少一點
+
+那在 training 的時候怎麼辦呢？
+
+在 training 的時候就是
+
+一句話就 train 下去這樣，懂嗎？
+
+這個可以算微分
+
+可以算微分就
+
+就沒有甚麼問題，就用 Gradient Descent
+
+來 minimize 這個式子而已
+
+那這一件事情
+
+它的角色就很像我們之前講的 Regularization
+
+所以它稱之為 Entropy-based 的 Regularization
+
+之前我們說 Regularization 的時候
+
+我們說，我們在原來的 loss function 後面
+
+加一個 parameter 的 1-norm 或 2-norm
+
+讓它比較不會 overfitting
+
+那現在加上一個
+
+根據 unlabeled data 得到的 entropy
+
+來讓它比較不會 overfitting
+
+那還有別的 Semi-supervised learning 的方式
+
+有一個很著名的叫做
+
+Semi-supervised SVM，不過我們還沒有講 SVM
+
+所以，這邊就是當作一個 outlook
+
+這個 Semi-supervised SVM 它的精神是這樣
+
+我們知道 SVM 做的事情就是
+
+給你兩個 class 的 data，然後找一個 boundary
+
+那這個 boundary，一方面它要有最大的 margin
+
+所謂最大的 margin 就是讓這兩個 class 分的越開越好
+
+同時，它也要有最小的
+
+分類的錯誤
+
+現在，假設有一些 unlabeled data
+
+這個 Semi-supervised SVM 會怎麼處理這個問題呢
+
+它會窮舉所有可能的 label
+
+這邊有 4 筆 unlabeled data
+
+每一筆它都可以是屬於 class 1，也可以是屬於 class 2
+
+我們就窮舉它所有可能的 label
+
+它可以是長這樣的
+
+就是說這三筆是屬於藍色 class
+
+這一筆是屬於橙色 class，它可以是長這樣
+
+它可以是長這樣
+
+這兩個是藍色 class，這兩個是橙色 class
+
+它可以長這樣，這個是橙的，這個是藍的
+
+這個是藍的，這個是橙的，有各種可能，有很多的可能
+
+有很多可能
+
+然後，對每一個可能的結果，你都去算一個
+
+你都去做一個 SVM
+
+如果是在這個可能，這個情況下
+
+你的 SVM 的 boundary 切在這邊
+
+然後，這個可能你的 SVM 的 boundary 切在這邊
+
+這個可能你的 SVM 的 boundary 不得不切在這邊
+
+因為找不到一個方法可以把兩個 class 分開
+
+然後，你再去看說，哪一個
+
+unlabeled data 的可能性
+
+在窮舉所有的可能的 label 裡面，哪一個可能性
+
+可以讓你的 margin 最大，同時又 minimize error
+
+今天在這個 example 裡面呢
+
+可能是這一個方法
+
+可以讓你的 margin 最大
+
+它的 margin 是小的
+
+它的 margin 不只小，而且還有分類錯誤
+
+它的 margin 大而且都分類對，所以
+
+你可能最後就選擇這一個 boundary
+
+那這個 SVM，我把它的 reference 放在下面
+
+你可能會有一個問題說
+
+窮舉所有 unlabeled data 的 label
+
+這聽起來不 make sense 阿，我有一萬筆 unlabeled data
+
+2 的一萬次方，可能沒辦法做啊
+
+所以，這個 paper 裡面
+
+它就提出了一個很 approximate 的方法
+
+基本精神是
+
+我們今天，先很快帶過
+
+它的基本精神是你一開始先得到一些 label
+
+然後，你每次改一筆 unlabeled data 的 label
+
+看看可不可以讓你的 objective function 變大
+
+變大的話就改這樣子
+
+接下來我們要講的方法呢
+
+叫做 Smoothness Assumption
+
+它的精神就是：近朱者赤；近墨者黑
+
+或者是，像勸學篇說的那個
+
+蓬生麻中，不扶而直；白沙在涅，與之俱黑
+
+它的假設是這樣子
+
+如果 x 是像的，那它們的 label y 也就像
+
+這個假設聽起來沒有甚麼，而且
+
+光講這個假設
+
+其實是不精確的，因為
+
+你知道一個正常的 model，你給它一個像的 input
+
+如果它不是很 deep 的話，output 就會很像阿
+
+所以，這個這樣講其實是不夠精確的
+
+真正精確的假設，應該是下面這個講法
+
+x 的分布是不平均的
+
+它在某些地方是很集中
+
+某些地方又很分散
+
+如果今天 x1 和 x2
+
+它們在一個 high density 的 region
+
+很 close 的話
+
+x^1 的 label、y^1\head
+
+跟 x^2 的 label、y^2\head，它們才會很像
+
+這句話有點讓人不知道在說甚麼
+
+甚麼叫做在 high density 的 region 下呢
+
+這句話的意思就是說
+
+它們可以用 high density 的 path 做 connection
+
+這樣講你還是不知道我在說什麼，所以我直接
+
+舉一個例子，假設這個是
+
+我們 data 的分布，假設這個是 data 的分布
+
+它分布就像是一個血輪眼的樣子
+
+假設我們現在有 3 筆 data
+
+有 3 筆 data
+
+x^1、x^2 跟 x^3
+
+如果我們只是考慮這個比較粗的假設
+
+像的 x，它的 output 像
+
+那它的 label 像，所以
+
+感覺好像應該是，x^2 跟 x^3 的 label 應該比較像
+
+x^1 跟 x^2 的 label 比較不像
+
+但是，其實 Smoothness Assumption 的假設不是這樣
+
+它更精確的假設是說
+
+你的像要透過一個
+
+high density 的 region 像
+
+懂嗎？就是說
+
+x^1 跟 x^2，它們中間有一個
+
+high density 的 region
+
+它們中間有很多很多很多的 data
+
+所以，它們兩個相連的地方是
+
+通過一個 high density 的 path 相連的
+
+從 x^1 走到 x^2 中間都是點，都是人煙
+
+然後 x^2 跟 x^3 中間沒有點，所以可以走過去
+
+這樣懂我意思嗎？就是
+
+假設藍色點是聚落的分布的話
+
+這中間是平原，所以人很多
+
+所以，從 x^1 走到 x^2 比較容易
+
+x^2 跟 x^3 中間是個山
+
+所以這邊沒有住人，所以你走不過去
+
+所以
+
+根據這個真正的 Smoothness Assumption 的假設
+
+它要告訴我們的意思是說
+
+x^1 跟 x^2 是會有
+
+比較可能有一樣的 label
+
+x^2 跟 x^3 比較可能有不一樣的 label
+
+因為，它們中間沒有 high density 的 path
+
+那為甚麼會有 Smoothness Assumption 這樣的假設？
+
+因為在真實的情況下，這個假設很有可能是成立的
+
+比如說，我們考慮這個例子
+
+我們考慮手寫數字辨識的例子
+
+我們現在看到這邊有兩個 2，這邊有一個 3
+
+對人來說，你當然知道這兩個都是 2
+
+但是，如果你是單純算他們 pixel 的相似度的話
+
+搞不好，這兩個其實是比較不像的
+
+這兩個搞不好還比較像，因為它這邊有一個圈圈
+
+它沒有圈圈，它這邊有一個勾勾
+
+它有一個這樣的勾勾
+
+我看它們兩個搞不好還比較像
+
+對不對，你這邊再稍微彎曲一點
+
+就變成 3 了，所以它們搞不好還比較像
+
+但是，如果你把你的 data 通通倒出來的話
+
+你會發現，這個 2
+
+和這個 2 中間，它們有很多連續的型態
+
+就是這個 2 稍微變一下變它
+
+再變一下變它、變一下變它這樣
+
+它和它中間有很多連續的變化
+
+所以，可以從這種生物演化成這種生物
+
+但是沒有辦法演化成這種生物
+
+中間沒有過渡的型態
+
+所以說，它們中間有很多
+
+不直接相連的相似
+
+它們中間有很多 stepping stone，可以讓它這樣跳過去
+
+所以，如果根據 Smoothness Assumption 的話
+
+你就可以得到說，這個東西
+
+和這個東西是比較像的
+
+這個東西和這個東西，它們中間沒有
+
+過渡的型態，所以它們其實是比較不像的
+
+它們其實不應該是屬於同一個 class
+
+它們其實是屬於同一個 class
+
+如果你看人臉辨識的話呢
+
+其實也是一樣，一個人的
+
+一個人，如果從他的左臉照一張相
+
+跟右臉照一張相，那差很多
+
+你拿這一張相片，跟另外一個人的
+
+這邊是甚麼，正側面，這也是正側面
+
+你拿另外一張一樣是眼睛朝左的相片來比較的話
+
+我看還比這個像
+
+還比較像這個眼睛朝左的相片
+
+跟這個眼睛朝右的相片相比的話
+
+但是，假設你收集到夠多的 unlabeled data 的話
+
+你會找到說，這一張臉和這一張臉中間呢
+
+有很多過渡的型態
+
+所以，這一張臉跟這一張臉可能是同一個人的臉
+
+或者是，在這個
+
+這招在文件分類上面呢
+
+可能是會非常有用的
+
+為甚麼呢？假設你現在
+
+要分天文學跟旅遊的文章
+
+那天文學的文章有一個它固定的 word distribution
+
+比如說，它會出現這個
+
+asteroid, bright，那如果旅遊的文章，它會出現
+
+yellow stone 等等
+
+如果今天，你的 unlabeled data
+
+如果今天你的 unlabeled data 跟你的 labeled data
+
+是有 overlapped 的
+
+那你就很容易可以處理這個問題
+
+但是，在真實的情況下
+
+你的 unlabeled data 跟 labeled data，它們中間可能
+
+沒有任何 overlapped 的 word
+
+為甚麼呢？因為世界上的 word 很多
+
+一篇文章裡面，你往往
+
+你的詞彙不會太多
+
+但是，世界上可能 word 很多
+
+所以，每一篇文章它裡面的詞彙，其實是非常 sparse 的
+
+它只提到非常少量的 word
+
+所以，你拿兩篇文章出來，它們中間
+
+有重複的 word 的比例，是沒有那麼多的
+
+所以，很有可能你的 data
+
+你的 unlabeled data 跟你的 labeled data 中間
+
+是沒有任何 overlap 的
+
+但是，如果你 collect 到夠多的 unlabeled data 的話
+
+如果你 collect 到夠多的 unlabeled data 的話
+
+你就可以說，這個是 d1 跟 d5 像
+
+d5 又跟 d6 像，這個像就可以一路 propagate 過去
+
+知道說 d1 跟 d3 一類，那 d2 跟 d9 像
+
+d9 跟 d8 像，那你就會得到 d2 跟 d4 像
+
+這個像也可以一路 propagate 過去
+
+那如何實踐這個 Smoothness Assumption  呢
+
+最簡單的方法這個
+
+呃，電腦卡住了，沒有卡住
+
+又回來了
+
+是 Cluster and then Label
+
+這個方法太簡單了，沒什麼可以講的
+
+我們現在 data distribution 長這個樣子
+
+橙色是 class 1 ，綠色是 class 2
+
+藍色是 unlabeled data
+
+接下來，你就做一下 clustering
+
+你把這些所有的 data 拿來做 clustering
+
+你可能就分成 3 個 class
+
+3 個 class，3 個 cluster
+
+然後，你就看出 cluster 1 裡面呢
+
+橙色 class 1 的 label data 最多
+
+所以，cluster 1 裡面所有的 data 都算 class 1
+
+那 cluster 2 跟 cluster 3 都算 class 2
+
+就結束了
+
+那你把這些 data 拿去 learn 就結束了
+
+那這個方法不一定有用，尤其是
+
+在你的作業三裡面，你可以 implement 這個方法
+
+因為我們只說，助教只說要實踐兩種方法
+
+沒有說做完以後一定要進步嘛，所以
+
+真的是這樣的阿，如果你今天在
+
+就是說助教只提供兩個方法
+
+一個是 self-learning
+
+我們自己試過啦，是一定會進步的
+
+如果你今天要做 Cluster and then Label
+
+你這個 cluster 要很強
+
+因為只有這一招 work 的假設就是
+
+你可以把同一個 class 的東西 cluster 在一起
+
+可是在 image 裡面
+
+你要把同一個 class 的東西 cluster 在一起
+
+其實是沒那麼容易的
+
+我們之前有講過說
+
+我們在前面的投影片講為甚麼要用 deep learning 的時候
+
+不同 class，可能會長得很像
+
+同一個 class，可能會長得很不像
+
+你單純只用 pixel 來做 clustering
+
+你結果八成是會壞掉
+
+你沒有辦法把同一個 class 的 data cluster 在一起
+
+那 unlabeled data 沒有什麼幫助
+
+做出來就是會壞掉
+
+所以，如果你要讓 Cluster and then Label 這個方法
+
+有用，你的 cluster 要很強
+
+你要有很好的方法，來描述你的一張 image
+
+在我們自己試的時候，我們會用 Deep Autoencoder
+
+我們還沒有講 Deep Autoencoder，所以
+
+如果你覺得沒有辦法這實作，這個也是正常的
+
+我們是用 Deep Autoencoder call feature
+
+然後再 call clustering，這樣才會 work
+
+如果你不這樣做的話，我覺得應該是不會 work 的
+
+但是，你還是可以直接用 pixel 做 cluster
+
+剛才講這個比較直覺的做法
+
+另外一個方法是引入 Graph structure
+
+我們用 Graph structure 呢
+
+來表達 connected by a high density path 這件事情
+
+就是說，我們現在呢
+
+把所有的 data points，都建成一個 graph
+
+每一個 data point, x，就是這個圖上的一個點
+
+你要想辦法算它們之間的 singularity
+
+你要想辦法它們之間的 edge 建出來
+
+有了這個 graph 以後
+
+你就可以說所謂的 high density path 的意思就是說
+
+如果今天有兩個點
+
+它們在這個 graph 上面是相連的
+
+是走得到的
+
+它們就是同一個 class，如果沒有相連
+
+就算是實際上的距離呢
+
+也不算太遠，那你也走不到
+
+那怎麼建一個 graph
+
+有些時候
+
+這個 graph 的 representation 是很自然就可以得到
+
+舉例來說，假設你現在要做的是
+
+這個網頁的分類
+
+而你有記錄網頁有網頁之間的 hyperlink
+
+hyperlink 自然地就告訴你說，這些網頁先是如何連結的
+
+或者是，你現在要做的是論文的分類
+
+而論文和論文之間有引用的關係
+
+這個引用的關係式也是另外一種 graph 的 edge
+
+它也可以很自然地把這種圖畫出來給你
+
+當然有時候，你需要自己想辦法建這個 graph
+
+怎麼自己想辦法建這個 graph？
+
+其實這邊
+
+你的 graph 的好壞對你的結果
+
+影響是非常的 critical 的
+
+不過這個地方就非常的 heuristic
+
+就是憑著經驗和直覺
+
+你就覺得你怎麼做比較好
+
+就選擇你覺得爽的方法做就是了
+
+那這邊通常的做法是這個樣子
+
+你要先定義兩個 object 之間
+
+你怎麼算它們的相似度
+
+影像的話，你可以 base on pixel 算相似度
+
+performance 不太好
+
+因為 base on autoencoder 抽出來的 feature 算相似度
+
+可能 performance 就會比較好
+
+算完相似度以後
+
+你就可以建 graph 了
+
+那 graph 有很多種，比如說你可以建
+
+K nearest Neighbor 的 graph
+
+所謂 K nearest Neighbor 的 graph，意思是說
+
+我現在有一大堆的 data
+
+那 data 和 data 之間，我都可以算出它的相似度
+
+我就說
+
+我 K nearest Neighbor 設 k = 3
+
+那每一個 point 都跟它最近的、相似度最像的
+
+三個點做相連
+
+或者，你可以做
+
+e-Neighborhood，所謂 e-Neighborhood 是甚麼意思呢
+
+是說，每一個點
+
+只有跟它相似度超過某一個 threshold
+
+跟它相似大於 1 的那些點
+
+才不會被黏起來
+
+這都是很直覺的
+
+那所謂的相連也不是只有
+
+所謂的 edge 也不是只有相連和不相連
+
+這樣 binary 的選擇而已
+
+你可以給 edge 一些 weight
+
+你可以讓你的 edge 跟你的
+
+要被連接起來的兩個 data point 之間
+
+相似度是成正比的
+
+怎麼定義這個相似度呢
+
+我會建議比較好的選擇
+
+其實是用 RBM function 來訂這個相似度
+
+然後，我就發現說我這邊寫錯了
+
+這邊這個應該是 s 才對啊
+
+這個其實應該是 s
+
+怎麼算這個 function
+
+你可以先算說
+
+x^i 跟 x^j 如果你都把它們用 vector 來表示的話
+
+算它們的 Euclidean distance
+
+前面乘一個參數
+
+然後，前面乘一個負號，再取 exponential
+
+那其實取 exponential 這件事情呢
+
+是我覺得還滿必要的，在經驗上
+
+用這樣的 function，可以給你比較好的 performance
+
+為甚麼用這樣子的 function
+
+會給你比較好的 performance 呢？
+
+因為你想想看這個 function，它下降的速度是非常快的
+
+因為它有取 exponential
+
+所以，只有當 x^i 跟 x^j 非常靠近的時候
+
+它的 singularity 才會大
+
+只要距離稍微遠一點
+
+singularity 就會下降很快，變得很小
+
+也就是說，如果你用這種 RBM function 的話
+
+你才能夠製造，比如說，像這個圖上
+
+這邊有兩個橙色的點，是距離很近的
+
+這個綠色的點，其實它跟橙色的點的距離
+
+也蠻近，只是稍微遠一點
+
+但是，你用這種 exponential 的話
+
+每一個點都只跟非常近的點連
+
+跟它稍微遠一點，它就不連了
+
+你要有這樣子的機制
+
+才可以避免你連到這種
+
+跨海溝的這種 link 這樣
+
+所以如果你有 exponential，通常效果是會比較好的
+
+所以，graph-based 的方法，它的精神
+
+是這樣子的
+
+如果我們現在，在這個 graph 上面
+
+我有一些 labeled data
+
+比如說，在這個 graph 上面
+
+我們已經知道說，這筆 data 是屬於 class 1
+
+這筆 data 是屬於 class 1
+
+那跟它們有相連的
+
+那些 data point，它是屬於 class 1 的機率也就會上升
+
+比如說，這筆 data 它屬於 class 1 的機率也會上升
+
+這筆 data 它屬於 class 1 的機率也會上升
+
+所以，每一筆 data 它會去影響它的鄰居
+
+光是會影響它的鄰居是不夠的
+
+如果你只考慮光會影響它的鄰居的話，其實可能
+
+幫助不會太大
+
+為甚麼呢？因為如果說它們相連
+
+本來就很像
+
+你 train 一個 model
+
+input 很像的東西，output 本來就很像的東西
+
+所以，幫助不會太大
+
+那 Graph-based 的 approach 真正會有幫助它的
+
+這個醍醐味就是
+
+它的這個 class 是會傳遞的
+
+也就是說，本來 class 1
+
+只有這個點有跟 class 1 相連
+
+所以，它會變得比較像 class 1
+
+但是，這件事情會像傳染病一樣傳遞過去
+
+所以，這個點雖然它沒有
+
+這個 data point，它雖然沒有真的跟任何
+
+真的是 class 1 的點相連
+
+但是，因為這件事情
+
+像 class 1 這件事情是會感染的
+
+所以，這件事情也會透過這個 graph 的 link 傳遞過來
+
+所以，舉例來說，我們如果看這個例子
+
+你把你所有的 data point 都建成一個 graph
+
+當然這個是比較理想的例子
+
+然後，你有一個藍色的點
+
+是你 label 一筆 data 是屬於 class 1
+
+你 label 一筆 data 是屬於 class 2
+
+經過  Graph-based approach
+
+如果你的 graph 是建得這麼漂亮的話
+
+這邊就會通通是藍色
+
+這邊就會通通是紅色
+
+雖然說，這一點其實跟它的尾巴其實沒有接在一起
+
+但是紅色這個 class 這件事情會一路 propagate 過去
+
+會一路 propagate 過去
+
+那如果你要讓 graph-based 這種
+
+這種 Semi-supervised 的方法有用
+
+你的一個 critical 的方法是你的 data 要夠多
+
+如果你 data 不夠多
+
+這個地方你沒收集到 data，這個點斷掉了
+
+那你這 information就傳不過去
+
+那剛才是
+
+定性的說一下說，怎麼把
+
+怎麼使用這個 graph，接下來是要說怎麼
+
+定量的使用這個 graph
+
+這個定量的使用方式
+
+是我們在這個 graph 的 structure 上面
+
+定一個東西，叫做
+
+label 的 smoothness
+
+我們會定義說，今天這個 label
+
+有多符合我們剛才說的 Smoothness Assumption 的假設
+
+怎麼定這個東西呢？
+
+如果我們看這兩個例子
+
+在這兩個例子裡面都有
+
+4 個 data point
+
+那 data point 和 data point 之間連接的數字
+
+代表了這個 edge 的 weight
+
+我們說，假設在左邊這個例子
+
+左邊和右邊這兩個 graph 是一樣的，但是
+
+我們現在給每一個 data 不同的 label
+
+假設在這個 class 裡面
+
+你給它的 label 是 1、1、1、0
+
+再這個 example 裡面
+
+給它的例子是 0、1、1、0
+
+那誰比較 smooth 呢
+
+給大家一秒鐘的時間考慮一下
+
+你覺得左邊比較 smooth 的同學舉手
+
+手放下
+
+你覺得右邊比較 smooth 的同學舉手
+
+沒有人，所以你覺得
+
+多數人都覺得左邊比較 smooth
+
+所以，大家的看法是非常一致的
+
+左邊、這個三角形的地方都是 1
+
+這邊是 0
+
+這邊三角的地方有 0、有 1
+
+這邊是 0，感覺這個比較
+
+不符合 Smoothness Assumption 的假設
+
+這個比較符合
+
+但是，我們需要用一個數字來
+
+定量的描述它說
+
+它有多 smooth
+
+那常見的作法是這個樣子
+
+常見的作法是，你寫一個式子
+
+這個式子你可以這樣寫，我們考慮
+
+兩兩、有相連的這個
+
+point，兩兩拿出來
+
+summation over 所有的 data pair (i, j)
+
+然後，我們計算 i, j 之間的 weight
+
+跟 i 的 label
+
+減掉 j 的 label 的平方
+
+這邊是 summation over 所有的 data
+
+不管它現在是有 label，還是沒有 label
+
+所以你看左邊這個 case
+
+(1 - 1) 的平方是 0
+
+(1 - 1) 的平方是 0
+
+(1 - 1) 的平方是 0
+
+只有這邊是 (1 - 0) 的平方是 1
+
+所以，你在 summation over 所有的 data pair 的時候
+
+你只需要考慮 x^3 跟 x^4 這邊
+
+那 (y^i - y^j) 的平方是 1
+
+那 w (下標i, j) 是 1，再除 0.5，除 0.5 這件事情只是
+
+為了等一下做某一個計算的時候
+
+比較方便，它其實沒有甚麼真正的效用
+
+這邊乘一個 0.5
+
+最後得到的這個 smoothness
+
+有多 smooth 呢？
+
+evaluation 就是 0.5
+
+那如果是右邊這一個 case
+
+你自己回去算一下，到底有沒有算錯
+
+根據這個定義，它算出來的 smoothness = 3
+
+所以，這個值越小
+
+它越 smooth
+
+所以，你會希望你得出來的 label
+
+根據這個 smoothness 的定義
+
+它算出來，越小越好
+
+其實，這邊可以很快告訴大家一件事情，這一項
+
+可以稍微整理一下
+
+寫成一個比較簡潔的式子，怎麼寫呢？
+
+我們把 y 串成一個 vector
+
+現在，y 是包括 labeled data，也包括 unlabeled data
+
+每一筆  labeled data 跟 unlabeled data
+
+都出一個值給你
+
+所以，你現在有 (R + U) 個 dimension
+
+串成一個 vector，寫成 y，我們粗體字來表示一個 vector
+
+如果你這樣寫的話
+
+這一個式子，可以寫成
+
+y 這個 vector 的 transpose，乘上一個 matrix，叫做 L
+
+再乘上 y
+
+那這個 L，它是一個
+
+因為 y 的 dimension 是 (R + U)
+
+所以，這個 L 是一個 (R +U) * (R + U) 的 matrix
+
+那這個 L，它是有名字的
+
+它叫 Graph Laplacian，你可能有聽過這個名字
+
+Graph Laplacian 就是指這個 L
+
+這個是它的名字
+
+那這個 L 的定義是甚麼呢？
+
+它寫成兩個 matrix 的相減，就是 D - W
+
+我們現在看 W 是什麼，W 就是
+
+你把這些 data point 阿
+
+兩兩之間 weight 的 connection 的關係建成一個 matrix
+
+就是 W，這邊的
+
+4 個 row 跟 4 個 column，分別就代表了
+
+data x^1 到 data x^4
+
+也就是說，你看現在 x^1 跟 x^2 之間的
+
+connection 的 weight 是 2
+
+這個 (1, 2) 這邊就是 2
+
+那 x^1 跟 x^3 的 connection 是 3
+
+(1, 3) 這邊就是 3，以此類推
+
+就建出一個 matrix, W
+
+D 是甚麼呢？ D 是這樣的
+
+你把 W 的每一個 row
+
+每一個 row 合起來，你把第一個 row：2 + 3 合起來
+
+放在 diagonal 的地方，變成 5
+
+2 + 1 變成 3，3 + 1 + 1 變成 5，1 變成 1
+
+然後，把這些合起來的值放在 diagonal 的地方就是 D
+
+然後，你把 D - W 就得到 Laplacian
+
+你再把它放在這邊
+
+這個左邊的式子，就會等於右邊的式子
+
+你可能沒有辦法一下子看出來說
+
+為什麼左邊的式子等於右邊的式子
+
+這個證明其實很無聊
+
+正確講你也不會覺得特別有趣
+
+你就回去，把這個東西展開
+
+你就知道左邊其實是等於右邊的
+
+所以，現在我們知道這件事情了
+
+我們可以用這一個式子
+
+來 evaluate 說，我們現在得到的 label有多 smooth
+
+那在這個式子裡面
+
+我們會看到有 y，那這個 y 是 label
+
+這個 label 的值，你的 neural network output 的值是
+
+取決於你的 network 的 parameter，所以這一項
+
+其實是 network 的 dependent
+
+所以，你要把 graph 的 information
+
+考慮到 neural network 的 training 的時候
+
+你要做的事情，其實就是在
+
+原來的 loss function 裡面，加一項
+
+你原來的 loss function 是考慮 cross entropy 之類的
+
+你就加另外一項，你加這一項是 smoothness 的值
+
+乘上某一個你想要調的參數，λ
+
+那這後面這一項，它其實就象徵了一個
+
+Regularization，它就像是一個 Regularization 的 term
+
+你不只要調你的參數讓你的那些 labeled data 的
+
+你的 neural network 在那些 labeled data 的 output
+
+跟真正的 label，越接近越好
+
+你同時還要做到說
+
+你 output 的這些 label
+
+不管是在 labeled data 或 unlabeled data 上面
+
+它都符合 Smoothness Assumption 的假設
+
+Smoothness Assumption 的假設是由這個 x
+
+所衡量出來的，所以你同時 minimize 這項
+
+也要同時 minimize 這項，你可能會說，這件事怎麼做？
+
+這件事沒有甚麼好講的
+
+你就算一下它的 gradient
+
+然後，做 gradient descent 就可以了
+
+那其實，你也要算 smoothness 時候，不一定要算在
+
+不一定要算在 output 的地方
+
+不一定要算在 output 的地方，如果你今天是一個
+
+deep neural network 的話
+
+你可以把你的 smoothness 放在 network 的任何地方
+
+你可以假設你的 output 是 smooth
+
+你也可以同時說
+
+我把某一個 hidden layer 接出來
+
+再乘上一些別的 transform
+
+它也要 smooth
+
+你也可以說，每一個 hidden layer 的 output
+
+都要是 smooth 的，都可以
+
+你可以同時把這些 smooth 
+通通都加到 neural network 上面去
+
+最後呢，這個
+
+最後的方法是 Better Representation
+
+這個方法的精神是：是去蕪存菁、化繁為簡
+
+這一部分我們會等到 unsupervised learning 的時候再講
+
+那它的精神是這樣子的
+
+我們觀察到的世界其實是比較複雜的
+
+我們在我們觀察到的世界背後
+
+其實有一些比較簡單的 vector
+
+比較簡單的東西，在操控我們這個複雜的世界
+
+所以，你只要能夠看透這個世界的假象
+
+支持它的核心的話，你就可以讓 training 變得比較容易
+
+舉例來說，這個圖是出自神鵰俠侶
+
+這個大家知道什麼意思嗎
+
+這個是楊過，他手上拿了一個剪刀
+
+這個是樊一翁，這個是他的鬍子
+
+然後，楊過跟樊一翁打的時候
+
+他說我可以在三招之內，就剪掉你的鬍子
+
+大家都不相信，楊過後來就真的在三招之內
+
+剪掉他的鬍子，為甚麼呢？因為
+
+楊過觀察到說，鬍子只是一個假相
+
+雖然，鬍子的變化是比較複雜的
+
+但是，鬍子是受到頭所操控
+
+頭的變化是有限的，所以他看透這一件事情
+
+以後，他就可以把鬍子剪掉
+
+所以說，樊一翁他的鬍子就是 observation
+
+而他的頭，就是你要找的 Better Representation
+
+那就是我們下一堂課要講的東西
+
+我們在這邊休息10分鐘
+
+臺灣大學人工智慧中心
+科技部人工智慧技術暨全幅健康照護聯合研究中心
+http://aintu.tw
+
