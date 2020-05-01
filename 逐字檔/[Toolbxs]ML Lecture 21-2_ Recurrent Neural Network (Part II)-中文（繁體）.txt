@@ -1,0 +1,2630 @@
+臺灣大學人工智慧中心
+科技部人工智慧技術暨全幅健康照護聯合研究中心
+
+那我們上次呢，講到 LSTM
+
+總之就是一個複雜的東西
+
+再來的問題是，像 Recurrent Neural Network 這種架構
+
+他要如何做 learning 呢？
+我們之前有說過說，如果要做 learning 的話
+
+你要定一個 cost function
+
+來 evaluate 你的 model 的 parameter 是好還是不好
+
+然後你選一個 model parameter 可以讓這個 lost 最小
+
+那在 RNN 裡面，你會怎麼定這個 lost 呢？
+
+以下我們就不寫算式，直接舉個例子
+
+假設我們現在要做的事情是 Slot Filling
+
+那你會有 training data ，
+這個 training data 是說，給你一些 sentence
+
+解決投影機問題中
+
+這個是 sentence, ok~
+
+你要給 sentence label，告訴 machine  說，
+第一個 word 它屬於 other 這個 slot
+
+然後台北屬於destination 這個 slot， on 屬於 other slot
+
+November 2nd 屬於抵達時間的 slot
+
+接下來你希望你的 cost 會怎麼定呢？
+
+把 arrive 丟到 RNN
+
+RNN 會得到一個 output 'y1'
+
+接下來 'y1' 會和一個 Reference 的 vector 算它的 cross entropy
+
+希望說如果我們現在丟進去的是 arrive 
+那 'y1' 的reference 的 vector 應該是對應到 other 那個 slot
+
+的 dimension value 是 1 其他是 0
+
+這個 reference vector的長度，就是你 slot 的數目
+
+比如說你定了 40 個 slot，
+那這個 reference vector 的長度，dimension 就是40
+
+假設現在 input 的這個 word，
+它應該是對應到 other 這個 slot 的話
+
+那對應到 other 那個 dimension
+
+就是 1 其他就是 0
+
+那現在你把 Taipei  丟進去的時候，因為 Taipei 屬於 destination 這個 slot
+
+所以你就會希望說把 'x2' 丟進去的時候
+
+'y2' 它要跟 reference 的 vector 距離越近越好
+
+那 'y2' 的 reference vector 是對應到 destination 那個 slot 是 1 其他是 0
+
+但這邊要注意的是，你在丟 'x2' 之前，一定要先丟 'x1'
+
+你在把 Taipei 丟進去之前，一定要先把 arrive 丟進去
+
+不然，你就不知道存在memory 裡面的值是多少
+
+在做 training 的時候，
+你也不能把你的 utterance  裡面的
+
+這些 word sequence 打散來看，
+word sequence 仍然要當做一個整體來看
+
+同樣的道理，把 on 丟進去
+
+它的 reference vector 對應到 other 是 1
+
+對應到 other 那個 dimension 是 1，其他是0
+
+所以你的 cost ，就是每一個時間點的
+
+RNN 的 output 跟 reference vector 的 cross entropy 和
+
+就是你要去 minimize 的對象
+
+那現在有了這個 lost function 之後，training 要怎麼做呢？
+
+training 其實也是用 gradient decent
+
+也就是說如果我們現在已經定出了 lost function 大 L
+
+我要 update 這一個 network 裡面的某一個參數 w，我要怎麼做呢？
+
+你就計算 w 對 L 的偏微分，把這個偏微分計算出來之後
+
+就用 gradient decent 的方式去 update 每一個參數
+
+那我們之前在講 Neural Network 的時候，
+已經講過很多次
+
+那在講之前這個 feed forward network 的時候，我們說gradient decent
+
+用在 feed forward network 裡面，
+你要用一個比較有效的演算法，叫做 Back propagation
+
+在 RNN 裡面，gradient decent 的原理是一模一樣的
+
+但是為了要計算方便，
+也有開發一套演算法，這套演算法呢
+
+是 Back propagation 的進階版，叫做BPTT
+
+那它跟 Back propagation 其實是很類似的
+
+只是因為 RNN 是在 time sequence 上運作，所以 BPTT 它需要考慮時間的information
+
+那我們在這邊就不講 BPTT ，反正你只要知道 RNN 是用 gradient decent train 的
+
+它是可以 train 的，這樣就行了
+
+然而不幸的，RNN 的 training 是比較困難的
+
+RNN 的 training 是比較困難的
+
+一般而言，你在做 training 的時候，
+你會期待你的 learning curve 是像藍色這條線
+
+這邊的縱軸是 Total Loss，
+橫軸呢，是 Epoch, training 時的 Epoch 的數目
+
+你會希望說呢
+
+隨著 Epoch 越來越多，隨著參數不斷的被 update，loss 應該就是慢慢，慢慢的下降
+
+最後趨向收斂
+
+但不幸的，當你在訓練 RNN 時，你有時候會看到
+
+綠色這條線
+
+這很重要，如果你是第一次 train RNN
+
+你看到綠色這樣的 learning curve
+
+這個 learning curve ，非常劇烈的抖動，
+然後抖到某個地方，就突然 NaN，
+然後你的程式就 segmentation fault
+
+這個時候你會有什麼想法呢？
+我相信你的第一個想法就是
+
+程式有 bug 啊！
+
+今年春天我邀那個 Thomas Mikolov 來台灣
+
+他們就是發明哪個 word vector 的人
+
+他跟我分享他當時開發 RNN 的心得
+
+最早開始做 RNN 的 language model 的人
+大概在 09 年就開始做了
+
+很長一段時間，
+只有他能把 RNN  language model train 起來
+
+其他人都 train 不起來
+
+你知道那個年代，不像現在有什麼 tensor flow 啊
+
+那個年代做什麼，
+都是要徒手刻的，所以他徒手刻了一個 RNN
+
+然後 train 完以後就發生這樣一個現象
+
+他第一個想法就是，程式有 bug ...
+努力 debug 後，果然有很多 bugs
+
+他後來就把 bugs 修掉
+
+但這現象還是在
+
+所以他就覺得很困惑
+其他人就跟他說放棄啦，不 work
+
+可是他想知道結果為何會這樣
+
+所以他就做分析，等一下這圖是來自於他的 paper
+
+他分析了 RNN 的性質，他發現說 RNN 的 error surface
+
+所謂 error surface 就是 Total Loss 對參數的變化，
+是非常的陡峭，非常崎嶇的
+
+所謂崎嶇的意思是說，這個 error surface 它有些地方非常平坦
+
+有一些地方，非常的陡峭
+
+就像是有懸崖峭壁
+
+投影片上是一個示意圖，縱軸是 Total Loss
+
+x 軸跟 y 軸代表兩個參數 w1 and w2
+
+圖上顯示的就是 w1 跟 w2 兩個參數
+
+對 Total Loss，那發現說對很多地方
+是非常平坦的
+
+然後在某些地方，非常的陡峭
+
+這個會造成什麼樣的問題呢？
+
+假設你從橙色那個點，當作你初始的點
+
+用 gradient decent 開始調整你的參數
+
+橙色那個點，你算一下 gradient
+然後update 你的參數
+
+跳到下一個橙色的點，再算一下 gradient
+再 update 你的參數
+
+你可能正好就跳過一個懸崖
+
+所以你的 Loss 會突然暴增，
+你就會看到 Loss 上下非常劇烈震盪
+
+有時候可能會遇到另外一個更慘的狀況，
+就是你正好就踩在
+
+你一腳踩在這懸崖上
+
+那你踩在這懸崖上，會發生什麼事情呢？
+你踩在懸崖上，因為在懸崖上 gradient 很大
+
+然後呢，之前的 gradient 都很小，所以你措手不及
+
+因為之前 gradient 很小，
+所以你可能把 learning rate 調得比較大
+
+但 gradient 突然很大，很大的 gradient 再乘上很大的 learning rate
+
+結果參數就 update 很多
+然後整個參數就飛出去了
+
+所以你就 NaN
+程式就 segmentation fault
+
+他們就想說怎麼辦呢？
+
+他說他不是一個數學家，
+所以他要用工程師的想法來解決這問題
+
+他就想了一招，這一招應該蠻關鍵的
+
+讓很長一段時間，
+只有他的 code 可以把 RNN train 出來
+
+很長一段時間，人們是不知道這一招的
+因為這一招他實在覺得太沒什麼
+
+所以沒寫在 paper 裡面
+直到他在寫博士論文時
+
+博士論文是比較長的
+所以有些東西 trivial 很可能還是會寫進去
+
+直到他在寫博士論文的時候，大家才發現這個秘密
+
+這個秘密是什麼呢？
+
+這一招說穿了就不值錢
+
+這一招叫做 clipping
+
+clipping 是說，當 gradient 大於某一個threshold 時後
+
+就不要讓他超過那個 threshold
+
+當 gradient 大於 15 的時候就等於15
+結束...
+
+因為 gradient 現在不會太大，假如你做 clipping 的時候
+
+就算是踩在這個懸崖上，也沒有關係，
+你的參數就不會飛出去
+
+他會飛到一個比較近的地方，
+這樣你仍然可以繼續做 RNN 的 training
+
+那接下來的問題就是
+
+為什麼 RNN 會有這種奇特的特性呢？
+
+為什麼 RNN 會有這種奇特的特性呢？
+
+有人可能會說是不是因為來自於 Sigmoid function
+
+我們之前有講過，在講 ReLU activation function 的時候呢
+
+我們有講過一個問題叫做 gradient vanishing 的問題
+
+那我們說這個問題是從 Sigmoid function 來的
+
+因為 Sigmoid 的關係，所以有 gradient vanishing 這個問題
+
+RNN 會有這種很小的，很平滑的 error surface
+
+是因為來自於 gradient vanish，gradient vanish 是因為來自於 Sigmoid function
+
+這件事情，我覺得不是真的
+
+想想看如果這個問題是來自於 Sigmoid function，換成 ReLU 就解決這個問題啦
+
+所以不是這個問題
+
+跟大家講一個秘密，如果你用 ReLU 你會發現說呢
+
+一般在 train Neural Network 的時候呢，
+很少用 ReLU 當作 activation function
+
+為什麼呢？因為如果你把 Sigmoid 換成 ReLU，其實在 RNN 上面 performance 通常是比較差的
+
+所以 activation function 並不是這個地方的關鍵點
+
+如果說我們今天有講 
+Back propagation through time 的話
+
+從式子裡面，你會比較容易看出為何會有這個問題
+
+今天沒有講 Back propagation through time
+
+沒有關係
+
+我們有一個更直觀的方法，
+可以來知道一個 gradient 的大小
+
+這個更直觀的方法，你把某一個參數做小小的變化，
+看他對 network output 的變化有多大
+
+就可以測出這個參數的 gradient 大小
+
+我們這邊呢舉一個很簡單的 RNN 當作我們的例子
+
+今天有一個全世界最簡單的 RNN，他只有一個 Neuron
+這個 Neuron 是 linear
+
+他只有一個 input 沒有 bias
+input 的 weight 是 1
+
+output weight 也是 1
+
+transition 部分的 weight 是 w
+
+也就是從 memory 接到 Neuron 的 input weight 是 w
+
+現在假設我給這個network 的輸入是 [1 0 0 0 0 0]
+
+只有第一個時間點輸入 1  ，接下來都輸入 0
+
+那這個 network 的 output 會長什麼樣子呢？
+
+比如說這個 network 在最後一個時間點，
+第 1000 個時間點的 output 值會是多少
+
+我相信大家都可以馬上回答我
+
+他的值是 w 的 999 次方，對吧？
+
+你把 1 輸入進去，再乘上 w，再乘上 w...
+乘了 999  次 w
+
+輸出就是 w 的 999 次方
+後面的輸入都是 0 當然不影響
+
+只有一開始的 1 有影響
+但他會通過 999 次的 w
+
+那我們現在來看，假設 w，是我們要認的參數
+
+我們想要知道他的 gradient
+
+所以我們想要知道，當我們改變 w 的值的時候
+
+對 network 的 output 有多大的影響
+
+現在我們假設 w = 1
+
+y 1000，
+network 在最後時間點的 output，也是 1
+
+假設 w = 1.01，那 y 1000 是多少呢？
+
+y 1000 是 1.01 的 999 次方，
+1.01 的 999 次方是多少呢？
+
+是 20000，是一個很大的值
+
+這就跟蝴蝶效應一樣，這個 w 有一點小小的變化
+
+對他的 output 影響是非常大的
+
+所以 w 有很大的 gradient
+
+想說這很大的 gradient 也沒有什麼
+
+我們只要把他的 learning rate 設小一點就好
+
+但是事實上，如果把 w 設成 0.99
+
+那 y 1000 就等於 0
+
+如果把 w 設 0.01，那 y 1000 還是等於 0
+
+也就是說在 1 這個地方有很大的 gradient 
+但在 0.99 的地方 gradient 就突然變得非常非常的小
+
+這個時候你又需要一個很大的 learning rate
+
+就會造成你設 learning rate 很麻煩，
+你的 error surface 很崎嶇
+
+因為這 gradient 是時大時小的
+
+而且在非常短的區域內，gradient 就會有很大的變化
+
+所以從這個例子，你可以看出來說，為什麼 RNN
+
+會有問題，RNN training 的問題
+
+其實是來自於，他把同樣的東西
+
+在 transition 的時候呢，
+在時間和時間轉換的時候，反覆使用
+
+從 memory 接到 Neuron 的那一組 weight
+
+在不同的時間點，都是反覆被使用
+
+所以這個 w 只要一有變化
+
+他有可能完全沒有造成任何影響，
+像這邊的例子
+
+一但他可以造成影響，那個影響都會是天崩地裂的影響
+
+所以他有時候 gradient 很大，有時很小
+
+RNN 會不好訓練的原因，
+並不是來自於 activation function
+
+而是來自於他有 time sequence，
+同樣的 weight，在不同的時間點
+
+被反覆的，不斷的被使用
+
+有什麼樣的技巧可以幫助我們解決這問題呢？
+
+其實現在廣泛被使用的技巧呢，就是 LSTM
+
+LSTM 可以讓你的 error surface 不要那麼崎嶇
+
+他會把那些比較平坦的地方拿掉，
+他可以解決 gradient vanishing 的問題
+
+但他不會解決 gradient explode 的問題
+
+可能你有些地方，仍然是會非常崎嶇的
+
+你有些地方，仍然變化會是非常劇烈的
+
+但是不會有特別平坦的地方
+
+因為如果你在做 LSTM 的時候
+
+大部分的地方都變化很劇烈
+
+所以當你在做 LSTM 的時候
+
+你可以放心的把你的 learning rate 設的小一點
+
+而他要在 learning rate 特別小的情況下進行訓練
+
+那為什麼 LSTM 可以做到 
+handle gradient vanish 的問題呢？
+
+為什麼他可以避免讓 gradient 特別小呢？
+
+我聽說有人在面試某家國際大廠的時候，
+就被問這個問題
+
+但這問題怎麼樣答比較好呢？
+
+他那個問題是這樣，為什麼我們把 RNN 換成 LSTM?
+
+如果你的答案是因為 LSTM 比較潮，
+因為 LSTM 比較複雜
+
+這個都太弱了
+
+真正的理由是 LSTM 可以 handle gradient vanishing 的問題
+
+但接下來人家就會問說，為什麼 LSTM 可以 handle gradient vanishing 的問題呢？
+
+我在這邊來試著回答看看
+
+之後假如有人口試再被問到，
+你可以想想你有沒有辦法回答
+
+如果你想看看 RNN 跟 LSTM，
+它們在面對 memory 的時候
+
+它們處理的 operation
+其實是不一樣的
+
+你想想看，在 RNN 裡面，在每一個時間點
+
+其實 memory 裡面的資訊，都會被洗掉
+
+你們看每一個時間點，
+Neuron 的 output 都會被放到 memory 裡面去
+
+所以在每一個時間點，
+memory 裡面的資訊都會被覆蓋掉
+
+都會被完全洗掉
+
+但在 LSTM 裡面不一樣
+
+他是把原來 memory 裡面的值，乘上一個值
+
+再把 input 的值，加起來
+
+放到 cell 裡面去
+
+所以他的 memory 和 input 是相加的
+
+今天他和 RNN 不同的地方是
+
+如果你的 weight 可以影響到 memory 的值的話
+
+一但發生影響，這個影響會永遠都存在
+
+不像 RNN 在每一個時間點，值都會被 format 掉
+
+只要影響一被 format 掉，他就消失了
+
+但在 LSTM 裡面，一但能對 memory 造成影響
+
+那個影響會永遠留著，除非 forget gate 被開
+
+除非 forget gate 被使用，
+除非 forget get 決定要把 memory 值洗掉
+
+不然一但 memory 有改變的時候，
+每次都只會有新的東西加進來
+
+而不會把原來存在 memory 裡面的值洗掉
+
+所以他不會有 gradient vanishing 的問題
+
+那你可能會想說，現在有 forget gate 啊
+
+forget gate 就是會把過去存的值洗掉啊
+
+事實上 LSTM 在 97 年就被 proposed 了
+
+LSTM 第一個版本就是
+為了解決 gradient vanishing 的問題
+
+所以他是沒有 forget gate 的，
+forget gate 是後來才加上去的
+
+那甚至現在有一個傳言是
+
+你在訓練 LSTM 時，不要給 forget gate 特別大的 bias
+
+你要確保 forget gate 在多數的情況下是開啟的
+
+只有少數情況會被 format 掉
+
+現在有另一個版本，用 gate 操控 memory 的 cell
+
+叫做 Gated Recurrent Unit
+
+LSTM 有 3 個 gate
+
+這個 GRU，他只有兩個 gate
+
+所以 GRU 相較於 LSTM，他的 gate 只有 2 個
+
+所以他需要的參數量是比較少的
+
+因為他需要的參數量是比較少的
+
+所以他在 training 是比較 robust 的
+
+所以你今天在 train LSTM 的時候，
+你覺得 over fitting 情況很嚴重
+
+你可以試一下用 GRU
+
+GRU 的精神就是，他怎麼拿掉一個 gate
+
+我們今天就不講 GRU 的詳細原理
+
+他的精神就是舊的不去，新的不來
+
+他會把 input gate 跟 forget gate 連動起來
+
+當 input gate 被打開的時候，
+forget gate 就會被自動的關閉
+
+當 input gate 被打開的時候，
+forget gate 就會被洗掉
+
+就會 format 掉，存在 memory 裡面的值
+
+當 forget gate 沒有要 format 值，
+input gate 就會被關起來
+
+也就是你要把存在 memory 裡面的值清掉，
+才可以把新的值放進來
+
+其實還有很多其他 techniques，
+是來 handle gradient vanishing 這個問題
+
+比如說是 Clockwise RNN 或是 SCRN，等等
+
+我們把 reference 留在這邊，讓大家參考
+
+最後，有一個蠻有趣的 paper
+
+是 Hinton proposed，
+
+他用一般的 RNN，不是用 LSTM
+
+一般 RNN，他用 identity matrix ，
+來initialize transition 的weight
+
+然後在使用 ReLU 的 activation function 的時候
+
+他可以得到很好的 performance
+
+有人說那 ReLU 的 performance 不是比較差嗎？
+
+如果你是一般 training 的方法，
+你 initialization 的 weight 是 random 的話
+
+那 ReLU 跟 Sigmoid function 來比的話，
+Sigmoid 的 performance 會比較好
+
+但是如果你今天用了 identity matrix 的話
+
+如果你今天用了 identity matrix 來當作 initialization 的話
+
+這時候用 ReLU 的 performance 就會比較好
+
+這件事情真的非常的神奇
+
+當你用了這一招以後，用一般的 RNN
+
+不用 LSTM，他的 performance 就可以屌打 LSTM
+
+你就覺得 LSTM 用的這麼複雜，都是白忙一場
+
+這個是非常神奇的一篇文章
+
+那其實 RNN 有很多的 applications
+
+在我們前面舉的 slot filling 例子裡面
+
+我們是假設 input 跟 output 的 element 數目是一樣多的
+
+也就是說 input 有幾個 word 我們就給每一個 word，
+一個 slot 的 label
+
+但事實上 RNN 他可以做到呢
+
+更複雜的事情
+
+可以做到更複雜的事情
+
+比如說，他可以 input 是 一個 sequence
+ output 只是一個 vector
+
+這有什麼應用呢，比如說你可以做 Sentiment Analysis
+
+Sentiment Analysis 現在有很多的 applications
+比喻來說
+
+某家公司想要知道說
+他們的產品在網路上評價呢
+
+是 positive 還是 negative
+
+他們可能就會寫一個爬蟲
+
+把跟他們網路評價有關，
+或跟它們產品有關係的網路文章，都爬下來
+
+但是一篇篇看太累了，
+所以你可以用一個 machine learning 的方法
+
+自動 learn 一個 classify，
+去分類說那些 documents 是正向，那些是負向
+
+或者是在電影版上呢
+
+Sentiment Analysis 做的事情，
+就是給 machine 看很多文章
+
+然後 machine 要自動知道說，
+那些文章是正雷，那些是負雷
+
+怎麼讓 machine 做到這件事情呢？
+
+你就是認一個 RNN
+
+這個 input 呢是一個 character sequence
+
+這個 input 呢是一個 character sequence
+
+然後 RNN 呢，
+把這個 character sequence 讀過一遍
+
+然後在最後一個時間點，把 hidden layer 拿出來
+
+把 hidden layer 拿出來，可能再通過幾個 transform
+
+然後呢，
+你就可以得到最後的 sentiment analysis 的 prediction
+
+比如說 input 這個 document
+
+他是 超好／好／普／負／超負 雷
+
+他是一個分類的問題
+
+但 input 是一個 sequence，
+所以你需要用 RNN 來處理這個 input
+
+或是我們實驗室做過，用 RNN 來做 key term extraction
+
+所謂 key term extraction 的意思是說
+
+給 machine 看一篇文章，
+然後 machine 要 predict 這篇文章有那些關鍵詞彙
+
+跟我們在 final project 裡面的第三個 task 
+做的其實是非常類似的事
+
+如果你今天能收集到一堆 training data
+
+你能夠收集到一堆 document
+
+然後這些 document 都有 label 說
+
+哪些詞彙是對應它對應的 key word 的話
+
+那你就可以直接 train 一個 RNN
+
+這個 RNN 呢，把 document word sequences 當作 input
+
+然後通過 embedding layer
+
+然後用 RNN 把這個 document 讀過一次
+
+然後呢，把出現在最後一個
+
+把這出現在最後一個時間點的 output 拿過來做 attention
+
+我發現我們沒有講過 attention 是什麼，
+這部分你就聽聽就好
+
+用 attention 以後呢，
+你可以把重要的 information 抽出來
+
+再丟到 feed forward network 裡面去
+
+得到最後的 output
+
+那它也可以是多對多的
+
+比如說你的 input/output 都是 sequences
+
+但 output sequence 比 input sequence 短的時候
+
+RNN 可以處理這個問題
+
+什麼樣的任務是 input sequence 長 
+output sequence 短呢？
+
+比如說語音辨識就是這樣一個任務
+
+在語音辨識這個任務，
+input 是一串 acoustic feature sequence
+
+語音是一段聲訊號
+
+要做語音辨識的時候，你就說一句話
+
+我們一般處理聲音訊號的方式
+
+就是在聲音訊號裡面，每隔一小段時間，
+就把它用一個 vector 來表示
+
+那一個一小段時間，通常很短，比如說是 0.01 秒之類的
+
+那它的 output 是 character 的 sequence
+
+那如果你是用原來的 RNN，
+用我們在做 Slot Filling 那個 RNN
+
+你把這一串 input 丟進去
+
+它充其量，只能做到說，告訴你
+
+每一個 vector，它對應到哪一個 character
+
+假設說中文的語音辨識
+
+那你 output 的 target，
+理論上就是這世界上所有可能的中文詞彙
+
+所有中文的可能的 characters，常用的可能就有 8000 個
+
+RNN output 的 class 數目，會有 8000
+
+雖然很大，是有辦法做的
+
+但充其量，你只能做到說
+
+每一個 vector 屬於一個 character
+
+但是
+
+input 每一個 vector 對應到的時間是很短的
+
+通常才 0.01 秒
+
+所以通常是好多個 vector 才對應到同一個 character
+
+所以你辨識的結果，就變成，好好好棒棒棒棒棒
+
+可是這不是語音辨識的結果啊，怎麼辦？
+
+有一招叫 trimming
+
+trimming 就是把重複的東西拿掉，就變好棒
+
+但這樣會有一個很嚴重問題，它就沒有辦法辨識 好棒棒
+
+不知道的說一下，好棒跟好棒棒正好是相反的
+
+所以不把好棒跟好棒棒分開來是不行的
+
+所以需要把好棒跟好棒棒分開來
+
+怎麼辦，我們要用一招，叫做 CTC
+
+這一招也是那種說穿了不值錢的方法
+
+但這一招很神妙
+
+它說，我們在 output 的時候，
+不只是 output 所有中文的 character
+
+我們還多 output 一個符號，叫做 Null
+
+叫做沒有任何東西
+
+所以今天如果我 input 一串 acoustic feature sequence
+
+它的 output 是 好 null null 棒 null null null null
+
+然後我就把 null 的部分拿掉，它就變好棒
+
+如果我們輸入另外一個 sequence 
+它的 output 是 好 null null 棒 null 棒 null null
+
+它的 output 就是好 棒 棒
+
+所以就可以解決疊字的問題了
+
+那 CTC 怎麼做訓練呢？
+
+CTC 在做訓練的時候，你手上的 training data
+
+就會告訴你說，這一串 acoustic feature
+
+對應到這一串 character sequence
+
+這個 sequence 對應到這個 sequence
+
+但他不會告訴你說，
+好 是對應第幾個 frame 到第幾個 frame
+
+棒 
+是對應第幾個 frame 到第幾個 frame
+
+那怎麼辦呢？
+
+窮舉所有可能的 alignment
+
+簡單來說，我們不知道 好 對應到哪幾個 frame
+棒 對應到哪幾個 frame
+
+我們就假設所有的狀況都是可能的
+
+可能第一個是 好，後面接 null，棒 後面接 3 個 null
+
+可能 好，後面接 2 個 null，棒 後面接 2 個 null
+
+可能 好，後面接 3 個 null，棒 後面接 1 個 null
+
+我們不知道哪個是對的，就假設全部都是對的
+
+在 training 的時候，全部都當作正確的一起去 train
+
+可能會想說，窮舉所有的可能，那可能性感覺太多了
+
+這個有巧妙的演算法，可以解決這個問題
+
+那我們今天就不細講這個部分
+
+以下是在文獻上 CTC 得到的一個結果
+
+這是英文的
+
+在做英文辨識的時候，你的 RNN 的 output target
+
+就是 character
+
+就英文的字母
+
+加上空白，空白就是說
+
+你也不需要給你的 RNN 10 點啊，什麼之類的
+
+它就直接 output 字母
+
+如果當那的字與字之間有 boundary，
+它就自動用空白區隔
+
+以下是一個例子，第一個 frame 就 output H
+
+第二個frame output null，第三個 frame output null
+
+第四個frame output I，第五個 frame output S
+
+接下來 output 底線，代表空白
+
+然後一串 null 然後 F null null R I
+
+null null... E N D null..  ' S _
+
+如果你看到 output 是這樣子的話
+
+你把 null 拿掉，這句話辨識結果就是 HIS FRIEND'S
+
+你不需要告訴 machine 說 HIS 是一個詞彙，
+FRIEND'S 是一個詞彙
+
+machine 透過 training data，它自己會學到這件事情
+
+那傳說呢，google 的語音辨識系統，
+已經全面換成 CTC 了
+
+如果你用 CTC 來做語音辨識的話
+
+就算是有某一個詞彙，比如說英文的人名，地名
+
+從來在 training data 沒有出現過
+
+machine 從來不知道這詞彙
+
+它其實有也機會把它正確的辨識出來
+
+另外一個神奇的 RNN 應用呢
+
+叫做 sequence to sequence learning
+
+在 sequence to sequence learning 裡面，
+RNN 的 input and output 都是 sequence
+
+這兩段 sequence 的長度是不一樣的
+
+剛剛在講 CTC 的時候，input 比較長，output 比較短
+
+在這邊我們要考慮的case是，
+不確定 input output 誰比較長，誰比較短
+
+比如說我們現在要做的是 machine translation
+
+input 英文的 word sequence 
+要把它翻成中文的 character sequence
+
+我們並不知道英文或中文，誰比較長，誰比較短
+
+都有可能是 output 比較長，或 output 比較短
+
+所以怎麼辦呢？
+現在假如 input 的是 machine learning
+
+machine learning 用 RNN 讀過去
+
+然後在最後一個時間點呢，memory 就
+存了所有 input 的整個 sequence 的 information
+
+然後接下來，你就讓 machine 吐一個 character
+
+比如說它吐的第一個 character 就是 機
+
+你把 machine learning 讓 machine 讀過一遍
+
+然後在讓它 output character，它可能就會 output 機
+
+接下來再叫它 output 下一個 character
+
+你把之前 output 出來的 character 當作 input
+
+再把 memory 裡面存的值讀進來
+
+它就會 output 器
+
+這個 機 要如何接到這裡，這地方有很多枝枝節節的技巧
+
+這個太多了，我們以後再講
+
+這個以後或許下學期，在 MLTS 再講
+
+這個其實有很多枝枝節節的地方，
+還有很多各種不同的變形
+
+那它在下一個時間點，器 以後它就 output 學
+
+然後學就 output 習
+
+它就會一直 output 下去
+
+習 後面接 慣，慣 後面接 性
+
+永遠都不停止這樣
+
+第一次看到這 model 根本不知道什麼時候該停止
+
+那怎麼辦呢，這就讓我想到推文接龍
+
+那你要怎麼讓他停下來呢
+
+你要有一個冒險去推一個 ==斷==
+然後它就會停下來了
+
+所以今天讓 machine 做的事情，也是一樣
+
+要如何阻止它不斷的繼續產生詞彙呢？
+
+你要多加一個 symbol 叫做 斷
+
+所以 machine 不只 output 所有可能的 character
+
+它還有一個可能的 output，就做斷
+
+所以如果今天 習 後面呢，
+它的 output 是 斷 的話
+
+就停下來
+
+可能覺得說，這東西 train 得起來嗎？
+
+恩，train 得起來
+
+神奇的就是這一招，是有用的！
+
+它也有被用在語音辨識上
+
+你就直接 input acoustic feature sequence
+
+直接就 output character sequence
+
+只是這方法，還沒有 CTC 強
+
+所以這方法，還不是 state of the art 的結果
+
+但讓人真正 surprise 的地方，
+這麼做是行的通，然後它的結果是沒有爛掉
+
+在翻譯上，據說用這個方法，
+已經可以達到 state of the art 的結果了
+
+那最近呢，這應該是 google 在 12 月初發的 paper
+
+所以是幾周前，放在 arxiv 上的 paper
+
+他們做了一件事情，我相信這件事情很多人都想到，
+只是沒人去做而已
+
+他的想法是這樣
+
+sequence to sequence learning 假設是做翻譯的話
+
+也就是 input 某種語言的文字
+
+翻成另外一種語言的文字
+
+我們有沒有可能，直接 input 某種語言的聲音訊號
+
+output 另為一種語言的文字呢？
+
+我們完全不做語音辨識
+
+比如說你要把英文翻成中文
+
+你就收集一大堆英文句子，和他對應的中文翻譯
+
+你完全不要做語音辨識
+
+直接把英文的聲音訊號，丟到這個 model 裡面去
+
+看他能不能 output 正確的中文
+
+結果這一招居然看起來是行得通的
+
+我相信很多人想過，大概覺得做不起來，
+所以沒有人去試
+
+這一招看起來是行得通的
+
+你可以直接 input 一串法文的聲音訊號
+
+然後 model 就得到辨識的結果
+
+如果這個東西能夠成功的話，他可以帶給我們的好處是
+
+如果我們在 collect translation 的 training data 的時候
+
+會比較容易
+
+假設你今天要把某種方言
+
+比如說台語，轉成英文
+
+但是台語的語音辨識系統比較不好做
+
+因為台語根本就沒有一個 standard 的文字的系統
+
+所以你要找人來 label 台語的文字，
+可能也有點麻煩
+
+如果這樣子技術是可以成功的話
+
+未來你在訓練台語轉英文的語音辨識系統的時候
+
+你只需要收集台語的聲音訊號
+
+跟他的英文翻譯就可以了
+
+你就不需要台語的語音辨識結果
+
+你就不需要知道台語的文字，你也可以做這種翻譯
+
+那現在還可以用 sequence to sequence 的技術
+
+甚至可以做到 Beyond Sequence
+
+比如說這個技術呢，
+也被用在 Syntactic parsing tree 裡面
+
+用在產生，Syntactic parsing tree 上面
+
+這個 Syntactic parsing tree 是什麼呢？
+
+意思就是，讓 machine 看一個句子
+
+然後他得到這個句子的文法的結構樹
+
+要怎麼讓 machine 得到這樣的樹狀的結構呢？
+
+過去呢，
+你可能要用 structure learning 的技術
+
+才能夠解這一個問題
+
+但現在有了 sequence to sequence 的技術以後
+
+你只要把這個樹狀圖，描述成一個 sequence
+
+樹狀圖當然可以描述成一個 sequence
+
+root 的地方是 S
+
+S 的左括號，S 的右括號
+
+他下面有 NP 跟 VP
+
+所以有 NP 的左括號，NP 的右括號
+
+VP 的左括號，VP 的右括號
+
+NP 下面有 NNP，VP 下面有 VBZ，NP
+NP 下面有 DT/NN 等等
+
+所以他有一個 sequence
+
+所以如果今天是 sequence to sequence learning 的話
+
+你就直接 learn 一個 sequence to sequence 的 model
+
+他的 output 直接是這個 Syntactic 的 parsing tree
+
+你可能覺得這樣真的 train 得起來嗎？
+
+恩，可以 train 得起來，這很 surprise
+
+當然你可能會想說 machine 今天長出來的 output sequence 他不符合文法結構呢？
+
+如果他記得加左括號，卻忘了加右括號呢？
+
+但神奇的地方是，LSTM 它有記憶力，
+他不會忘記加上右括號
+
+好，那我們之前講過 word vector
+
+那如果我們要把一個 document 表示成一個 vector 的話
+
+往往會用 bag-of-word 的方法
+
+但當我們用 bag-of-word 的方法
+
+我們就會忽略到 word order 的 information
+
+舉例來說，有一個 word sequence
+
+是 white blood cells destroying an infection
+
+另外一個 word sequence 是 an infection destroying white blood cells
+
+這兩句話的意思，完全是相反的
+
+但是如果你用 bag-of-word 來描述他的話
+
+它們的 bag-or-word 完全是一樣的
+
+它們裡面有一模一樣的 6 個詞彙
+
+但是因為這個詞彙的 order 是不一樣的
+
+對他們的意思，一個變成 positive，一個變成 negative
+
+意思是很不一樣的
+
+那我們可以用 sequence to sequence auto-encoder 這種做法
+
+在有考慮 word sequence order 的情況下
+
+把一個 document 變成一個 vector
+
+怎麼做呢？
+
+我們就 input 一個 word sequence
+
+通過一個 RNN
+
+把它變成一個 embedded 的 vector
+
+然後再把這個 embedded vector 當成 decoder 的輸入
+
+然後讓這個 decoder 長回一個一模一樣的句子
+
+如果今天 RNN 可以做到這件事情的話
+
+那 encoding 的這個 vector
+
+就代表這個 input sequence 裡面，重要的資訊
+
+所以這個 decoder 呢，才能根據 encoder 的 vector
+
+把這個訊號 decode 回來
+
+train 這個 sequence to sequence auto-encoder
+你是不需要 label data 的
+
+你只需要收集到大量的文章
+
+然後直接 train 下去就好了
+
+那這個 sequence to sequence auto-encoder，
+還有另外一個版本叫做 skip-thought
+
+當你是用 skip-thought，如果是用 Seq2Seq auto encoder
+
+input 跟 output 都是同一個句子
+
+如果你用 skip-thought 的話，output target會是下一個句子
+
+如果是用 Seq2Seq auto encoder，通常你得到的 code 比較容易表達文法的意思
+
+如果你要得到語意的意思，
+用 skip-thought 可能會得到比較好結果
+
+這個結構，甚至可以是 Hierarchy 的
+
+你可以每一個句子都先得到一個 vector
+
+再把這些 vector 加起來，變成一個整個
+
+document high level 的 vector
+
+再用這個 document high level 的 vector
+
+去產生一串 sentence 的 vector
+
+再根據每一個 sentence vector
+
+再去解回 word sequence
+
+所以這是一個 4 層的 LSTM
+
+你從 word 變成 sentence sequence
+
+再變成 document level 的東西
+
+再解回 sentence sequence，再解回 word sequence
+
+這個東西也是可以 train 的
+
+那剛才的東西，也可以被用在語音上
+
+seq2seq auto encoder 除了被用在文字上，
+也可以被用在語音上
+
+如果用在語音上，它可以做到的事情，就是
+
+它可以把一段 audio segment 
+變成一段 fixed length 的 vector
+
+比如說它可以把 dog 變成
+
+比如說這邊有一堆聲音訊號，
+它們長長短短的都不一樣
+
+你把它們變成 vector 的話，
+可能 dog/dogs 的 vector 比較接近
+
+可能 never/ever 的 vector 是比較接近的
+
+這個我稱之為 audio 的 word to vector
+
+就像一般的 word to vector，它是把一個 word 變成一個 vector
+
+這邊是把一段聲音訊號，變成一個 vector
+
+這個東西有什麼用呢？
+一開始在想這個我覺得應該沒有什麼用
+
+但它其實可以拿來做很多事，比如說
+
+我們可以拿來做語音的搜尋
+
+什麼是語音的搜尋呢？
+你有一個聲音的 database
+
+比如說上課的錄影錄音
+
+然後你說一句話
+
+比如說你今天要找美國白宮有關的東西
+
+你就用說的，說美國白宮
+
+然後不需要做語音辨識
+
+直接比對聲音訊號的相似度
+
+machine 就可以從 database 裡面，
+把有提到美國白宮的部分，找出來
+
+那這個怎麼做呢？你有一個 audio 的 data base
+
+把這個 database 做 segmentation
+
+切成一段一段
+
+然後每一段呢，
+用剛才講的 audio segment to vector 的技術呢
+
+把他們通通變成 vector
+
+然後現在使用者輸入一個 Query
+
+Query 也是語音的
+
+透過 audio segment to vector 的技術呢
+
+可以把這一段聲音訊號呢，也變成 vector
+
+然後接下來呢，計算它們的相似程度
+
+然後就得到搜尋的結果
+
+這件事情怎麼做呢？
+
+怎麼把一個 audio segment 變成一個 vector 呢？
+
+作法是這樣，先把 audio segment
+
+抽成 acoustic feature sequence
+
+然後呢，把它丟到 RNN 裡面去
+
+這個 RNN 它的角色，就是一個 encoder
+
+而這個 RNN 它讀過這個 acoustic feature sequence 以後
+
+它存在 memory 裡面的值，就代表了
+
+它在最後時間點存在這 memory 裡面的值
+
+就代表了它的整個 input 的聲音訊號
+它的 information
+
+它存在 memory 裡面的值，是一個 vector
+
+這個東西，
+其實就是我們要拿來表示一整段聲音訊號的 vector
+
+但是只有這個 RNN encoder 我們沒有辦法 train
+
+你同時還要 train 一個 RNN 的 decoder
+
+RNN decoder 它的作用呢，它把
+
+encoder 存在 memory 裡面的值呢，拿進來當作做 input
+
+然後產生一個 acoustic feature sequence
+
+那你會希望這個 y1 跟 x1 越接近越好
+
+然後根據 y1 再產生 y2 y3 y4
+
+而今天訓練的 target
+
+就是希望 y1 到 y4 跟 x1 到 x4 它們是越接近越好
+
+那在訓練的時候
+
+這個 RNN 的 encoder 和 RNN decoder 他們是 jointly learned
+
+它們是一起 train的
+
+如果 RNN encoder/decoder，它們只有一個人，
+是沒有辦法 train 的
+
+但是把他們兩個人接起來
+
+你就有一個 target 可以從這邊，
+一路 back propagate 回來
+
+你就可以同時 train RNN encoder 跟 decoder
+
+這邊呢是我們在實驗上得到的一些有趣結果
+
+這個圖上的每一個點，都是一段聲音訊號
+
+你把聲音訊號用剛才講的
+ sequence to sequence encoder 技術
+
+把它變成平面上的一個 vector
+
+會發現說 fear 的位置，在左上角
+
+near 的位置在右下角
+
+中間是這樣子的關係
+
+fame 的位置在左上角，name 的位置在右下角
+
+它們中間有一個這樣子的關係
+
+哪你會發現說，把 fear 開頭的 f 換成 n
+跟 fame 開頭的 f 換成 n
+
+它們的 word vector 的變化，方向是一樣的
+
+就好像我們之前看到的這個 vector 一樣
+
+跟我們好像之前看到文字的 word vector 一樣
+
+不過這邊的 vector 
+還沒有辦法考慮 semantic 語意的 information
+
+那我們下一步要做的事情，就是把語意加進去
+
+但這部分現在還沒有完成
+
+那接下來我有一個 demo，這個 demo  是
+用 sequence to sequence auto encoder
+
+來訓練一個 chat bot
+
+chat bot 就是聊天機器人
+
+那怎麼用 sequence to sequence，
+
+喔，這不是 sequence to sequence auto encoder
+
+這是 sequence to sequence learning
+
+那怎麼用來
+來 train 一個 chat bot 呢？
+
+你就收集很多對話，比如說電影的台詞
+
+假設電影的台詞裡面，有一個人說 how are you
+
+另外一個人就接 I am fine
+
+那就告訴 machine 說，
+這個 sequence to sequence learning
+
+它的 input 當它是 how are you 的時候
+
+這個 model 的 output 就要是 I am fine
+
+假如你可以收集到這種 data，然後就讓 machine 去 train
+
+然後我們就收集了 40000 句的電視影集
+
+和美國總統大選辯論的句子
+
+然後就讓 machine 去學這個 
+sequence to sequence 的 model
+
+這個是跟中央大學 蔡宗翰 老師的團隊一起開發的
+
+然後作的同學呢，台大這邊呢，是有
+
+那其實現在除了 RNN 以外呢
+
+還有另外一種有用到 memory 的 network
+
+叫做 attention-base model
+
+它可以想成是 RNN 的一個進階版本
+
+那我們知道人的大腦，有非常強的記憶力
+
+所以你可以記得非常多的東西
+
+比如說你現在可能同時記得，早餐吃了什麼
+
+可能同時記得 10 年前中二的夏天發生了什麼
+
+可能同時記得在這幾門課學到的東西
+
+那當然有人問你什麼是 deep learning 的時候
+
+那你的腦中會去提取重要的 information
+
+然後再把這些 information 組織起來
+
+產生答案
+
+但你的腦會自動忽略掉那些無關的事情
+
+比如說 10 年前中二的夏天發生的事情，等等
+
+那其實 machine 也可以做到類似的事情
+
+machine 也可以有很大的記憶容量
+
+它也可以有一個很大的 data base
+
+在這個 data base 裡面，每一個 vector 就代表某種 information
+
+被存在 machine 的記憶裡面
+
+當你輸入一個 input 的時候，
+這個 input 會被丟進一個中央處理器
+
+這個中央處理器，可能是一個 DNN/RNN
+
+那這個中央處理器，會操控一個讀寫頭
+
+操恐一個 reading head controller
+
+最後這個 reading head controller 
+會決定這個 reading head
+
+放的位置
+
+然後 machine 再從這個 reading head 放的位置，
+去讀取 information 出來
+
+然後產生最後的 output
+
+那我們就不打算細講這樣的 model，
+如果你有興趣
+
+可以參考我之前上課的錄影
+
+這個 model 還有一個 2.0 的版本
+
+這個 2.0 版本，它會去操控一個 
+writing head controller
+
+這個 writing head controller 
+會去決定 writing head 放的位置
+
+然後 machine 會把它的 information 
+透過這個 writing head 呢
+
+寫進它的 database 裡面
+
+所以他不只有讀的功能，還可以把資訊
+
+它 discover 出來的東西
+
+寫到它的 memory 裡面去
+
+這個東西就是大名鼎鼎的 Neural Turing Machine
+
+這些其實都是很新的東西
+
+Neural Turing Machine 應該是在 14 年的年底提出來的
+
+我也忘了
+
+不知道是 15 年初，還是 14 年底的時候，提出來的
+
+所以都是很新的東西
+
+現在 attention-based model，
+常常被用在 reading comprehension
+
+所謂 reading comprehension，就是，
+讓 machine 去讀一堆 document
+
+然後這些 document 裡面的內容呢？
+
+每一句話，變成一個 vector 存起來
+
+每一個 vector 代表某一句話的語意
+
+接下來呢，你問 machine 一個問題
+
+比如說玉山有多高之類的
+
+然後這個問題被丟進一個中央處理器裡面
+
+那這個中央處理去去控制一個 reading head controller
+
+去決定現在在這個 database 裡面
+
+那些句子是跟中央處理器有關的
+
+所以假設呢 machine 發現說這個句子，
+是跟現在這個問題有關的
+
+它就把 reading head 放在這個地方
+
+把 information 讀到中央處理器裡面
+
+這個讀取 information 的過程，它可以是 iterative
+
+它可以是重複數次的
+
+也就是說 machine 並不會只從一個地方讀取 information
+
+它先從這裡讀取 information 以後
+
+它還可以換一個位置，從另外一個地方，
+再去讀取 information
+
+然後它把所有讀到的 information collect 起來
+
+它可以給你一個最終的答案
+
+以下呢，是 facebook AI research
+
+在 baby **** 上面的一個實驗結果
+
+baby **** 是一個 QA question answer 的一個 test
+
+它其實是一個比較簡單的 test
+
+有很多用 template 產生的 document
+
+和一些簡單的問題，我們需要回答這些問題
+
+我們現在要做的事情就是，讀過這五個句子
+
+來問它 what color is Greg
+
+它要得到正確的答案，yes
+
+你可以從 machine attention 的位置
+
+也就是它 reading head 的位置
+
+看出 machine 的思路
+
+這邊的藍色代表 machine reading head 放置的位置
+
+hop1/2/3 代表的是時間
+
+也就是他第一個時間點 machine 
+先把它的 reading head 放在 Greg is a frog
+
+所以他把這個 information 把它提取出來
+
+它提取 Greg is a frog 這個 information
+
+接下來它再提取 Brian is a frog 這個 information
+
+接下來它再提取 Brian is a yellow 的 information
+
+最後呢，它就得到結論說
+
+它按了 Greg 的顏色是 yellow
+
+這些事情是 machine 自動 learn 出來的
+
+也就是 machine 要 attend 在哪一個位置，是透過 neural network 自己去學到知道怎麼做的
+
+也就是說，並不是去寫程式，告訴 machine 說
+
+你要先看這個句子，再看這個句子...，不是
+
+是 machine 自動去決定，它要看哪一個句子
+
+那也可以做 Visual 的 Question Answering
+
+Visual Question Answering 就是讓 machine 看一張圖
+
+然後問它一個問題
+
+比如說問他這是什麼
+
+如果它可正確回答是香蕉的話，它就超越部分人類了
+
+那這個 Visual Question Answering 怎麼做呢？
+
+就讓 machine 看一張圖
+
+透過 CNN 呢，你可以把這個圖
+
+的每一小塊 region ，
+用一個 vector 來表示
+
+那接下來呢？輸入一個 Query
+
+然後這個 Query 被丟到中央處理器裡面
+
+那這個中央處理器，去操控 reading head controller
+
+然後這個 reading head controller 
+決定了它要讀取資訊的位置
+
+看看這圖片的什麼位置呢，
+是跟現在輸入的問題是有關的
+
+那把 information 讀到中央處理器裡面
+
+這個讀取的 process 可能有好幾個步驟
+
+machine 會分好幾次把 information 讀到中央處理器裡面
+
+最後得到答案
+
+那也可以做語音的 Question Answering
+
+比如說
+
+在語音處理實驗室，
+我們讓 machine 做 TOFEL 的聽力測驗
+
+所謂 TOFEL 的聽力測驗就是
+
+讓 machine 聽一段聲音
+
+然後問他問題
+
+然後從四個正確選項裡面呢，machine 要選出正確選項
+
+那 machine 做的事情，跟人類考生做的事情
+
+是一模一樣的
+
+我們用來訓練測試 machine 的資料
+就是 TOFEL 聽力測驗資料
+
+用的 model architecture 跟我們剛才看到的
+
+其實就是大同小異
+
+你讓 machine 先讀一下 question
+
+然後把這個 question 做語意的分析
+
+得到這個 question 的語意
+
+那聲音的部分，先用語音辨識把它轉成文字
+
+那再把這些文字做語意的分析
+
+得到這段文字的語意
+
+那 machine 了解了問題的語意
+
+和 audio story 的語意以後
+
+它就可以做 attention
+
+決定在這個 audio story 裡面，
+那些部分是和回答問題有關
+
+這就好像是畫重點一樣，
+machine 根據它畫的重點呢
+
+產生答案
+
+那它甚至也可以回頭過去修正它產生出來的答案
+
+經過幾個 process 以後呢，最後 machine 得到它的答案
+
+那它把它答案呢，跟其他選項，計算相似度
+
+然後看哪一個選項的相似度最高
+
+它就選哪一個選項
+
+那這整個 task 其實就是一個大的 neural network
+
+除了語音辨識以外
+
+Question semantic 的部分，
+還有 audio story semantic 的部分呢
+
+都是 neural network
+
+所以他們都是 jointly trained
+
+你就只要給 machine TOFEL 聽一次考古題
+
+machine 就自己會去學了
+
+那底下是一些實驗結果啦
+
+這個實驗結果是這樣子
+
+random 猜阿，正確率是 25%
+
+你會發現說有兩個方法
+
+是遠比 25 % 強的
+
+這是很重要的 information
+
+這邊這五個方法，都是 naive 的方法
+
+也就是完全不管文章的內容
+
+就直接看問題跟選項，就猜答案
+
+然後我們發現說，如果你選最短的那個選項
+
+可以得到 35 % 的正確率
+
+這是計中計，你可能會覺得應該要選最長的
+
+其實要選最短的
+
+另外一個是這樣，如果你分析四個選項的 semantic
+
+你做那個 sequence to sequence auto encoder
+
+去把每個選項的 semantic 找出來
+
+然後你再去看說，某一個選項，跟另外三個選項
+
+的語意上的相似度
+
+你會發現說，如果某一個選項，
+和另外三個選項的語意相似度
+
+比較高的話
+
+然後你就把它選出來，那你有 35% 的正確率
+
+這跟你的直覺是相反的
+
+我們的直覺通常會覺得說，應該選一個選項
+
+它的語意，與另外三個選項是不像的
+
+但人家早就計算到你會這麼做了
+
+所以這是一個計中計
+
+如果你要選某一個選項的語意，
+與另外三個選項最像的話
+
+你反而可以得到超過 random 的答案
+
+如果你今天是選
+
+最不像的，語意最不像的那個選項
+
+你得到的答案就會接近 random
+
+它都是設計好的
+
+那這些都是一些 trivial 的方法
+
+你可以用一些 machine learning 的方法
+
+比如說用 memory network
+
+可以得到 39% 的正確率
+
+是比隨機弄一下的還好一些
+
+如果用我們剛才講的那個 model 的話呢
+
+我們現在在有語音辨識錯誤的情況之下
+
+最好可以做到將近 50% 的正確率啦
+
+所以其實 50% 正確率是沒有很高
+
+我覺得這樣應該是去不了什麼美國學校的啦
+
+但是就是兩題可以答對一題
+
+所以如果你沒有辦法兩題答對一題，
+
+你其實就是沒有 machine 強
+
+以下是一些 reference 給大家參考
+
+那最後
+
+我這邊其實有一個問題
+
+我們講了 Deep learning
+也講了 structured learning
+
+它們中間有什麼樣的關係呢？你想想看
+
+我們上周講了 HMM，
+講了 CRF/Structured Perceptron/SVM
+
+它們可以做的事情，比如說做 pos taking
+
+input 一個 sequence，output 一個 sequence
+
+RNN/LSTM，也可以做到一樣的事情
+
+當我們使用 deep learning 跟 structured learning 的技術
+
+有什麼不同呢？
+
+首先
+
+假如我們現在用的是 uni-directional 的 RNN 或 LSTM
+
+當你在 make decision 的時候，
+你只看了 sentence 的一半
+
+而如果你是用 structured learning 的話
+
+透過 Viterbi 的 algorithm
+
+你考慮的是整個句子
+
+如果你是用 Viterbi 的 algorithm 的話，
+machine 會讀過整個句子以後
+
+才下決定
+
+所以從這個角度來看，也許
+
+HMM, CRF... 等等，還是有佔到一些優勢
+
+但這個優勢並沒有很明顯，因為
+
+RNN/LSTM 等等，它們可以做 Bi-directional
+
+所以他們也有辦法考慮，一整個句子的 information
+
+在 HMM/CRM 裡面啊
+
+你可以很 explicitly 去考慮 label 和 label 之間的關係
+
+什麼意思呢？
+
+舉例來說
+
+你今天在做 inference 的時候
+
+你在用 Viterbi algorithm 求解的時候
+
+假設你可以直接把你要的 constrain 下到
+
+那個 Viterbi algorithm 裡面去
+
+你了解我意思嗎？
+
+你可以直接說，我希望每一個 label 出現的時候，
+都要連續出現五次
+
+這件事情你可以輕易地用 Viterbi algorithm 做到
+
+因為你可以修改 Viterbi algorithm，讓 machine 在選擇
+
+分數最高的句子的時候
+
+排除掉不符合你要的 constrain 的那些結果
+
+但如果是 RNN 或 LSTM 的話
+
+你要直接下一個 constrain 進去，是比較難的
+
+你沒有辦法要求 RNN 一定要連續吐出
+某一個 level 5 次才是正確的
+
+你可以在 training data 裡面，
+給他看這種 training data
+
+但是
+
+但是你叫他去學，然後再這樣，是比較麻煩的
+
+Viterbi 可以直接告訴你的 machine 要它做什麼事
+
+所以在這點上，
+structured learning 似乎是有一些優勢的
+
+如果是 RNN 和 LSTM 你的 cost function
+
+跟你實際上最後要考慮的 error 往往是沒有關係的
+
+你想想看，當你在做 RNN/LSTM 的時候
+
+你在考慮的 cost 是，比如說
+
+每一個時間點的 cross entropy
+
+每一個時間點，你的 RNN output 
+跟 reference 的 cross entropy
+
+它跟你的 error 往往不見得是直接相關的
+
+因為你的 error 可能是比如說，
+兩個 sequence 之間的 ***
+
+但如果你是用 structured learning 的話，它的 cost
+
+會是你 error 的 upper bound
+
+所以從這個角度來看，
+structured learning 也是有一些優勢的
+
+但是最後最困難最重要的
+
+RNN/LSTM 可以是 deep
+
+而 HMM, CRF, ... 他們其實也可以是 deep
+
+但是他們拿來做 deep 的 learning 其實是比較困難的
+
+在我們下一堂課講的內容裡面
+
+他們都是 linear
+
+為什麼他們是 linear，
+因為我們定的 evaluation function 是 linear
+
+如果它不是 linear，你在 training 的時候會有很多麻煩
+
+所以他們是 linear，我們才能套用上一堂課教的那些方法
+
+來做 inference 跟 training
+
+那在這個比較上，deep learning 會佔到很大的優勢
+
+最後整體說起來呢，
+其實如果你要得到一些 state of the art 的結果
+
+在這種 sequence labeling task 上，
+你要得到 state of the art 的結果
+
+RNN/LSTM 是不可或缺的
+
+所以整體說起來 RNN/LSTM 
+在這種 sequence labeling task 上面表現
+
+其實會是比較好的
+
+deep 這件事是比較強的
+
+它非常的重要
+
+如果你今天用的只是 linear model
+
+如果你的 model 是 linear，
+你的 function space 就這麼大
+
+就算你可以直接 minimize 一個 error 的 upper bound
+
+那又怎麼樣？
+
+因為你所有的 function 都是壞的啊
+
+所以相比之下 deep learning 可以佔到很大的優勢
+
+但是其實 deep learning 和 structured learning，
+它們是可以被結合起來的
+
+而且有非常多成功結合的先例
+
+你可以說我底部呢，就是我 input 的 feature
+
+先通過 RNN 跟 LSTM
+
+然後先通過 RNN 跟 LSTM
+
+RNN/LSTM 的 output 再做為 HMM, CRF... 的 input
+
+你用 RNN/LSTM 的 output 來定義 HMM, CRF... 的 evaluation function
+
+如此，你就可以同時又享有 deep 的好處，
+同時又享有 structured learning 的好處
+
+那這個再過去已經有很多先例，比如說呢
+
+到最後你現在這邊有 deep，這邊有 structured
+
+這兩個是可以 jointly 一起 learned
+
+你可以想想看，HMM/CRF 可以用 Gradient decent train
+
+其實 structured/SVM，我們好像沒有講
+
+但它也可以用 Gradient decent train
+
+所以你可以把 deep learning 部分跟 structured learning 部分 jointly 合起來
+
+一起用 Gradient decent 來做 training
+
+那在語音上呢
+
+我們常常會把 
+deep learning 跟 structured learning 合起來
+
+你可以常常見到的組合是
+
+deep learning 的 model: CNN/LSTM/DNN 
+加上 HMM 的組合
+
+所以做語音的人常常說，
+我們把過去所做的東西丟掉了，其實不是
+
+HMM 往往都還在
+
+如果你要得到最 state of the art 的結果
+
+現在還是用這樣 hybrid 的 system 得到的結果往往是最好
+
+那這 hybrid system 怎麼 work 呢？
+
+我們說在 HMM 裡面
+
+我們必須要去計算 x 跟 y 的 joint probability
+
+或是在 structured learning 裡面，我們要計算 x 跟 y 的 evaluation function
+
+在語音辨識裡面，
+x 是聲音訊號，y 是語音辨識的結果
+
+在 HMM 裡面，我們有 transition 的部分
+
+我們有 emission 的部分
+
+DNN 做的事情，其實就是去取代 Emission 的部分
+
+原來在 HMM 裡面
+
+這個 emission 就是簡單的統計
+
+你就是統計一個 Gaussian mixture model
+
+但是把它換成 DNN 以後，
+你會得到很好的 performance
+
+怎麼換呢？
+
+一般 RNN 它可以給我們的 output 是
+
+input 一個 acoustic feature
+
+它告訴你說這個 acoustic feature
+
+屬於每一個 state 的機率
+
+但你可能想說這跟我們要的東西不一樣啊
+
+我們要的是 p of x given y
+
+這邊給我們的是 p of y given x
+
+怎麼辦呢？做一下轉換
+
+RNN 可以給我們 p of x given y
+
+然後你可以把它分解成 p of x, y 除以 p of y
+
+再把它分解成 p of y given x 乘以 p of x 除以 p of y
+
+那前面這個 p of y given x，它可以從 RNN 來
+
+那 p of y 呢？
+
+可以從，你就直接 count
+
+你就可以直接從你的 **** 統計
+
+p of y 出現的機率
+
+這個 p of x 呢，你可以直接無視它
+
+為什麼 p of x 可以直接無視它呢？
+
+你想想看，最後你得到這個機率的時候
+
+在 inference 的時候，x 是 input 是聲音訊號，是已知
+
+你是窮舉所有的 y
+
+看哪一個 y 可以讓 p of x,y 最大
+
+所以跟 x 有關的項，最後不會影響
+
+第一個 inference 的結果
+
+所以我們不需要把 x 考慮進來
+
+那其實加上 HMM，在語音辨識裡面
+
+是蠻有幫助的
+
+就算是你用 RNN，你在做辨識的時候啊
+
+常常會遇到一個問題
+
+假設我們是一個 frame
+
+每一個一個 frame 丟到 RNN
+
+然後問他說這一個 frame，這一個一個 frame
+
+屬於哪一個 form
+
+它往往會產生一些怪怪的結果
+
+比如說因為一個 form 往往是 ****
+
+所以本來理論上你應該會看到說
+
+比如說第一個 frame 是 a，第二，第三，第四，第五個 frame 也是 a
+
+然後接下來換成 b, b, b
+
+但是如果你用 RNN 在做的時候
+
+你知道 RNN 它每一個產生的
+
+label 都是 independent 的
+
+所以他可能會突然發狂
+
+在這個地方突然若無其事地改成 b
+
+然後又改回來這樣子
+
+你會發現它很容易出現這個現象
+
+然後如果今天這是一個比賽的話
+
+你就會有人發現，嗯，RNN 有點弱
+
+它就會發生這種現象
+
+如果手動，只要比如說，某一個 output 跟前後不一樣
+
+我就手動把它改掉，然後你就可以得到大概 2% 的進步
+
+你就可以屌打其他同學
+
+那如果你加上 HMM 的話
+
+就不會有這種情形
+
+HMM 會幫你把這種狀況自動修掉
+
+所以加上 HMM 其實是還蠻有幫助的
+
+對 RNN 來說，因為它在 training 的時候
+
+它是一個一個 frame，分開考慮的
+
+所以其實今天假如不同的錯誤
+
+對語音辨識結果影響很大，但 RNN 不知道
+
+如果我們今天把 b 改成錯在這個地方
+
+對最後語音辨識的錯的影響就很小
+
+但是 RNN 不知道這件事情
+
+所以對它來說，
+在這邊放一個錯誤跟這邊放一個錯誤是一樣的
+
+但是 RNN 認不出這一件事情來
+
+你要讓 RNN 可以認出這件事情來
+
+你需要加上一些 structural learning 的概念
+
+才能夠做到
+
+那在做 slot filling 的時候呢？
+
+現在也很流行用 Bi-directional LSTM
+
+再加上 CRF 或是 structured SVM
+
+也就是說先用 Bi-directional LSTM 抽出 feature
+
+再拿這些 feature 來定義
+
+CRF 或者是 structured SVM 裡面，
+我們需要用到的 feature
+
+CRF 跟 structured SVM 都是 linear 的 model
+
+你都要先抽 feature phi of x,y
+
+然後 learn 一個 weight w
+
+這個 phi of x,y 的 feature，
+你不要直接從 raw 的 feature 來
+
+你直接從 bi-directional RNN 的 output
+
+可以得到比較好的結果
+
+有人問說 structural learning 到底是否 practical
+
+我們知道 structural learning
+
+你需要解三個問題
+
+那其中 inference 那個問題，往往是很困難的
+
+你想想看 inference 那個問題，你需要 arg
+
+你要窮舉所有的 y 看哪一個 y 可以讓你的值最大
+
+你要解一個 optimization 的 problem
+
+那這個 optimization 的 problem
+
+很多時候
+
+並不是所有的狀況都有好的解
+
+應該說大部分的狀況都沒有好的 solution
+
+sequence labeling 是少數有好的 solution 的狀況
+
+但其他狀況，都沒有什麼好的 solution
+
+所以好像會讓人覺得 structural learning，
+它的用途沒那麼廣泛
+
+但未來還未必是這樣子
+
+事實上你想想看，我們之前講過的 GAN
+
+我認為 GAN 就是一種 structural learning
+
+如果你把 Discriminator 看作是 evaluation function
+
+就是我們之前講的，在 structural learning 裡面
+
+你有一個 problem 1，你要找出一個 evaluation function
+
+這個 Discriminator，
+我們就可以把它看作是 evaluation function
+
+所以我們就知道 problem 1 要怎麼做
+
+那最困難的 problem 2，
+要解一個 inference 的問題
+
+我們要窮舉所有我們未知的東西
+
+看看誰可以讓我們的 evaluation function 最大
+
+這一步往往很困難，因為 x 的可能性太多了
+
+未知的東西可能性太多
+
+但事實上這個東西它可以就是 Generator
+
+我們可以想成 generator 它不是就是
+
+給一個 noise，給一個從 Gaussian sample 出來的 noise
+
+它就 output 一個 x 嗎？
+
+output 一個 object 出來嗎？
+
+它 output 的這個 object
+
+不是就是可以讓 Discriminator 
+分辨不出來那個 object 嗎？
+
+如果 Discriminator 就是 evaluation function 的話
+
+它 output 的那個 object
+
+就是可以讓 evaluation function 的值很大的那個 object
+
+所以這個 Generator 它其實就是在解這個問題
+
+這個 generator 的 output，
+其實就是這個 arg max 的 output
+
+所以你可以把 Generator 
+當作是在解 inference 的這個問題
+
+那 problem 3 你已經知道了
+
+我們怎麼 train GAN 就是 problem 3 的 solution
+
+事實上 GAN 的 training
+
+它跟 structured SVM 那些方法
+的 training 你不覺得其實也有異曲同工之妙嗎？
+
+大家還記得 structured SVM 是怎麼 train 的嗎？
+
+在 structured SVM 的 training 裡面，
+我們每次找出最 competitive 的那些 example
+
+然後我們希望正確的 example，
+它的 evaluation function 的分數
+
+大過 competitive 的 example
+
+然後 update 我們的 model，
+然後再重新選 competitive 的 example
+
+然後在讓正確的，大過 competitive
+
+就這樣 iterative 去做
+
+你不覺得 GAN 也是在做一樣的事情嗎？
+
+GAN 的 training 是我們有正確的 example
+
+就是這邊的 x
+
+它應該要讓 evaluation function 的值，
+比 Discriminator 的值大
+
+然後我們每次用這個 Generator，Generate 出，
+最competitive 的那個 x
+
+也就是可以讓 Discriminator 的值最大的那個 x
+
+然後再去 train Discriminator
+
+Discriminator 要分辨正確的，real 的跟 Generated 的
+
+也就是 Discriminator 要給 real 的 example 比較大的值
+
+給那些 most competitive 的 x 比較小的值
+
+然後這個 process 就不斷的 iterative 的進行下去
+
+你會 update 你的 Discriminator 
+然後 update 你的 Generator
+
+然後再 update 你的 Discriminator
+
+其實這個跟 Structured SVM 的
+ training 是有異曲同工之妙的
+
+那你可能會想說在 GAN 裡面
+
+我們之前在講 structured SVM 的時候
+
+都是有一個 input/output，有一個 x 有一個 y
+
+那我們之前講的 GAN 只有 x
+
+聽起來好像不太像
+
+那我們就另外講一個像的，給你聽看看
+
+其實 GAN 也可以是 conditional 的 GAN
+
+什麼是 conditional 的 GAN 呢？
+
+我今天的 example 都是 x,y 的 pair
+
+我要解的任務是，是 given x 找出最有可能的 y
+
+你就想成是做語音辨識
+
+x 是聲音訊號，y 是辨識出來的文字
+
+如果是用 conditional GAN 的概念，怎麼做呢？
+
+你的 Generator input 一個 x，它就會 output 一個 y
+
+Discriminator 它是去 check 一個 x,y 的 pair，
+是不是對的
+
+如果我們給它一個真正的 x,y pair，
+它會給它一個比較高的分數
+
+你給它一個 Generator output 出來的 y，
+配上它的 input x，所產生一個假的 x,y pair
+
+它會給它比較低的分數
+
+training 的 process 就跟原來的 GAN 是一樣的
+
+這個東西已經被成功應用在，
+用文字產生 image 的 task 上
+
+在用文字產生 image 的 task
+
+比如說你跟 machine 說一句話說，
+有一隻藍色的鳥，它就畫一張藍色的鳥的圖
+
+這個 task 你的 input x 就是一句話，
+output y 就是一張 image
+
+那 Generator 做的事情，就是給它一句話，在圖上
+
+給它一句話，它就產生一張 image
+
+Discriminator 做的事情就是，
+Discriminator 給它看一張 image
+
+扔一句話，那它判斷說這個 x,y 的 pair
+這個 image/sentence pair
+
+他們是真的，還是不是真的
+
+那如果你把 Discriminator 換成就是 evaluation function
+
+把 Generator 換成就是解 inference 的那些 problems
+
+其實 conditional GAN 跟 structured learning，
+它們是可以類比的
+
+或者你可以說 GAN 就是
+ train structured learning 的 model 的一種方法
+
+你可能覺得
+
+這聽起來，或許你沒有聽得很懂，就算了
+
+你可能覺得這只是我隨便講講的
+
+但是我就想說，其他人也一定就想到了
+
+所以，我就 google 一下其他人的 publication
+
+果然，很多人都有類似的想法
+
+GAN 可以跟 energy based model 做 connection
+
+GAN 可以視為 train energy based model 的一種方法
+
+所謂 energy based model，其實我們之前有講
+
+它就是 structured learning 的另外一種稱呼
+
+這邊有一系列的 paper 在講這件事
+
+那你可能覺得說把 Generator 
+視做是在做 inference 這件事情
+
+是在解 arg max 這個問題，聽起來感覺很荒謬
+
+其實也有人就是這麼想的
+
+也有人想說，這邊也列一些 reference 給大家參考
+
+也有人覺得說，一個 neural network ，
+它有可能就是在解 arg max 這個 problem
+
+所以也許 deep and structured 
+就是未來一個研究的重點的方向
+
+以下為其它課程資訊
+
+臺灣大學人工智慧中心
+科技部人工智慧技術暨全幅健康照護聯合研究中心
+
