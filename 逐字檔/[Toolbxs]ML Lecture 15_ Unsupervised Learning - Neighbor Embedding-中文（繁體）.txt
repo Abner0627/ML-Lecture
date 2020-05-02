@@ -1065,7 +1065,7 @@ t-distribution 他的尾巴特別長
 
 那做完 transform 以後他還是很近
 
-如果原來就已經有一段距離了，有⼀個 gap
+如果原來就已經有一段距離了，有個 gap
 
 那做完 transform 以後他就會被拉得很遠
 
