@@ -7,6 +7,12 @@ Created on Sat Apr 25 21:29:39 2020
 
 
 # In[0]:
+'''
+!gdown --id '1KSFIRh0-_Vr7SdiSCZP1ItV7bXPxMD92' --output data.tar.gz
+!tar -zxvf data.tar.gz
+!ls
+下載data set
+'''
 # Preparing Data
 import numpy as np
 
@@ -26,31 +32,35 @@ with open(Y_train_fpath) as f:
 with open(X_test_fpath) as f:
     next(f)
     X_test = np.array([line.strip('\n').split(',')[1:] for line in f], dtype = float)
+# load data
 
 def _normalize(X, train = True, specified_column = None, X_mean = None, X_std = None):
-    # This function normalizes specific columns of X.
-    # The mean and standard variance of training data will be reused when processing testing data.
-    #
-    # Arguments:
-    #     X: data to be processed
-    #     train: 'True' when processing training data, 'False' for testing data
-    #     specific_column: indexes of the columns that will be normalized. If 'None', all columns
-    #         will be normalized.
-    #     X_mean: mean value of training data, used when train = 'False'
-    #     X_std: standard deviation of training data, used when train = 'False'
-    # Outputs:
-    #     X: normalized data
-    #     X_mean: computed mean value of training data
-    #     X_std: computed standard deviation of training data
+    '''
+     This function normalizes specific columns of X.
+     The mean and standard variance of training data will be reused when processing testing data.
+    
+     Arguments:
+         X: data to be processed
+         train: 'True' when processing training data, 'False' for testing data
+         specific_column: indexes of the columns that will be normalized. If 'None', all columns
+             will be normalized.
+         X_mean: mean value of training data, used when train = 'False'
+         X_std: standard deviation of training data, used when train = 'False'
+     Outputs:
+         X: normalized data
+         X_mean: computed mean value of training data
+         X_std: computed standard deviation of training data
+    '''
 
     if specified_column == None:
         specified_column = np.arange(X.shape[1])
+        # 假設X有N維column，則建立0~N-1的array
+        # 參見:https://numpy.org/doc/stable/reference/generated/numpy.arange.html?highlight=arange#numpy.arange
     if train:
         X_mean = np.mean(X[:, specified_column] ,0).reshape(1, -1)
-        X_std  = np.std(X[:, specified_column], 0).reshape(1, -1)
+        X_std  = np.std(X[:, specified_column] ,0).reshape(1, -1)
+    X[:,specified_column] = (X[:, specified_column] - X_mean) / (X_std + 1e-8)    # 避免為0
 
-    X[:,specified_column] = (X[:, specified_column] - X_mean) / (X_std + 1e-8)
-     
     return X, X_mean, X_std
 
 def _train_dev_split(X, Y, dev_ratio = 0.25):
@@ -87,23 +97,29 @@ def _sigmoid(z):
     # Sigmoid function can be used to calculate probability.
     # To avoid overflow, minimum/maximum output value is set.
     return np.clip(1 / (1.0 + np.exp(-z)), 1e-8, 1 - (1e-8))
-
+    # np.clip(a,amin,amax) 使a array內的數值介於amin,amax之間
 def _f(X, w, b):
-    # This is the logistic regression function, parameterized by w and b
-    #
-    # Arguements:
-    #     X: input data, shape = [batch_size, data_dimension]
-    #     w: weight vector, shape = [data_dimension, ]
-    #     b: bias, scalar
-    # Output:
-    #     predicted probability of each row of X being positively labeled, shape = [batch_size, ]
+    '''
+     This is the logistic regression function, parameterized by w and b
+    
+     Arguements:
+         X: input data, shape = [batch_size, data_dimension]
+         w: weight vector, shape = [data_dimension, ]
+         b: bias, scalar
+     Output:
+         predicted probability of each row of X being positively labeled, shape = [batch_size, ]
+    '''
     return _sigmoid(np.matmul(X, w) + b)
+    # np.matmul 矩陣相乘
+    # 參見:https://numpy.org/doc/stable/reference/generated/numpy.matmul.html?highlight=matmul#numpy-matmul
 
 def _predict(X, w, b):
     # This function returns a truth value prediction for each row of X 
     # by rounding the result of logistic regression function.
     return np.round(_f(X, w, b)).astype(np.int)
-    
+    # np.round 四捨五入結果
+    # 參見:https://numpy.org/doc/stable/reference/generated/numpy.around.html#numpy.around
+
 def _accuracy(Y_pred, Y_label):
     # This function calculates prediction accuracy
     acc = 1 - np.mean(np.abs(Y_pred - Y_label))
@@ -112,13 +128,15 @@ def _accuracy(Y_pred, Y_label):
 # In[2]:
 # Functions about gradient and loss
 def _cross_entropy_loss(y_pred, Y_label):
-    # This function computes the cross entropy.
-    #
-    # Arguements:
-    #     y_pred: probabilistic predictions, float vector
-    #     Y_label: ground truth labels, bool vector
-    # Output:
-    #     cross entropy, scalar
+    '''
+     This function computes the cross entropy.
+    
+     Arguements:
+         y_pred: probabilistic predictions, float vector
+         Y_label: ground truth labels, bool vector
+     Output:
+         cross entropy, scalar
+    '''
     cross_entropy = -np.dot(Y_label, np.log(y_pred)) - np.dot((1 - Y_label), np.log(1 - y_pred))
     return cross_entropy
 
@@ -159,7 +177,9 @@ for epoch in range(max_iter):
     for idx in range(int(np.floor(train_size / batch_size))):
         X = X_train[idx*batch_size:(idx+1)*batch_size]
         Y = Y_train[idx*batch_size:(idx+1)*batch_size]
-
+        # np.floor 向下取整數(float64)，不大於input的值
+        # 參見:https://numpy.org/doc/stable/reference/generated/numpy.floor.html?highlight=floor
+        
         # Compute the gradient
         w_grad, b_grad = _gradient(X, Y, w, b)
             
