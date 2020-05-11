@@ -59,6 +59,8 @@ def _normalize(X, train = True, specified_column = None, X_mean = None, X_std = 
     if train:
         X_mean = np.mean(X[:, specified_column] ,0).reshape(1, -1)
         X_std  = np.std(X[:, specified_column] ,0).reshape(1, -1)
+        # 取與0的mean和std
+        
     X[:,specified_column] = (X[:, specified_column] - X_mean) / (X_std + 1e-8)    # 避免為0
 
     return X, X_mean, X_std
@@ -114,8 +116,10 @@ def _f(X, w, b):
     # 參見:https://numpy.org/doc/stable/reference/generated/numpy.matmul.html?highlight=matmul#numpy-matmul
 
 def _predict(X, w, b):
-    # This function returns a truth value prediction for each row of X 
-    # by rounding the result of logistic regression function.
+    '''
+     This function returns a truth value prediction for each row of X 
+     by rounding the result of logistic regression function.
+    '''
     return np.round(_f(X, w, b)).astype(np.int)
     # np.round 四捨五入結果
     # 參見:https://numpy.org/doc/stable/reference/generated/numpy.around.html#numpy.around
