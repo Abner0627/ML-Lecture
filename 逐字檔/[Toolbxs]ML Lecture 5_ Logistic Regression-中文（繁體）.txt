@@ -1,0 +1,2486 @@
+臺灣大學人工智慧中心
+科技部人工智慧技術暨全幅健康照護聯合研究中心
+http://aintu.tw
+
+好，我們來講 Logistic Regression
+
+在 Logistic Regression 裡面呢
+
+我們在上一份投影片裡面，我們都已經知道說
+
+我們要找的東西呢，是一個機率
+
+是一個 Posterior probability
+
+如果這個 Posterior probability &gt; 0.5 的話
+
+就 output C1，否則呢，就 output C2
+
+我們知道這個 posterior probability
+
+假設你覺得你想要用 Gaussian 的話
+
+其實很多其他的 probability，化簡以後
+
+也都可以得到同樣的結果
+
+假設你覺得你想要用 Gaussian 的話
+
+那你就說，你可以說這個
+
+posterior probability 就是 σ(z)
+
+它的 function 長的是右邊這個樣子
+
+那這個 z 呢，是 w 跟 x 的 inner product 加上 b
+
+所謂 w 跟 x 的 inner product 呢，是說
+
+這個 w，它是一個 vector
+
+它的每一個 dimension 我們就用下標 i 來表示
+
+那這個 w 呢，是一個 vector
+
+每一個 x，都有一個對應的 w 下標 i
+
+你把所有的 xi 跟 (w 下標 i) 相乘
+
+summation 起來再加上 b，就得到 z
+
+代進這個 sigmoid function
+
+就得到機率
+
+所以，我們的 function set 是長這樣子
+
+我們的 function set,  f(下標 w, b) (x)
+
+這邊加下標 w, b 的意思就是說
+
+我們現在的這個 function set 是受 w 和 b 所控制的
+
+就是你可以選不同的 w 和 b，你就會得到不同 function
+
+所有 w 和 b 可以產生的 function 集合起來
+
+就是一個 function set，那這一項
+
+它的涵意呢，就是一個 posterior probability
+
+given x，它是屬於 C1 的機率
+
+如果我們用圖像化的方式來表它的話呢
+
+它長這樣
+
+我們的 function 裡面，有兩組參數
+
+一組是 w，我們稱之為 weights
+
+weights 呢，有一整排
+
+然後有一個 constant b
+
+這個我們稱之為 bias
+
+然後有一個 sigmoid function
+
+如果我們今天的 input 是 x1, xi 到 xI
+
+你就把 x1, xi, xI 分別乘上 w1, wi, wI
+
+然後再加上 b 呢，你就得到 z，這個 z
+
+我發現我寫錯了一個地方，後面這邊呢，應該是要 + b
+
+你把  x1*w1 + xi*wi 加到 xI*wI，再加上 b，就得到 z
+
+z 通過我們剛才得到的 sigmoid function
+
+它 output 的值，就是機率，就是 posterior probability
+
+這個是整個模型，長這個樣子
+
+這件事呢，叫做 Logistic Regression
+
+那我們可以把 Logistic Regression
+
+跟我們在第一堂課就講的 Linear Regression 做一下比較
+
+Logistic Regression，把每一個 feature 乘上一個 w
+
+summation 起來再加上 b，再通過 sigmoid function
+
+當作 function 的 output
+
+那它的 output 因為有通過 sigmoid function
+
+所以，一定是界於 0~1 之間
+
+那 Linear Regression 呢？它就把 feature * w 再加上 b
+
+它沒有通過 sigmoid function
+
+所以，它的 output 就可以是任何值
+
+可以是正的，可以是負的，負無窮大到正無窮大
+
+那等一下呢，我們說 machine learning 就是 3 個 step
+
+等一下我們會一個一個 step
+
+比較 Logistic Regression 跟 Linear Regression 的差別
+
+接下來呢，我們要決定一個 function 的好壞
+
+那我們的 training data 呢
+
+因為我們現在要做的是 Classification
+
+所以我們的 training data，就是假設有 N 筆 training data
+
+那每一筆 training data，你都要標說它屬於哪一個 class
+
+比如說，x^1 屬於 C1，x^2 屬於 C1，x^3 屬於 C2
+
+x^N 屬於 C1......等等，那接下來呢
+
+我們假設這筆 training data 是從
+
+我們的 function 所定義出來的這個 posterior probability
+
+所產生的，就是這組 training data
+
+是根據這個 posterior probability 所產生的
+
+那給我們一個 w 和 b
+
+我們就決定了這個 posterior probability
+
+那我們就可以去計算，某一組 w 和 b
+
+產生 N 筆 training data 的機率
+
+某一組 w 和 b 產生 N 筆 training data 的機率怎麼算呢？
+
+這個很容易，就是假設 x1 是屬於 C1
+
+那它根據某一組 w 和 b，產生的機率就是
+
+f(下標w, b) (x^1)
+
+假設 x2 是屬於 C1，那它被產生的機率就是
+
+f(下標w, b) (x^2)
+
+假設 x3 是屬於 C2
+
+我們知道 x3 如果屬於 C1 的機率
+
+就是 f(下標w, b) (x^3)，因為我們這邊算的是 C1 的機率
+
+那這個 x3 屬於 C2，所以他的機率就是
+
+1 - f(下標w, b) (x^3)，以此類推
+
+那最有可能的參數 w 跟 b
+
+我們覺得最好的參數 w 跟 b
+
+就是那個有最大的可能性、最大的機率
+
+可以產生這個 training data 的 w 跟 b
+
+我們把它叫做 w* 跟 b*
+
+w* 跟 b* 就是那個可以最大化這一個機率的 w 跟 b
+
+那我們在這邊，做一個數學式上的轉換
+
+我們原來是要找一組 w 跟 b
+
+最大化 L(w , b)
+
+最大化這個 function
+
+但是，這件事情等同於呢
+
+我們找一個 w 跟 b
+
+minimize 負 ln 這個 function
+
+我們知道取 ln，它的這個 order 是不會變的
+
+加上一個負號，就從找最大的，變成找最小的
+
+所以，我們就是要找一組 w 跟 b
+
+最小化 -ln L(w, b)
+
+這個可以讓計算變得容易一點，左式跟右式是一樣的
+
+根據左式跟右式找出來的 w 跟 b 呢
+
+w* 跟 b* 呢，是同個 w* 跟 b*
+
+那 -ln (這一項) 怎麼做呢？
+
+你知道取 -ln 的好處就是，本來相乘，現在變成相加
+
+然後，你就把它展開，所以這一項就是 -ln f(x^1)
+
+-ln f(x^2), -ln (1 - f(x^3))
+
+以此類推
+
+那這件事情讓你，寫式子有點難寫
+
+就是你沒有辦法寫一個 summation over
+
+因為對不同的 x，如果屬於不同 class
+
+我們就要用不同的方法來處理它
+
+而且你沒有辦法 summation over x，那怎麼辦呢？
+
+我們做一個符號上的轉換
+
+我們說，如果某一個 x 它屬於 class 1
+
+我們就說它的 target 是 1
+
+如果它屬於 class 2，我們就說它的 target 是 0
+
+我們之前在做 Linear Regression 的時候
+
+每一個 x，它都有一個對應的 y\head，對不對？
+
+然後那個對應的 y\head 是一個 real number
+
+在這邊呢，每一個 x 也都有一個對應的 y\head
+
+這個對應的 y\head，它的 number 就代表說
+
+現在這個 x，屬於哪一個 class
+
+如果屬於 class 1
+
+欸，我怎麼會犯這麼弱智的錯誤
+
+大家有發現嗎？這個投影片上，有一個錯啊
+
+對，它應該是 1, 1 , 0，麼會犯這麼弱智的錯誤
+
+這個屬於 class 1 就應該是 1，所以這個應該是
+
+1, 1, 0 這樣，沒關係，你無視這邊
+
+你就看這裡就好
+
+屬於 class 1 就是 1，屬於 class 2 就是 0
+
+如果你做這件事的話
+
+那你就可以把這邊的每一個式子
+
+都寫成這樣
+
+這看起來有一點複雜，但你仔細算一下就會發現說
+
+左邊和右邊，是相等的
+
+每一個 -ln f(x)，你都可以寫成
+
+負的中括號、負的括號
+
+它的 y1\head、它的 y\head 乘上 ln f(x)
+
+加上 (1 - y\head) * ln(1 - f(x))
+
+你就實際上算一下，比如說
+
+x1, x2 都是屬於 C1
+
+所以呢，它對應的 y\head 是 1
+
+所以這個 y1\head 跟 y2\head 是 1
+
+(1 -  y1\head) 跟 (1 - y2\head) 就是 0
+
+0 的話呢，它乘上後面那一項，你就不要管它，把它拿掉
+
+所以，你會發現它等於它，它等於它這樣
+
+因為空間的關係，我就把 w 跟 b 省略掉了
+
+有時候放 w 跟 b，只是為了強調說
+
+這個 f 是 w 跟 b 的 function
+
+那因為這個寫不下，所以把它省略掉
+
+好，那這個 y3 呢？
+
+這個 x3 它屬於 C2，C2 是 0
+
+所以 y3\head 是 0，(1 - y3\head) 就是 1
+
+那前面這個部分可以拿掉，你會發現
+
+右邊這個也是等於左邊這個
+
+有了這些以後，我們把
+
+這個 likelihood 的 function，取 -ln
+
+然後呢，再假設說
+
+class 1 就是 1，class 2 就是 0 以後
+
+我們就可以把，我們要去 minimize 的對象
+
+寫成一個 function
+
+我們就可以把我們要去 minimize 的對象
+
+寫成 summation over N
+
+- [ y^n\head * ln f(x^n) + (1-y^n\head) * ln (1-f(x^n))]
+
+那其實 summation over 的這一項阿
+
+這個 Σ 後面的這一整項阿
+
+它其實是兩個 Bernoulli distribution 的 Cross entropy
+
+這一項其實是一個 Cross entropy
+
+所以，等一下我們就會說它是 Cross entropy
+
+雖然它的來源跟 information theory 沒有太直接的關係
+
+但是，我們剛才看過它推導的過程
+
+但是，如果你把
+
+你假設有兩個 distribution，p 跟 q
+
+這個 p 的 distribution，它是說 p(x =1) = y^n\head
+
+p(x=0) =1 – y^n\head
+
+q 的 distribution，它 q(x =1) 是 f(x^n)
+
+q(x =0) 是 1 - f(x^n)
+
+那你把這兩個 distribution 算 cross entropy
+
+如果你不知道甚麼是 cross entropy 的話，沒有關係
+
+反正就是，代一個式子
+
+summation over 所有的 x (-Σ p(x)*ln(q(x))
+
+前面有個負號，這個就是 cross entropy
+
+如果你把這兩個 distribution，
+算他們之間的 cross entropy
+
+cross entropy 的涵義是這兩個 distribution 有多接近
+
+如果今天這兩個 distribution 一模一樣的話
+
+那他們算出來的 cross entropy 就是 0
+
+所以，你把這兩個 distribution 算一下 cross entropy
+
+你把 y^n\head 乘上 ln(f(x^n))
+
+(1 - y^n\head) 乘上 ln (1 - f(x^n))
+
+你得到的，就是這項
+
+如果你有修過 information theory 的話呢
+
+它這個式子寫出來，跟 cross entropy 是一樣的
+
+所以在 Logistic Regression 裡面
+
+我們怎麼定義一個 function，它的好壞呢？
+
+我們定義的方式是這樣
+
+有一堆 training data，我們有(x^n, y^n\head)
+
+有這樣的 pair，如果屬於 class 1 的話呢
+
+y^n\head 就等於 1，如果屬於 class 2 的話，
+y^n\head 就等於 0
+
+那我們定義的 loss function，我們要去 minimize 的對象
+
+是所有的 example
+
+它的 cross entropy 的總和
+
+也就是說，假設你把 f(x^n) 
+當作一個 Bernoulli distribution
+
+把 y^n\head 當作另一個 Bernoulli distribution
+
+它們的 cross entropy，你把它算出來
+
+這個東西，是我們要去 minimize 的對象
+
+所以，就直觀來講，我們要做的事情是
+
+我們希望 function 的 output 跟它的 target
+
+如果你都把它看作是 Bernoulli distribution 的話
+
+這兩個 Bernoulli distribution，他們越接近越好
+
+如果我們比較一下 Linear Regression 的話
+
+Linear Regression 這邊，這個你大概很困惑啦
+
+如果你今天是第一次聽到的話
+
+你應該聽得一頭霧水，想說這個
+
+哇，這個這麼複雜，到底是怎麼來的
+
+如果你是看 Linear Regression 的話，這個很簡單
+
+減掉它的 target，y^n\head的平方
+
+就是我們要去 minimize 的對象
+
+這個，比較單純
+
+這個，不知道怎麼來的
+
+因為你可能就會有一個想法說
+
+為甚麼在 Logistic Regression 裡面
+
+我們不跟 Linear Regression 一樣
+
+用 square error 就好了呢？
+
+這邊其實也可以用 square error 阿
+
+沒有甚麼理由，你不能用 square error 不是嗎？
+
+對不對，因為你完全可以算說
+
+這個 f(x^n) 跟 (y^n\head) 的 square error
+
+你就把這個 f(x^n) 跟 (y^n\head) 代到右邊去
+
+你一樣可以定一個 loss function
+
+這個 loss function 聽起來也是頗合理的
+
+為甚麼不這麼做呢？
+
+等一下，我們會試著給大家一點解釋
+
+那到目前為止呢，這個東西，反正就是很複雜
+
+你就先記得說，必須要這麼做
+
+接下來呢，我們要做的事情就是
+
+找一個最好的 function
+
+就是要去 minimize，我們現在要 minimize 的對象
+
+那怎麼做呢？你就用 Gradient Descent 就好了
+
+很簡單，接下來都是一些數學式無聊的運算而已
+
+我們就算
+
+它對某一個 w 這個 vector，
+裡面的某一個 element 的微分
+
+我們就算這個式子，對 wi 的微分就好
+
+剩下的部分呢，其實就可以交給大家自己來做
+
+那我們要算這個東西對 w 的偏微分
+
+那我們只需要能夠算
+
+ln(f(x^n) 對 w 的偏微分
+
+跟 ln(1 - f(x^n)) 對 w 的偏微分就行了
+
+那 ln(f(x^n) 對 w 的偏微分，怎麼算呢？
+
+我們知道說，我們把這個 f 寫在下面
+
+把 f 寫在下面
+
+f 它受到 z 這個 variable 的影響
+
+然後 z 這個 variable 呢？
+
+是從 w, x, b 所產生的
+
+所以，你就知道說，我們可以把
+
+這個偏微分拆開
+
+把 ∂(ln(f(x)) / ∂(wi) 拆解成呢
+
+∂(ln(f(x)) / ∂(z)
+
+乘上 ∂(z) / ∂(wi)
+
+那這個 ∂(z) / ∂(wi) 是甚麼？
+
+∂(z) / ∂(wi)，這個 z 的式子我寫在這邊了
+
+只有一項是跟 wi 有關
+
+只有 wi * xi 那一項是跟 wi 有關
+
+所以 ∂(z) / ∂(wi) 就是 xi
+
+那這一項是甚麼呢？這一項太簡單了
+
+我們把 f(x) 換成 σ(z)
+
+把這個換成 σ(z)
+
+然後做一下微分
+
+這個  ∂(ln σ(z)) / ∂(z) 做微分以後呢，1/σ(z)
+
+然後，再算  ∂(σ(z))/σ(z)
+
+那  ∂(σ(z))/σ(z) 是甚麼呢？
+
+這個 σ(z) 是 sigmoid function
+
+sigmoid function 的微分呢，其實你可以直接背起來
+
+就是 σ(z) * (1 - σ(z))
+
+如果你要看比較直觀的結果的話
+
+你就把它的圖畫出來
+
+σ(z) 這邊顏色可能有一點淡
+
+是綠色這條線，σ(z) 是綠色這條線
+
+橫軸是 z，那如果對 z 做偏微分的話
+
+在接近頭跟尾的地方
+
+它的斜率很小
+
+所以對 z 做微分的時候，是接近於 0 的
+
+在中間的地方，斜率最大
+
+所以這個地方，斜率最大
+
+所以把這一項對 z 做偏微分的話
+
+你得到的結果是長得像這樣
+
+那這一項，其實就是 σ(z) * (1 - σ(z))
+
+那你就把 σ(z) 消掉
+
+那你就得到說，這項就是 (1 - σ(z)) * xi
+
+那 σ(z) 其實就是 f(x)
+
+所以這一項就是 [1 - f(x^n)] * xi^n
+
+右邊這一項呢，這個也是 trivial 阿
+
+你把 ln(1-f(x)) 對 wi 做偏微分
+
+那就可以拆成先對 z 做偏微分，wi 再對 z 做偏微分
+
+右邊這一項， ∂(z)/∂(wi) 我們已經知道它就是 xi
+
+左邊這一項
+
+你就把 ln 裡面的值，放到分母
+
+然後呢，這邊是 -σ(z)
+
+前面有個負號，然後這邊要算 σ(z) 的偏微分
+
+那 σ(z) 做偏微分以後，得到的結果是這樣
+
+把 (1 - σ(z)) 消掉，就只剩下 σ(z)
+
+所以，這一項就是 xi * σ(z)，把它放上來
+
+就是這個，ok
+
+那我們就把這一項放進來
+
+把這一項放進來
+
+整理一下以後，你得到的結果就是這樣
+
+接下來呢，你整理一下，把 xi
+
+提到右邊去
+
+把 xi 提到右邊去，把括弧的部分展開
+
+那裡面有一樣的，把它拿掉
+
+最後，你得到一個直觀的結果
+
+這個式子看起來有點複雜、有點崩潰
+
+但是，你對它做偏微分以後
+
+得到的值的結果，卻是容易理解的
+
+你得到的值，它的結果呢，每一項都是負的
+
+y^\head - f(x^n)
+
+再乘上 x^n 的第 i 個 component
+
+如果你用 Gradient Descent update 它的話
+
+那你的式子就很單純，就這樣
+
+wi 是原來的 wi - learning rate
+
+乘上 summation over 所有的 training sample
+
+[y^n\head - f(x^n)] * x^n 在 i 維的地方
+
+這件事情，它代表了甚麼意思呢？
+
+它代表甚麼涵義呢？如果你看括號內的式子的話
+
+括號內的這個式子的話
+
+現在，你的 w 的 update 取決於三件事
+
+一個是 learning rate，這個是你自己調的
+
+一個是 xi，這個是來自於 data
+
+第三項呢，就是這個 y^n\head
+
+y^n\head - f(x^n) 是甚麼意思呢？
+
+y^n\head - f(x^n) 代表說你現在這個 f 的 output
+
+跟理想的這個目標
+
+它的差距有多大
+
+y^n\head 是目標
+
+f(x^n) 是現在你的 model 的 output
+
+這兩項之間的差距，這兩個相減的差呢
+
+就代表說，他們的差距有多大
+
+那如果今天，你離目標越遠
+
+那你 update 的量就應該越大
+
+所以，這個結果看起來是匹頗為合理的
+
+那接下來呢
+
+我們就來比較一下 Linear Regression 跟 Logistic Regression
+
+Logistic Regression 跟 Linear Regression
+
+他們在做 Gradient Descent 的時候，參數 update 的方式
+
+我們已經看到 Logistic Regression
+
+它 update 的式子長這樣子
+
+那神奇的是 Linear Regression
+
+大家應該都順利做完作業一了
+
+Linear Regression 的這個
+
+Gradient Descent update 的式子，你應該是很熟
+
+他們其實是一模一樣的
+
+你看哦，他們都算
+
+y^n\head - f(x^n)
+
+他們都算 y^n\head - f(x^n)
+
+唯一不一樣的地方是
+
+Logistic Regression 你的 target 一定是 0 或 1
+
+你的 target 一定是 0 或 1
+
+你的這個 f 呢。一定是介於 0~1 之間
+
+但是如果是 Linear Regression 的話，你的 target y\head
+
+它可以是任何 real number
+
+而你這個 output 也可以是任何 value
+
+但是他們 update 的這個方式，是一樣的
+
+作業二我們需要做 Logistic Regression
+
+你甚至八成都不用改 code
+
+秒做就可以把它做出來這樣子
+
+大家作業一做的還順利嗎？
+
+我相信你應該是遇到了種種特別的問題啦
+
+比如說，如果你在做 Gradient Descent 的話
+
+你會發現說
+
+雖然教科書上跟你講 Gradient Descent 的時候
+
+你對他是不屑一顧的
+
+然後，你覺得說一個 complex 的這個 surface
+
+我應該用 Gradient Descent 可以輕易地找到它的最佳解
+
+但是，你會發現說實際上做起來
+
+是沒有那麼容易的
+
+對不對，我其實可以出一個那種教科書上的問題
+讓你們來做 Linear Regression
+
+但是，我們用真實的 example 就可以讓你知道說
+
+在真實的世界，你會碰到怎麼樣的問題
+
+事實上，因為今天我們做的是 Linear Regression
+
+我看你八成可以用這個
+
+解 least square error 的方式，偷偷找一下最佳解
+
+然後再從那個最佳解當作 initialization 開始找對吧
+
+大家聽得懂我在說甚麼嗎？
+
+呵呵
+
+有這麼做的人舉手一下
+
+沒有人這麼做，還是不敢舉手這樣子
+
+要是我就這麼做
+
+大家知道我意思嗎？
+
+好，但是如果你做到 deep learning 的時候
+
+你就不能這麼做啦
+
+因為 deep learning 你沒有任何方法可以去
+
+找它的最佳解，到時候你才會真正的卡翻
+
+那在下課之前，我想要講一下
+
+我們今天的計畫是這樣子啦
+
+我們講完 Logistic Regression 以後
+
+我們就會進入 deep learning
+
+然後等一下第三堂課，助教就會來講一下作業二
+
+那我們現在要問的問題是這樣
+
+為什麼 Logistic Regression 不能加 square error？
+
+我為甚麼不能用 square error，
+當然可以用 square error 阿
+
+我們如果用 square error 的話會怎樣？
+
+我們做 Logistic Regression 的時候，我們的式子長這樣
+
+我當然可以做 square error 阿
+
+我把我的 function 的 output 減掉 y^n\head 的平方
+
+summation 起來當作我的 loss function
+
+我一樣用 Gradient Descent 去 minimize 它
+
+有什麼不可以呢？當然沒什麼不可以這樣子
+
+如果我們算一下這個微分的話
+
+你會發現說，如果我們把括號裡面
+
+summation 後面這個式子
+
+對 wi 做偏微分的話
+
+它得到的結果呢，是這樣子
+
+然後這個 2 呢，提到前面去
+
+所以，2(f(x) - y\head)
+
+然後，把 f(x) 對 z 做偏微分
+
+把 w 對 z 做偏微分
+
+把他們都乘起來
+
+然後，這一項
+
+欸，這個地方
+
+沒有寫錯，好，就是
+
+這一項，就是這一項
+
+把 z 對 f(x) 做偏微分
+
+因為 f(x) 是 sigmoid function
+
+所以，做偏微分以後，就是 f(x) * (1 - f(x))
+
+∂(z) / ∂(wi) 就是 xi
+
+當然你可以
+
+就用 Gradient Descent 去 update 你的參數
+
+但是，你現在會發現你遇到一個問題
+
+假設 y^n\head  = 1
+
+假設第 n 筆 data 是 class 1
+
+當我的 f(x) 已經等於 1 的時候
+
+當我的第 n 筆 data 是 class 1
+
+而我的 f(x) 已經等於 1 的時候
+
+我已經達到 perfect 的狀態了
+
+這個時候，沒有甚麼問題
+
+因為你 f(x) = 1、y^n\head = 1 的時候
+
+你把這兩個數值代進這個 function 裡面
+
+你會發現說，至少這一項
+
+f(x) - y^n\head 是 0
+
+所以你的微分，會變成 0
+
+這件事情是很合理
+
+但是，如果今天是另一個狀況
+
+f(x^n) = 0
+
+意味著說，你現在離你的目標
+
+仍然非常的遠
+
+因為你的目標是希望 f(x^n) 的目標是 1
+
+但你現在 output 是 0
+
+你離目標還很遠
+
+但是，如果你把這個式子代到這裡面的話
+
+你會發現說，這邊有乘一個 f(x^n)，而 f(x^n)  = 0
+
+這時候，你會變成你微分的結果算出來也是 0
+
+所以，如果你離目標很近
+
+微分算出來是 0 沒有問題，但是，如果你離目標很遠
+
+微分算出來也是 0
+
+這個是 class 1 的例子
+
+如果我們舉 class 2 的例子，看起來結果也是一樣
+
+假設 y^n\head  = 0
+
+假設現在距離目標很遠
+
+假設距離目標很遠的時候
+
+f(x^n) = 1 你代進去，至少最後這個式子是 0
+
+你微分算出來也是 0
+
+距離目標很近的時候，微分算出來也是 0
+
+這會造成甚麼問題呢？
+
+如果我們把
+
+參數的變化對 total loss 作圖的話
+
+你會發現說，如果你選擇 cross entropy
+
+跟你選擇 square error
+
+參數的變化跟 loss 的變化
+
+串起來是這樣子的
+
+黑色的是 cross entropy
+
+紅色的是 square error
+
+我們剛才講說 cross entropy 在距離目標很近的地方
+
+假設現在中心最低的點就是
+
+距離目標很近的地方
+
+你的微分值就很小
+
+但是，距離目標很遠的地方
+
+你的微分值也是很小的
+
+所以，在距離目標很遠的地方呢
+
+你會非常的平坦
+
+這會造成甚麼問題呢？
+
+如果是 cross entropy 的話
+
+你距離目標越遠，你的微分值就越大
+
+那沒有問題，所以你距離目標越遠
+
+你參數 update 的時候就越快
+
+你參數更新的速度就越快
+
+你參數 update 的時候，變化量就越大
+
+這個沒有問題，距離你的目標越遠
+
+你的步伐當然要踏越大一點
+
+但是，如果你選 square error 的話，你就會很卡
+
+因為，當你距離目標遠的時候
+
+你的微分是非常非常小的
+
+就變成說，你離目標遠的時候
+
+你移動的速度是非常慢
+
+所以，如果你用隨機
+
+你 random 找一個初始值
+
+那通常你離目標的距離，是非常遠的
+
+那如果你今天是用 square error
+
+你其實可以自己在作業裡面試試看
+
+如果你用 square error，你選一個起始值
+
+你算出來的微分很小，你一開始就卡住了
+
+它的參數都不 update，你就永遠卡在那邊
+
+它的參數 update 的速度很慢
+
+你等了好幾個小時了，它都跑不出來這樣
+
+那你可能會想說
+
+那我們可以說看到這個
+
+微分值很小的時候，就把它的
+
+那個 learning rate 設大一點阿
+
+可使問題是微分值很小的時候
+
+你也有可能距離你的目標很近阿
+
+如果距離目標很近的時候
+
+這個時候你應該把它的微分值設小一點
+
+但是，你現在搞不清楚說
+
+到底 Gradient 小的時候，微分值算出來小的時候
+
+你是距離目標很近，還是距離目標很遠
+
+因為做 Gradient Descent 的時候
+
+你是在玩世紀帝國這個遊戲
+
+你不知道你距離目標是很近，還是很遠
+
+所以你就會卡翻了
+
+不知道你的 learning rate 應該設大還是設小
+
+所以你選 square error
+
+在實做上，你當然可以這麼做
+
+那你可以在作業裡面試試看
+
+你是不容易得到好的結果的
+
+用 cross entropy 可以讓你的 training 順很多
+
+我們在這邊呢，休息 10 分鐘
+
+臺灣大學人工智慧中心
+科技部人工智慧技術暨全幅健康照護聯合研究中心
+http://aintu.tw
+
+我們來上課吧
+
+那我們接下來要講的是
+
+這個 Logistic Regression 的方法阿
+
+我們稱它為 discriminative 的方法
+
+而剛才呢，我們用 Gaussian
+
+來描述 posterior probability 這件事呢
+
+我們稱之為 generative 的方法
+
+實際上，他們的 function
+
+他們的這個 model、function set 呢，是一模一樣的
+
+不管你是用我們在這份投影片講的 Logistic Regression
+
+還是前一份投影片講的機率模型
+
+只要你在做機率模型的時候
+
+你把 covariance matrix 設成是 share 的
+
+那他們的 model 其實是一模一樣的
+
+都是 σ(w * x + b)
+
+那你可以找不同的 w 跟不同的 b，
+就得到不同的 function
+
+那我們
+
+我們可以直接去把 w 跟 b 找出來
+
+如果你今天是用 Logistic Linear Regression 的話
+
+你可以直接把 w 跟 b 找出來
+
+就用 Gradient Descent 的方法
+
+如果今天是 generative model 的話
+
+那首先呢，我們會去算
+
+μ^1, μ^2 跟 Σ 的 inverse
+
+然後呢，我們就去把
+
+我們一樣把 w 算出來、把 b 算出來
+
+你算出 μ^1, μ^2 跟 covariance matrix
+
+接下來呢，你就把這些項代到
+
+這裡面，代到這裡面
+
+這邊這個 Σ^1, Σ^2 呢，應該都是等於 Σ
+
+這邊應該都把它代成 Σ
+
+那就把它算出來就可以得到 w 跟 b
+
+現在的問題來了
+
+如果我們比較左邊跟右邊求 w 跟求 b 的方法
+
+我們找出來的 w 跟 b 會是同一組嗎？
+
+會是同一組嗎？
+
+你覺得它是同一組的同學舉手一下
+
+你覺得它是不同的同學舉手一下
+
+好，謝謝，手放下
+
+多數同學覺得它是不同
+
+沒錯，你找出來的結果不會是一樣的
+
+所以，今天當我們用 Logistic Regression
+
+還是用剛才的 probabilistic 的 generative model
+
+我們用的其實是同一個 model
+
+其實是同一個 function set
+
+也就是我們的 function 的那個 pool 阿
+
+我們可以挑的那個 function 的 candidate 阿
+
+其實是同一個 set
+
+但是 ，因為我們做了不同的假設
+
+所以，我們最後找出來的
+
+根據同一組 training data 找出來的參數
+
+會是不一樣的
+
+在這個 Logistic Regression 裡面
+
+其實我們就沒有做任何假設
+
+我們沒有對這個 probability distribution 有任何的描述
+
+我們就是單純去找一個 w 跟 b
+
+那在 generative model 裡面
+
+我們對 probability distribution 是有假設的
+
+比如說，假設它是 Gaussian
+
+假設它是 Bernoulli
+
+假設它是不是 Naive Bayes...... 等等
+
+我們做了種種的假設
+
+根據這些假設，我們可以找到另外一組 w 跟 b
+
+左右兩邊找出來的 w 跟 b 呢，不會是同一組
+
+那問題就是，哪一組找出來的 w 跟 b 是比較好的呢？
+
+如果我們比較
+
+Generative model 跟 Discriminative model 的話
+
+那我們先看一下我們之前講的
+
+defense 跟 special defense 的例子
+
+如果用 generative model 的話
+
+我們的這兩個 class
+
+就藍色的是水系的神奇寶貝，紅色的是一般系的寶可夢
+
+他們之間 boundary 是這一條
+
+如果你是用 Logistic Regression 的話呢
+
+你找出來的 boundary 是這一條
+
+其實從這個結果上，你很難看出來說
+
+誰比較好啦
+
+但是，如果我們比較說
+
+我們都用 7 個 feature 的這個 class
+
+我們會發現說，如果用 generative model 的話
+
+我們剛才說，我們得到的正確率呢，是 73%
+
+如果是用 discriminative model 的話
+
+在同樣的 data set 上面，我們只是用
+
+不同的假設，所以找了不同的 w 跟 b
+
+但是我們找出來的結果比較好的
+
+我們找出來的正確率有 79% 這樣
+
+那我相信在文獻上，會常常聽到有人說
+
+discriminative model 會比 generative model
+
+常常會 performance 的更好
+
+為甚麼會這樣呢？
+
+我們來舉一個 toy 的 example
+
+現在假設呢，你有一筆 training data
+
+你有兩個 class
+
+那你這筆 training data 裡面呢
+
+總共有
+
+每一筆 data 呢，有兩個 feature
+
+然後呢
+
+你總共有 1 + 4 + 4 + 4，總共有 13 筆 data
+
+第一筆 data 是兩個 feature 的 value 都是 1
+
+接下來呢，有 4 筆 data
+
+第一個 feature 是 1，第二個 feature 是 0
+
+接下來 4 筆 data，是第一個 feature 是 0，
+第二個 feature 是 1
+
+接下來 4 筆 data，是兩個 feature 都是 0
+
+然後呢，我們給第一筆 data 的 label 是 1
+
+我們給剩下 12 筆 data 的 label 呢
+
+都是 class 2
+
+那假設你現在不做機器學習，做人類的學習
+
+給你一個 testing data
+
+它的兩個 feature 都是 1，
+你覺得它是 class 1 還是 class 2 呢？
+
+我們來問一下大家的意見吧
+
+如果你覺得它是 class 1 的同學，舉手一下
+
+手放下，你覺得它是 class 2 的同學，舉手一下
+
+沒有人覺得是 class 2，大家都覺得是 class 1
+
+那如果我們來問一下 Naive Bayes
+
+它覺得是 class 1 還是 class 2，它會怎麼說呢？
+
+所謂的 Naive Bayes 就是，我們假設
+
+所有的 feature，它產生的機率是 independent
+
+所以 P(x|Ci)，P of x 從某一個 class 產生出來的機率
+
+等於從某一個 class 產生 x1 的機率
+
+乘上從某一個 class 產生 x2 的機率
+
+那我們用 Naive Bayes 來算一下
+
+首先，算一下 prior 的 probability
+
+class 1 它出現的 probability 是多少？
+
+總共 13 筆 data，只 sample 到一次是 class 1
+
+所以是 1/13
+
+class 2 的機率是多少呢？
+
+總共 13 筆 data，有 12 筆是 class 2
+
+所以它是 12/13，它比較多
+
+那接下來呢，我們算說
+
+在 class 1 裡面，x1 = 1 的機率
+
+在 class 1 裡面，x1 = 1 的機率 就是 1
+
+在 class 2 裡面，x1 = 1 的機率也是 1
+
+class 1 就這筆 data 嘛
+
+它 x1 是 1，x2 是 1
+
+所以，如果你用機率來統計的話
+
+那在 class 1 裡面，x1 = 1 的機率是 1
+
+在 class 1 裡面，x2 = 1 的機率也是 1
+
+接下來我們看
+
+我發現我犯了一個錯，這邊應該是 C2，不好意思
+
+這邊應該是 C2，這邊也應該是 C2
+
+如果我們看 class 2 的話
+
+如果我們看右邊這 12 筆 class 2 的 data
+
+在 class 2 裡面，x1 = 1的機率是多少呢？
+
+是 1/3 對不對，只有 1/3 的 data 是 x1(老師講錯) = 1 的
+
+是 x1 = 1 的
+
+那再來我們看 x2
+
+x2= 1 的機率在 class 2 裡面有多少呢？
+
+在 class 2 裡面只有 1/3 的 data
+
+x2 = 1，所以它的機率是 1/3
+
+如果我們把這些機率通通算出來以後
+
+給你一個 testing data
+
+你就可以去初估測它是來自 class 1 的機率
+
+你就可以初估測它是來自 class 2 的機率
+
+我們就算這筆 training data x 呢
+
+它來自 class 1 的機率是多少
+
+那你就把它代到這個
+
+Bayesian 的 function 裡面，算一下
+
+C1 的 prior probability 是 1/3
+
+P(x|C1) 的機率是 1*1
+
+甚麼意思呢？
+
+這筆 data x，從 C1 裡面 generate 出來的機率
+
+等於這個機率乘上這個機率
+
+下面這項你算過，這是 1/13，這是 1*1
+
+那這一項呢，P(C2) 是 12/13
+
+P(x|C2)，從 C2 裡面 sample 出
+
+根據 C2 的 distribution ，
+sample 出這筆 data 的機率是多少呢？
+
+是 1/3 * 1/3
+
+因為 x1 = 1 的機率在 C2 裡面是 1/3
+
+x2 = 1 的機率在 C2 裡面是 1/3
+
+所以這一項是 1/3 * 1/3
+
+如果你實際去做一下運算
+
+實際算一發就知道說
+
+這一個是小於 0.5 的
+
+所以對 Naive Bayes 來說
+
+給它這樣子的 training data
+
+它認為這一筆 testing data
+
+應該是屬於 class 2
+
+而不是 class 1
+
+所以這跟大家的直覺比起來，是相反的
+
+是相反的
+
+其實我們很難知道說
+
+怎麼知道說這筆 data 的產生到底是來自
+
+class 1 還是 class 2
+
+比較合理的假設
+
+你會覺得說，因為 class 1 裡面
+
+x1 和 x2 通通都是等於 1 的
+
+所以，這筆 data 應該是要來自 class 1 才對吧
+
+可是對 Naive Bayes 來說
+
+它不考慮不同 dimension 之間的 correlation
+
+所以，對 Naive Bayes 來說
+
+這兩個 dimension 是 independent 所產生的
+
+在 class 2 裡面，之所以沒有
+
+sample 到這樣的 data，觀察到這樣的 data
+
+是因為你 sample 的不夠多
+
+如果你 sample 的夠多
+
+搞不好就有都是 1 的 data
+
+就都是 1 的 data
+
+也是有機率被產生出來的
+
+只是，因為我們 data 不夠多
+
+所以，沒有觀察到這件事而已
+
+所以，今天這個 generative model
+
+跟 discriminative model 的差別就在於
+
+這個 generative model
+
+它有做了某些假設
+
+假設你的 data 來自於一個機率模型
+
+它做了某些假設
+
+也就是說，它其實做了腦補這件事情
+
+腦補是什麼，大家知道嗎？
+
+就是，如果你看了一部動漫
+
+那裡面沒有發生某一些事情
+
+比如說，兩個男女主角其實沒有在一起
+
+但是，你心裡想像他們是在一起，這個就是腦補
+
+所以，這個 generative model 它做的事情
+
+就是腦補
+
+如果，我們在 data 裡面明明沒有觀察到
+
+在 class 2 裡面
+
+有都是 1 的這樣的 example 出現
+
+但是，對 Naive Bayes 來說
+
+它想像它看到了這件事情
+
+所以，它就會做出一個跟我們人類直覺想法不一樣的
+
+判斷的結果
+
+那到底腦補是不是一件好的事情呢？
+
+通常腦補可能不是一件好的事情
+
+因為你的 data 沒有告訴你這一件事情
+
+你卻腦補出這樣的結果
+
+但是，如果今天在 data 很少的情況下
+
+腦補有時候也是有用的
+
+如果你得到的情報很少，腦補可以給你更多的情報
+
+所以，其實
+
+discriminative model 並不是在所有的情況下
+
+都可以贏過 generative model 
+
+有些時候 generative model 也是有優勢的
+
+甚麼時候會有優勢呢？
+
+如果你今天的 training data 很少
+
+你可以比較說，在同一個 problem 下
+
+你給 discriminative model 和 generative model 
+
+不同量的 training data
+
+你會發現說，這個 discriminative model
+
+因為它完全沒有做任何假設
+
+它是看著 data 說話
+
+所以它的 performance 的變化量，
+會受你的 data 量影響很大
+
+假設，現在由左到右是 data 越來越多
+
+然後，縱軸是 error rate
+
+discriminative model 它受到 data 影響很大
+
+所以 data 越來越多，它的 error 就越來越小
+
+如果你是看 generative model 的話
+
+它受 data 的影響是比較小的
+
+因為它有一個它自己的假設
+
+它有時候會無視那個 data，而遵從它內心自己的假設
+
+自己內心腦補的結果
+
+所以如果你看 data 量
+
+所以如果你看 data 量的影響的話，在 data 少的時候
+
+generative model 有時候是可以
+贏過 discriminative model 的
+
+只有在 data 慢慢增加的時候
+
+generative model 才會輸給 discriminative model
+
+這個其實是 case by case
+
+你可以在作業裡面做做實驗，
+看看你能不能觀察到這樣的現象
+
+那有時候 generative model 是有用的
+
+可能是
+
+你今天的 data 是 noise 的
+
+你的 label 本身就有問題
+
+因為你的 label 本身就有問題
+
+你自己做一些腦補、做一些假設
+
+反而可以把 data 裡面有問題的部分呢
+
+忽視掉
+
+那我們在做 discriminative model 的時候
+
+我們是直接假設一個 posterior probability
+
+然後去找 posterior probability 裡面的參數
+
+但是我們在做 generative model 的時候
+
+我們把整個 formulation 裡面拆成
+
+prior 跟 class-dependent 的 probability 這兩項，對不對
+
+那這樣做有時候是有好處的
+
+如果你把你的整個 function 拆成
+
+prior 跟 class-dependent 的 probability 這兩項的話
+
+有時候會有幫助
+
+因為，這個 prior 跟 class-dependent 的 probability 
+
+它們可以是來自於不同的來源
+
+舉例來說，以語音辨識為例
+
+大家可能都知道說呢
+
+語音辨識現在都是用
+
+neural network，它是一個discriminative 的方法
+
+但事實上，整個語音辨識的系統
+
+是一個 generative 的 system
+
+DNN 只是其中一塊而已
+
+所以說，該怎麼說呢
+
+所以說，就全部都是用 DNN 這件事情呢
+
+並不是那麼的精確，它整個 model 其實是 discriminative
+
+為甚麼會這樣呢
+
+因為它還是要去算一個 prior probability
+
+因為 prior probability 是某一句話
+
+被說出來的機率
+
+而你要 estimate 某一句話被說出來的機率
+
+你並不需要有聲音的 data
+
+你只要去網路上爬很多很多的文字
+
+你就可以計算某一段文字出現的機率
+
+你不需要聲音的 data
+
+這個就是 language model
+
+所以在語音辨識裡面
+
+我們整個 model 反而是 generative 的
+
+因為你可以把 class-dependent 的部分跟 prior 的部分 
+
+拆開來考慮，而 prior 的部分
+
+你就用文字的 data 來處理
+
+而 class-dependent 的部分，才需要聲音和文字的配合
+
+這樣你可以把 prior estimate 的更精確
+
+這一件事情在語音辨識裡面是很關鍵的
+
+現在幾乎沒有辦法擺脫這個架構
+
+那現在我們要講，我們剛剛舉的例子通通都是
+
+只有兩個 class 的例子
+
+接下來我們要講的是
+
+如果是有兩個以上的 class，我們等一下舉的例子是
+
+3 個 class 的，那應該要怎麼做呢？
+
+那我們等一下就只講過程、不講原理
+
+如果你想要知道原理的話
+
+你可以看一下 Bishop 的教科書
+
+那這個原理跟我們剛才從
+
+只有兩個Class的情況呢
+
+幾乎是一模一樣的
+
+我相信你自己就可以推導出來
+
+所以我就不想重複一個你覺得很 trivial 的東西
+
+那我們就直接看它的操作怎麼做
+
+假設我有三個 class
+
+C1, C2 跟 C3
+
+每一組 class 都有自己的 weight
+
+和自己的 bias
+
+這邊 w^1, w^2, w^3 分別代表 3 個 vector
+
+b1, b2, b3 呢，代表 3 個 scalar
+
+那接下來呢
+
+input  一個 x，這個是你要分類的對象
+
+你把 x 跟 w^1 做 inner product 加上 b1
+
+x 跟 w^2 做 inner product 加上 b2
+
+x 跟 w^3 做 inner product 加上 b3
+
+你得到 z1, z2 跟 z3
+
+這個 z1, z2 跟 z3 呢，它可以是任何值
+
+它可以是負無窮大到正無窮大的任何值
+
+接下來呢，我們把 z1, z2, z3 
+
+丟進一個 Softmax 的 function
+
+這個 Softmax function 它做的事情是這樣
+
+把 z1, z2, z3 都取 exponential
+
+得到 e^(z1), e^(z2), e^(z3)
+
+接下來，把 e^(z1), e^(z2), e^(z3)
+
+summation 起來
+
+你得到它們的 total sum
+
+然後你再把這個 total sum 分別除掉這 3 項
+
+把 total sum 分別除掉這 3 項
+
+得到 Softmax function 的 output, y1, y2 跟 y3
+
+如果覺得有一點複雜的話，我舉一個數字
+
+假設 z1 = 3, z2 = 1, z3 = -3
+
+做完 exponential 以後
+
+e^3 是很大的，是 20
+
+e^1 是 2.7
+
+e^(-3) 很小，是 0.05
+
+接下來呢，你把這 3 項合起來
+
+再分別去除掉，也就是做 normalization
+
+那你得到的結果呢，20 就變成 0.88
+
+2.7 就變成 0.12，0.05 就趨近於 0
+
+那當你做完 Softmax 以後
+
+原來 input z1, z2, z3 它可以是任何值
+
+但是，做完 Softmax 以後，你的 output 會被限制住
+
+第一個，你的 output 的值一定是介於 0~1 之間
+
+首先，你 output 值一定是正的
+
+不管你 z1, z2, z3 是正的還是負的，開exponential 以後
+
+都變成是正的
+
+那今天它的 total sum 
+
+一定是 1，你 output 的和一定是 1
+
+因為在這個地方做了一個 normalization，
+所以你的 total sum 一定是 1
+
+為甚麼這個東西叫 Softmax 呢？因為如果你做
+
+如果是 max 的話，就是取最大值嘛
+
+但是，你做 Softmax 的意思呢
+
+是說你會對最大的值做強化
+
+因為今天，你有取了 exponential
+
+你取了 exponential 以後呢
+
+大的值和小的值，他們之間的差距呢
+
+會被拉得更開
+
+強化它的值，這件事情呢，叫做 Softmax
+
+那你就可以把這邊的每一個 y 呢
+
+yi 呢，當作 input x
+
+input 這個 x 是第 i 個 class 的 posterior probability
+
+所以今天假設說，你 y1 是 0.88
+
+也就是說，你 input x 屬於 class 1 的機率是 88%
+
+屬於 class 2 的機率是 12%
+
+屬於 class 3 的機率是趨近於 0
+
+這個 Softmax 的 output
+
+就是拿來當 z 的posterior probability
+
+那你可能會問說
+
+為甚麼會這樣呢？
+
+事實上這件事情
+
+是有辦法推導的
+
+如果有人在外面演講，問我說為什麼是用 exponential
+
+我就會回答說，你也可以用別的
+
+因為我用別的，你也會問同樣的問題這樣子
+
+但是，這個事情是有辦法講的
+
+你可以去翻一下 Bishop 的教科書
+
+這件事情是可以解釋的
+
+如果，你今天有 3 個 class
+
+假設這 3 個 class，通通都是 Gaussian distribution
+
+他們共用同一個 covariance matrix
+
+在這個情況下，你做一般推導以後
+
+你得到的就會是這個 Softmax 的 function
+
+這個就留給大家，自己做
+
+如果你想要知道更多，你還可以 google 一個叫做
+
+ maximum entropy 的東西
+
+maximum entropy 也是一種 classify
+
+但它其實跟 Logistic Regression 是一模一樣的東西
+
+你只是換個名字而已
+
+那它是從另外一個觀點呢
+
+來切入為甚麼我們的 classifier 長這樣子
+
+我們剛才說，我們可以從機率的觀點
+
+假設我們用的是 Gaussian distribution，
+經過一般推導以後
+
+你可以得到 Softmax 的 function
+
+那你可以從另外一個角度
+
+從 information theory 的角度去推導
+
+你會得到 Softmax 這個 function
+
+這個就留給大家
+
+自己去研究，google maximum entropy 你會找到答案
+
+所以，我們複習一下剛才做的事情
+
+你就有一個 x 當作 input
+
+所以你乘上 3 組不同的 weight
+
+加上 3 組不同的 bias，得到 3 個不同的 z
+
+通過 Softmax function 
+
+你就得到
+
+y1, y2, y3 分別是這 3 個 class 的 posterior probability
+
+可以把它合起來呢，當作是 y
+
+那你在訓練呢，你要有一個 target
+
+它的 target 是甚麼呢？
+
+它的 target 是 y\head
+
+每一維、你用 3 個 class，你 output 就是 3 維
+
+這 3 維分別對應到 y1\head, y2\head 跟 y3\head
+
+我們要去 minimize 的對象
+
+是 y 所形成的這個 probability distribution
+
+它是一個 probability distribution 嘛
+
+在做完 Softmax 的時候
+
+它就變成了
+
+你把它當一個 probability distribution 來看待
+
+你可以去計算這個 y 跟 y\head 他們之間的 cross entropy
+
+它的這個 cross entropy 的式子呢
+
+我就發現我寫錯了
+
+這邊前面應該要有一個負號，不好意思
+
+這前面應該要有一個負號
+
+好
+
+所以，這兩個 probability 的 cross entropy
+
+它們的式子就是 y1\head
+
+乘上 ln(y1)
+
+y2\head * ln(y2) + y3\head * ln(y3)
+
+前面再加一個負號
+
+就是它們之間的 cross entropy
+
+如果我們要計算 y 跟 y\head 的 cross entropy 的話
+
+y\head 顯然也要是一個 probability distribution
+
+我們才能夠算 cross entropy
+
+怎麼算呢？
+
+假設 x 是屬於 class 1 的話
+
+在 training data 裡面，我們知道 x 是屬於 class 1 的話
+
+它的 target 就是 [1 0 0]
+
+如果是屬於 class 2 的話，它的 target 就是 [0 1 0]
+
+如果是屬於 class 3 的話，它的 target 就是 [0 0 1]
+
+我們之前有講過說
+
+如果你設 class 1 的 target 是 1
+
+class 2 的 target 是 2，class 3 的 target 是 3
+
+這樣會有問題
+
+你是假設說，1 跟 2 比較近、2 跟 3 比較近
+
+1 跟 3 比較遠，這樣做會有問題
+
+但是，如果你今天是
+
+換一個假設
+
+你今天是假設
+
+如果 x 是屬於 class 1 的話，它的目標是 [1 0 0]
+
+屬於 class 2是 [0 1 0]，屬於 class 3是 [0 0 1]
+
+那你就不用假設 class 和 class 之間
+
+誰跟誰比較近，誰跟誰比較遠
+
+的問題這樣
+
+至於這個式子，哪來的呢？
+
+其實這個式子也是去 maximum likelihood
+
+我們剛才在講這個 binary 的 case 的時候
+
+我們講說，我們的這個 cross entropy 這個 function
+
+minimize cross entropy 這件事情
+
+其實是來自 maximize likelihood
+
+那在有多個 head 的情況下
+
+也是一模一樣的
+
+它是一模一樣的
+
+你就把 max likelihood 那個 function 列出來
+
+那經過一番整理，你也會得到 minimize cross entropy
+
+那這件事呢，就交給大家自己做
+
+接下來，我要講的是
+
+這個 Logistic Regression 阿，其實它是有
+
+非常強的限制
+
+怎麼樣的限制呢？
+
+我們今天假設這樣一個 class
+
+假設這樣一個 class
+
+現在有 4 筆 data
+
+它們每一筆 data 都有兩個 feature
+
+那它們都是 binary 的 feature
+
+那 class 2 呢，有兩筆 data
+
+分別是 (0, 0)、(1, 1)
+
+class 1 有兩筆 data，分別是 (0, 1)、(1, 0)
+
+如果把它畫出來的話
+
+class 1 的兩筆 data 是在這裡、在這裡
+
+class 2 的兩筆 data 是在這跟這
+
+如果我們想要用 Logistic Regression
+
+對它做分類的話
+
+我們能做到這件事情嗎？
+
+我們能做到這件事情嗎？
+
+你會發現說
+
+這件事情
+
+我們是辦不到的
+
+Logistic Regression 的話，我們會希望說
+
+對 Logistic Regression 的 output 而言
+
+這兩個屬於 class 1 的 data，它的機率
+
+要大於 0.5
+
+另外兩個屬於 class 2 的 data
+
+它的機率要小於 0.5
+
+但這件事情，對 Logistic Regression 來說呢
+
+它卡翻了，它沒有辦法做到這件事
+
+因為 Logistic Regression 兩個 class 之間 boundary
+
+就是一條直線
+
+它的 boundary 就是一條直線
+
+所以，你要分兩個 class 的時候，你只能在你的
+
+feature 的平面上，畫一條直線
+
+要馬畫這邊，要馬畫這邊
+
+那不管你怎麼畫
+
+你都沒有辦法把
+
+紅色的放一邊、藍色的放一邊
+
+不管你怎麼畫，你都沒有辦法把
+紅色的放一邊、藍色的放一邊
+
+這直線可以隨便亂畫、你可以調整
+
+w 跟 b，你的 weight 跟 bias
+
+使得你的某些 Regression，兩個 class 之間的 boundary
+
+可以是任何樣，可以是這樣、是這樣，怎麼畫都可以
+
+這個 boundary 是一條直線，怎麼畫都可以
+
+但你永遠沒有辦法把
+
+今天這個 example 的紅色點跟藍色點分成兩邊
+
+怎麼辦呢？
+
+假設你還是堅持要用 Logistic Regression 的話
+
+有一招叫做 Feature Transformation
+
+就是你剛才的 feature 定的不好
+
+原來 x1, x2 的 feature 定的不好
+
+我們可以做一些轉化以後
+
+找一個比較好的 feature space
+
+這一個比較好的 feature space，
+讓 Logistic Regression 是可以處理
+
+我們把 x1 跟 x2 呢
+
+轉到另外一個 space 上面
+
+轉到 x1' 跟 x2' 上面
+
+x1' 是
+
+怎麼做 feature transformation 是
+
+這是很 heuristic and ad hoc的東西
+
+想一個你喜歡的方式
+
+舉例來說，我這邊定 x1' 就是某一個點到 (0,0) 的距離
+
+x2' 就是某一個點到 (1,1) 的距離
+
+如果我們把它畫出來的話
+
+如果我們把它畫出來，我們先看
+
+先看左下角這個點好了
+
+如果我們看左下角這個點
+
+它的 x1' 應該是 0
+
+因為它跟 (0,0) 的距離就是 0
+
+它跟 (1,1) 的距離，(0,0) 跟 (1,1) 的距離是
+
+根號 2，所以 x2' 是 sqrt(2)
+
+所以，經過這個 transformation，(0,0) 這個點
+
+跑到這邊
+
+那經過這個 transformation，(1,1) 這個點
+
+跑到右下角
+
+因為它跟 (0,0) 的距離是 sqrt(2)，跟 (1,1) 的距離是 0
+
+經過這個 transformation，(0,1)
+
+這邊又寫錯了，這邊應該是 (1,0)
+
+(0,1) 和 (1,0)它們跟 (0,0) 和 (1,1) 之間的距離
+
+都是一樣的
+
+(0,1) 和 (0,0) 之間的距離是 1
+
+(0,1) 和 (1,1) 之間的距離是 1
+
+所以，經過這個 transform 以後
+
+這兩個紅色的點會map，重疊在一起
+
+都變成是 1
+
+這個時候，對 Logistic Regression 來說
+
+它可以處理這個問題了
+
+因為它可以找一個 boundary，比如說，可能在這個地方
+
+把藍色的點跟紅色的點分開
+
+但是，麻煩的問題是這樣
+
+麻煩的問題是
+
+我們不知道怎麼做 feature transformation
+
+如果我們花太多力氣在做 feature transformation
+
+那就不是機器學習了，不是人工智慧了
+
+就都是人的智慧了
+
+所以，有時候我們不知道要怎麼找一個
+
+好的 transformation
+
+所以，我們會希望說
+
+這個 transformation 是由機器自己產生的
+
+怎麼讓機器自己產生這樣的 transformation 呢？
+
+我們就把很多個 Logistic Regression 呢
+
+cascade 起來
+
+把很多 Logistic Regression 接起來
+
+我們就可以做到這一的事情
+
+假設 input 是 x1, x2
+
+我們有一個 Logistic Regression 的 model
+
+我們這邊就把 bias 省略掉，讓圖看起來比較簡單一點
+
+這邊有一個 Logistic Regression 的 model
+
+它的 x1 乘一個 weight，跟 x2 乘一個 weight
+
+加起來以後得到 z 的 sigmoid function
+
+它的 output 我們就說是
+
+新的 transform 的第一維，x1'
+
+我們有另外一個 Logistic Regression 的 model
+
+它跟 x1 乘上一個 weight，對 x2 乘一個 weight，得到 z2
+
+再通過 sigmoid function，得到 x2'
+
+我們說它是 transform 後的另外一維
+
+如果我們把 x1 跟 x2 經過
+
+這兩個 Logistic Regression mode 的 transform
+
+得到 x1' 跟 x2'，而在這個新的 transform 上面
+
+class 1 和 class 2 是可以用一條直線分開的
+
+那麼最後，只要再接
+另外一個 Logistic Regression 的 model
+
+它的 input 就是 x1' 和 x2'
+
+對它來說， x1' 和 x2' 就是
+
+每一個 example 的 feature，不是 x1 和 x2，是 x1' 和 x2'
+
+那根據 x1' 和 x2' 這個新的 feature
+
+它就可以把 class 1 和 class 2 分開
+
+所以前面這兩個
+
+Logistic Regression 做的事情
+
+就是做 feature transform 這件事情
+
+它先把 feature transform 好以後
+
+再由後面的，紅色的 Logistic Regression 的 model 呢
+
+來做分類
+
+如果舉比較實際的例子的話
+
+我們看剛才那個例子
+
+我們在 x1 和 x2 平面上，有 4 個點
+
+我們可以調整藍色這個 Logistic Regression
+
+它的 weight 的參數
+
+讓它的 posterior probability 的 output 呢
+
+長得像是這個圖上的顏色這樣子
+
+因為這個 boundary 一定是一條直線嘛
+
+所以，這個 posterior probability 的 output 呢
+
+一定是長這樣子的，它的等高線一定是直的
+
+在左上教的地方
+
+output 的值比較大，在右下角的地方
+
+output 的值比較小
+
+你可以調整參數，讓這個藍色的
+
+這個 Logistic Regression
+
+它 input x1, x2 的時候，對這 4 個點
+
+它的 output 是 0.73, 0.27, 0.27, 0.05
+
+這件事情呢，是它做得到的
+
+對綠色這個點來說
+
+你也可以調整它的參數
+
+讓它對右下角紅色這個點的 output 是 0.73
+
+對藍色的點是 0.27, 0.27
+
+對左上角這個點，它是 0.05
+
+Logistic Regression 它可以
+
+它的 boundary 一定是一條直線
+
+那這個直線可以有任何的畫法
+
+你可以是左邊高、右邊低
+
+你可以是左上高、右下低，也可以是右下高、左上低
+
+這都是做得到的，只要調整參數，都做得到這些事情
+
+所以，現在呢
+
+有了前面這兩個 Logistic Regression 以後
+
+我們就可以把 input 的每一筆 data
+
+做 feature transform得到另外一組 feature
+
+有就是說呢，原來左上角這個點
+
+原來左上角這個點
+
+它本來在 x1, x2 的平面上是 (0, 1)
+
+但是在 x1', x2' 的平面上
+
+它變成是 (0.73, 0.05)
+
+如果我們看右下角，這個紅色的點
+
+在 x1', x2' 的平面上
+
+它就是 (0.05, 0.73)
+
+呃，這個 x1 跟 x2 是不是畫反了呢？
+
+我看一下，對，畫反了
+
+不好意思，這個 x1 跟 x2 是畫反的
+
+因為你看這個是 0.05
+
+然後，這個縱軸呢
+
+才是比較小的，才是 0.05
+
+所以，x1 跟 x2 呢，這邊的 label
+
+應該要是反過來的
+
+然後，我們現在把
+
+紅色的點變到 (0.73, 0.05) 的位置
+
+紅色的點變到 (0.05, 0.73) 的位置
+
+把這兩個藍色的點變到 (0.27, 0.27) 的位置
+
+我們做了這樣的轉換以後呢
+
+我們就可以用紅色的這個 Logistic Regression
+
+畫一條 boundary
+
+把藍色的點和紅色的點分開
+
+所以，如果我們只有一個 Logistic Regression
+
+我們沒有辦法把這個 example 處理好
+
+但是，如果我們有 3 個 Logistic Regression
+
+他們被接在一起的話
+
+那我們就可以把這件事情處理好
+
+所以，把這些 Logistic Regression 的 model 疊在一起
+
+它還滿有用的，我們可以有
+
+某一個 Logistic Regression 它的 model、它的 input
+
+是來自於其他 Logistic Regression 的 output
+
+而某一個 Logistic Regression 的 output
+
+它也可以是其他 Logistic Regression 的 input
+
+我們可以把它前後相連起來
+
+就變得呢，很 powerful
+
+那我們呢，可以給它一個新的名字
+
+我們把每一個 Logistic Regression
+
+叫做一個 Neuron
+
+把這些 Logistic Regression 串起來
+
+所成的 network，就叫做 Neural Network
+
+就叫做類神經網路
+
+換了一個名字以後，它整個就潮起來了
+
+你就可以騙麻瓜
+
+你就可以跟麻瓜講說，我們是在模擬人類大腦的運作
+
+而麻瓜就會覺得，你做的東西實在是太棒了
+
+這個東西就是 deep learning 這樣
+
+所以我們呢，就進入 deep learning
+
+臺灣大學人工智慧中心
+科技部人工智慧技術暨全幅健康照護聯合研究中心
+http://aintu.tw
+
