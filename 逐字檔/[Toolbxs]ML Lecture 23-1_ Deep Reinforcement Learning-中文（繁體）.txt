@@ -1,0 +1,1778 @@
+臺灣大學人工智慧中心
+科技部人工智慧技術暨全幅健康照護聯合研究中心
+http://aintu.tw
+
+Reinforcement Learning 其實是一個很大的題目
+
+所以在下面加了一個 subtitle : 學一些皮毛
+
+剩下時間我們就講一些皮毛
+
+那這年頭講到 Deep Reinforcement Learning
+
+大家就會覺得說很興奮，為什麼呢？
+
+因為，在 15 年 2 月的時候
+
+Kreeger 先生在Nature 上面發了一篇
+
+用 Reinforcement Learning 的方法
+
+來玩 Atari 的小遊戲，都可以痛電人類
+
+然後，後來在 16 年的春天呢
+
+又有大家都耳熟能詳的 AlphaGo，也是可以痛電人類
+
+David Silver 就有說，他覺得說
+
+AI 就是 Reinforcement Learning 加 Deep learning
+
+Reinforcement Learning 加 Deep learning 就是
+
+Deep Reinforcement Learning
+
+所以，這個東西現在講起來大家都覺得很興奮
+
+那這個 Reinforcement Learning 是甚麼呢？
+
+在 Reinforcement Learning 裡面呢，也會有
+
+一個 Agent，跟一個 Environment
+
+這樣講可能有一點抽象
+
+等一下會舉比較具體的例子
+
+告訴大家說這個 Agent 跟 Environment 它們分別可以是些甚麼
+
+我找個喉糖出來吃一下這樣子
+
+你可能會覺得說為什麼我一直咳嗽都不會好
+
+但是，這其實是沒有甚麼關係的
+
+我記得我高三的時候，不知道怎麼回事一直咳嗽咳嗽，咳到大二
+
+後來，就好了
+
+好，那，
+
+這個 Agent 呢，它會有 Observation，它會去看這個世界，
+
+看到世界的某些種種的變化
+
+那這個 Observation 又叫做 State
+
+你在看 Deep Reinforcement Learning 的時候，
+
+你常常會看到一個詞，叫做 State
+
+其實這個 State，就是 Observation
+
+這個 State 這個詞呀，我覺得總是很容易讓人誤導
+
+當你聽到 State這個詞，你總是會想好像是一個，它翻譯應該翻譯成狀態，而這個狀態感覺是系統的狀態
+
+不是，這個 State 是環境的狀態。這樣，大家了解我的意思嗎?
+
+所以，我覺得用 Observation 這個詞或許是更貼切的
+
+就是，你的 Machine 所看到的東西。
+
+所以，這個 State 其實指的是這個環境的狀態，也就是你的 Machine 所看到的東西。
+
+所以，在這個 Reinforcement Learning 領域才會有這種胖 DP 的這種作法
+
+所謂胖 DP 就是 Part your observe 的 state，就是我們 State 只能觀察到一部分的情況
+
+如果今天這個 State 是 machine 本身的 State，那怎麼會有那種 State 我會不知道的情況
+
+那就是因為這個 State 其實是，所以如果你把 State 當作 machine 的 State，你就會搞不清楚 Partial observation
+
+Partial Observation State 的那套想法到底是在幹麻。
+
+今天就是因為 State 就是環境的 State，所以機器是有可能沒有辦法看到整個環境所有的狀態
+
+所以才會有這個 Partial observation State 的這個想法
+
+總之我今天沒有要講那個，但是這個 State 呀其實就是 Observation。
+
+如果你以後有有機會看看文獻的話，你再看看我說得對不對。
+
+好，那 Machine 呢，會做一些事情，它做的事情就叫做 Action
+
+那它做的這些事情，會影響環境，
+
+會跟環境產生一些互動，
+
+對環境造成一些影響
+
+那它因為對環境造成的一些影響，它會得到 Reward。
+
+這 Reward 就會告訴它，它的影響是好的，還是不好的。
+
+那這邊舉一個抽象的例子，比如說
+
+機器看到一杯水，然後它就 take 一個 action，
+
+action 就把水打翻了，那
+
+Environment 它就得到一個 negative 的 reward，因為人告訴它說不要這麼做，
+
+所以它就得到一個負向的 reward。
+
+接下來呢，因為水被打翻了，
+
+在 Reinforcement Learning 裡面，這些發生的事情都是連續的
+
+因為水被打翻了，所以接下來它看到的 Observation 就是水被打翻的狀態。
+
+看到水被打翻了，它決定 take 另外一個 action，
+
+它決定要把它擦乾淨，人覺得它做得很對，它就得到一個 positive reward。
+
+那，機器要做的事情，它生來的目標就是
+
+它要去學習採取那些 action
+
+它根據過去的得到的 positive reward 還有 negative reward，
+
+它去學習採取那些可以讓 reward 被 
+maximize 的那些 action，這個就是它存在的目標
+
+如果我們用 AlphaGo 為例子的話，一開始 Machine 的 Observation 是甚麼?
+
+Machine 的 Observation 就是棋盤，那棋盤你可以用一個 19*19 的 matrix 來描述它
+
+所以如果是 AlphaGo 它的 Observation 就是棋盤
+
+然後接下來呢，它要 take 一個 action，它 take 的 action 是甚麼呢?
+
+它 take 的 action 就是落子的位置
+
+它 take 的 action 就是放一個棋子到棋盤上，落一子這樣
+
+下在這裡，下在 3 之 3。
+
+接下來呢，在圍棋這個遊戲裡面
+
+你的 Environment 是甚麼，你的 Environment 其實就是你的對手，
+
+所以，你落子呀，落子在不同的位置，
+
+你就會影響你的對手的反應，總之你落子以後，
+
+你的對手會有反應
+
+你看到的這個 observation 呢，就變了。假設說，你的對手呢落一個白子在這個地方，你的 observation就變了
+
+機器看到另外一個 observation 以後，它又要決定它的 action
+
+所以它再 take 一個 action，它再採取某一個行動，它再落子在另外一個位置。
+
+所以下圍棋呢，用機器下圍棋呢，就是這麼一回事。
+
+那今天在圍棋這個 case 裡面，它是個還蠻困難的 Reinforcement Learning 的 task，
+
+因為在多數的時候，你得到的 reward 都是零，
+
+因為你落子下去，通常是甚麼事也沒發生
+
+你得到的 reward 就是零。
+
+只有在你贏了，或者是輸了的時候，
+
+你才會得到 reward。
+
+如果你贏了，你就得到 reward 是 1，如果是輸了，你就得到 reward 是 -1
+
+所以做 Reinforcement Learning 困難的地方就是，有時候你的 reward 是很sparse
+
+只有少數的 action，只有在少數的情況你才能夠會得到 reward
+
+所以它的難點就是機器怎麼在只有少數的 action 會得到 reward 的情況下
+
+卻發覺正確的 action，這是一個很困難的問題。
+
+對 machine 來說呢，它要怎麼學習下圍棋呢，
+
+它就是不斷地找某一個對手一直下一直下，有時候輸、有時候贏
+
+接下來，它就是調整它看到的 observation 和 action 之間的關係。
+
+它裡面有一個 model，它會調整它看到 observation 時，它要採取甚麼 action，
+
+它會調整那個 model，讓它得到的 rewards 可以被 maximize。
+
+那我們可以比較一下，如果今天要下圍棋的時候，用 Supervised learning 和 un-supervised learning
+
+你得到的結果會有怎麼樣的差別
+
+你的 training 的方法有怎麼樣的差別
+
+如果是 supervised learning 的話
+
+那你就是告訴機器說，看到這樣子的盤勢，
+
+你就落子在這個位置；
+
+看到另一個盤勢，你就落子在另外一個位置。
+
+那 Supervised learning 會不足的地方是，
+
+當我們會用 Reinforcement Learning 的時候，往往是你不知道
+
+連人都不知道正確答案是甚麼，所以在這個 task，你不太容易做 Supervised learning。
+
+因為，在圍棋裡面，看到這個盤勢到底下一個位置最好的點是哪裡，其實有時候人也不知道
+
+那機器可以看著棋譜學，
+
+那棋譜上面的這個應對不見得是最 optimal
+
+所以用 Supervised learning 可以學出一個會下圍棋的 Agent
+
+但它可能不是真正最厲害的 Agent。
+
+如果用 Supervised learning 就是 machine 從一個老師那邊學，
+
+那老師會告訴它說，每次看到這樣子的盤勢，你要下在甚麼樣的位置；看到那樣子的盤勢，你要下在甚麼樣的位置。
+
+這個是 Supervised Learning。
+
+如果是 Reinforcement Learning ，就是讓機器呢，就不管它，它就找某一個人
+
+去跟它下圍棋，然後下一下以後，如果贏了，它就得到 positive reward。
+
+輸了，就得到 negative reward。
+
+贏了它就知道說，之前的某些下法，可能是好，但是沒有人告訴它
+
+甚麼樣的下法，在這幾百步裡面，哪幾步是好的，哪幾步是不好的，沒有人告訴它這件事
+
+它要自己想辦法去知道。
+
+在 Reinforcement Learning 裡面，你是從過去的經驗去學習，
+
+但是，沒有老師告訴你說甚麼是好的，甚麼是不好的。
+
+Machine 要自己想辦法。
+
+其實在做 Reinforcement Learning 下圍棋的這個 task 裡面，
+
+Machine 需要大量的 training 的 examples
+
+它可能要下三千萬盤以後，它才能夠變得很厲害。
+
+但是因為沒有人可以跟 machine 下三千萬盤，
+
+所以大家都知道 AlphaGo 的解法，就是任兩個 machine，然後它們自己互下。
+
+我們知道 AlphaGo 其實是先做 Supervised learning，讓 machine 學得不錯了以後，
+
+再讓它去做 Reinforcement Learning。
+
+Reinforcement Learning 也可以被用在 chat-bot 上面
+
+怎麼用呢?
+
+我們之前其實也有講過 chat-bot 是怎麼做的，learn一個sequence-to-sequence model，
+
+input 是一句話，output 就是機器人回答
+
+如果你用 supervised learning learn 一個 chat-bot
+
+你就是告訴 machine 說，
+
+如果有人跟你說 "Hello"，你就要講 "Hi"
+
+如果有人跟你說 "Bye bye"，你就要說 "Goodbye"，
+
+這個是 Supervised learning 的 learn 法。
+
+如果是 Reinforcement Learning 的 learn 法，就是讓 machine 胡亂去跟人講話，講一講以後，人最後就生氣了
+
+Machine 就知道說，它某句話可能講得不太好，但是沒有人告訴它，它到底哪句話講得不好
+
+它要自己去想辦法發覺這件事情。
+
+這個想法聽起來很 crazy，但是真的有 chat-bot 是這樣 learn 的。
+
+這個怎麼做呢，因為你要讓 machine 去跟人一直講話，
+
+學習看出人生氣了，或者是沒有生氣，然後去學怎麼跟人對話
+
+這個學習太慢了，你可能要講好幾百萬次以後
+
+你要跟好幾百萬人對話以後才會學會
+
+但是如果一個 Agent 要跟好幾百萬人對話的話，大家都會很煩，沒有人要跟它對話。
+
+所以怎麼辦呢，就用 AlphaGo style 的講法，
+
+它任兩個 Agent，讓它們互講。
+
+任兩個 Chat-bot 互講，可能都亂講，
+
+有一個說 "See you"，另外一個說 "See you"
+
+然後另外一個再說 "See you" ，陷入如窮地 loop。
+
+然後就亂講，就讓兩個 chat-bot 去對話
+
+然後它對話完以後，還是需要有人去告訴它說，它們講的好呢，還是不好
+
+所以如果是在圍棋裡面比較簡單，因為圍棋的輸贏是很明確的
+
+贏了就是 positive，輸了就是 negative
+
+那輸贏你就寫個程式來判讀就好了
+
+可是如果是對話的話就很麻煩，因為你可以讓兩個 machine 去互相對話，
+
+它們兩個可以對話好幾百次，好幾百萬次，但是
+
+問題就是你不知道這個對話，沒有人告訴那兩個 machine 說你們現在聊天到底還是聊得好還是聊得不好。
+
+所以這個算是一個尚待克服的問題，
+
+那這個在文獻上的方法是，這方法可能不見得是最好的方法，
+
+它說，就訂個 rule，人去寫些規則，這規則其實在 paper 裡面寫得是，也是蠻簡單的，就蠻簡單的幾條規則
+
+然後這幾條規則會去檢查，我看過去這兩個 Agent 對話的紀錄，
+
+如果講得好的話，就給它 positive 的 reward，講得不好，就給它 negative 的 reward
+
+講得好或不好，就是人自己主觀訂的，所以不知道人訂得好不好
+
+然後 machine 就從它這個 rewards 裡面去學怎麼樣講才是好的
+
+其實我可以在這邊做個預言，就是我覺得接下來就會有人用 game 來 learn 這個 chat-bot 了
+
+雖然現在還沒有看到，但我相信很快就會有人幹這麼一件事。
+
+這個怎麼做呢，你就 learn 一個 discriminator，
+
+然後這個 discriminator 它會看真正人的對話和那兩個 machine 的對話
+
+然後就判斷說你們現在這兩個 Agent 的對話，像不像人
+
+如果像的話，
+
+它會去抓說像人還是不像人
+
+接下來呢，那兩個 Agent 的對話它們就會去想要騙過那個 discriminator， 讓它講得越來越像人。
+
+那個 discriminator 判斷它說像人或不像人的這個結果就是 reward
+
+它等於是用 discriminator 自動 learn 出給 reward 的方式
+
+我相信很快就會有人做這麼一件事了
+
+其實這個 Reinforcement Learning 有很多的應用，今天它特別適合的應用就是，
+
+如果有一個 task ，人也不知道怎麼做，那你人不知道怎麼做就沒有 labeled data，
+
+這個時候，用 Reinforcement Learning 是最適合的。
+
+比如說在語音實驗室裡面，我們有做讓 machine 學會做 Interactive retrieval
+
+所謂 Interactive retrieval 意思是說，有一個搜尋系統，
+
+Machine 跟它說想要找尋一個跟 US President 有關的事情
+
+那 machine 可能覺得說，這 US President 太廢了，
+
+很多人都是美國總統，你到底是要知道跟美國總統甚麼有關的事情呢?
+
+這 machine 會反問它一個問題，要求它 modify
+
+它說它要找跟川普有關的事情
+
+那 machine 反問它說，你要找的是不是跟選舉有關的事情等等
+
+但是，machine 要反問甚麼問題，這個人也不知道，我們人也不知道要問甚麼樣的問題才是好
+
+但是，你可以用 Reinforcement Learning 的方式，
+
+來讓 machine 學說，問甚麼樣的問題，它可以得到最高的 reward。
+
+那你的 reward 可能就是，最後搜尋的結果，使用者覺得越好，就是 reward 越高。
+
+但是，每一次 machine 只要每問一個問題，它就會得到一個 negative 的 reward
+
+因為每問一個問題，對人來說，就是 extra 的 effort
+
+所以，應該要有一個 negative reward
+
+Reinforcement Learning 還有很多 applications，比如說開一台直升機，開一個無人車，或者是
+
+據說最近 DeepMind 用 Reinforcement Learning 的方法，來幫 Google 的 server 節電
+
+現在也有人拿 Reinforcement Learning 來讓 machine 產生句子
+
+在很多 task 裡面，machine 都需要產生句子，比如說 summarization，或者是 translation。
+
+那這種產生句子的 Task，有時候還蠻麻煩的，為什麼?
+
+因為有時候，machine 產生出來的句子，它是好的
+
+但是，可是卻跟答案不一樣。
+
+因為 translation 有很多種呀，
+
+有一個標準答案是那樣，但是並不代表說 machine 現在產生出來的跟標準答案不一樣，它一定是壞的
+
+所以這個時候，你如果可以引入 Reinforcement Learning 的話呢，其實是會有幫助的。
+
+那 Reinforcement Learning 最常用的 application 就是
+
+現在最常用的 application 就是打電玩
+
+打電玩的 applications 現在已經滿坑滿谷
+
+如果你想要玩的話，現在都有現成的 environment
+
+可以讓你在現成的 environment 上面去玩
+
+一個呢，叫做 Gym，這都是 Open AI 公司開發的。
+
+這個 Gym 比較舊，最近他們又開了一個 Universe
+
+Universe 裡面有很多那種 3D 的遊戲。
+
+那每次講說讓 machine 玩遊戲，
+
+就會有個問題說，可是 machine 不是本來就已經會玩遊戲了嗎?
+
+在那些遊戲裡面，不是本來就已經有一個 AI  了嗎?
+
+但是，現在你要讓 machine 用 Reinforcement Learning 的方法，去學玩遊戲，跟那些已經內建的 AI
+
+其實是不一樣的。
+
+因為，machine 它學怎麼玩這個遊戲，其實是跟人一樣的，
+
+它是坐在螢幕前的，也就是說它看到的東西，並不是從那個程式裡面去擷取甚麼東西出來，
+
+它看到的東西就是那個螢幕畫面，
+
+它看到的東西跟人一樣就是 pixels，
+
+當你用 machine 來玩，用 Reinforcement Learning 讓 machine 學習玩這些電玩的時候
+
+Machine 看到的，就是 pixels。
+
+然後再來呢，它要 take 哪個 action，它看到這個畫面，它要做甚麼事情
+
+它自己決定了，並不是人寫程式告訴它說，if 你看到這個東西，then 你做甚麼
+
+它是自己學出來的。
+
+舉例來說，你可以讓 machine 玩 Space invader，space invader 就是叫小蜜蜂還是大黃蜂，反正這是 translation 不太重要
+
+我們等一下舉例的時候都用這個來作例子
+
+都用 Space invader 來作例子，我們可以稍微解說一下這個遊戲，
+
+在這個遊戲裡面，你可以 take 的 action 有三個，就是左、右移動，跟開火，
+
+那它怎麼玩這個 video game 呢? 整個 scenario 是這樣，
+
+首先呢，machine 會看到一個 observation，
+
+這個 observation 就是螢幕的畫面，
+
+也就是螢幕畫面裡面的 pixels
+
+那開始的 observation 我們就叫它 S1，所以一開始 machine 看到一個 S1
+
+那這個 S1 其實就是一個 matrix，那這個 matrix 其實就是每一個 pixel 用一個 vector 來描述它
+
+所以這邊應該是一個三維的 tensor
+
+這是一個 matrix，但它是有顏色的，所以它三維
+
+好，那 machine 看到這個畫面以後，它要決定它要 take 哪一個 action，
+
+它現在只有三個 action 可以選擇，比如說它決定要 "往右移"
+
+那每次 machine take 一個 action 以後，它會得到一個 reward
+
+但是因為只是往右移，這個 reward 是甚麼
+
+就是左上角的這個分數，就是它的 reward，那往右移不會得到任何的 reward，
+
+所以得到的 reward r1 是 0
+
+Machine take 完這個 action 以後，它的 action 會影響了環境，machine 看到的 observation 就不一樣
+
+現在 machine 看到的 observation 叫做 s2，
+
+那有點不一樣，因為它自己往右移了。
+
+當然這些外星人，也會稍微移動一點，
+
+不過這個跟 machine take 的 action 是沒有關係的，
+
+但是，有時候環境的變化本來就會跟 action 沒有關係
+
+有時候環境的變化會是純粹隨機的，跟 machine take 的 action 是沒有關係的
+
+那看到 s2
+
+這邊講一下通常環境會有 random 的變化
+
+環境這個 random 的變化跟 machine take 的 action 是沒有甚麼關係的
+
+比如說這邊突然多出一個子彈
+
+這些外星人甚麼時候要放出來我覺得應該就是隨機的
+
+然後 machine 看到 s2 以後他要決定 take 哪一個 action
+
+這個是 a2 假設他決定他要射擊了
+
+假設他成功殺了一隻外星人
+
+他就會得到一個 reward
+
+那我發現殺不同外星人其實得到分數不一樣
+
+假設他殺了一個五分的外星人
+
+那他看到的 observation 就變少了一隻外星人
+
+這個是第三個 observation
+
+這個 process 就一直進行下去
+
+直到某一天在第 T 個回合的時候
+
+machine take action aT
+
+然後他得到的 reward rT 進入了另外一個 state
+
+這個 state 是個 terminal 的 state
+
+它會讓這個遊戲結束
+
+在這個 Space Invader 這個遊戲裡面
+
+terminal state 就是你被殺死就結束了
+
+所以 machine 可能 take 一個 action 比如說往左移
+
+那得到 reward 0 不小心撞到 alien 的子彈
+
+就死了遊戲就結束了
+
+遊戲的開始到結束叫做一個 episode
+
+對 machine 來說它要做的事情就是要不斷去玩這個遊戲
+
+他要學習在怎麼在一個 episode 裡面 maximize 它可以得到的 reward
+
+maximize 他在整個 episode 裡面可以得到的 total 的 reward
+
+它必須要在死之前殺最多的外星人
+
+他要殺最多的外星人而且他要閃避外星人的子彈，讓自己不要那麼容易被殺死
+
+Reinforcement Learning 的難點在哪裡
+
+它有兩個難點
+
+第一個難點是 reward 的出現往往會有 delay
+
+比如說在 Space Invader 裡面
+
+其實只有開火這件事情才可能得到 reward
+
+也就是開火以後才得到 reward
+
+但是如果 machine 只知道開火以後就得到 reward
+
+它最後 learn 出來的結果它只會瘋狂開火
+
+對它來說往左移、往右移沒有任何 reward 它不想做
+
+實際上往左移、往右移這些 moving
+
+它對開火能不能夠得到 reward 這件事情是有很關鍵的影響
+
+雖然往左移、往右移的 action 本身沒有辦法讓你得到任何 reward
+
+但它可以幫助你在未來得到 reward
+
+這些事情其實就像規劃未來一樣
+
+所以 machine 需要有這種遠見，它要有這種 vision
+
+它才能夠把這些電玩完好
+
+那其實下圍棋也是一樣
+
+有時候短期的犧牲最後可以換來最後比較好的結果
+
+就像是虛子把自己的子堵死一塊
+
+結果最後反而贏了
+
+另外一個就是你的 agent 採取的行為
+
+會影響它之後所看到的東西
+
+所以 agent 要學會去探索這個世界
+
+比如說在 Space Invader 裡面你的 agent 只會往左移、往右移
+
+它從來不開火，他就永遠不知道開火可以得到 reward
+
+或是它從來沒有試著去擊殺最上面這個紫色的母艦
+
+它可能從來沒有試著擊殺紫色的母艦，它就永遠不知道擊殺那個東西可以得到很高的 reward
+
+所以要讓 machine 知道要去 explore 這件事情
+
+它要去探索它沒有做過的行為
+
+這個行為可能有好的結果、壞的結果
+
+但是要探索沒有做過的行為
+
+在 Reinforcement Learning 裡面也是重要的一件事情
+
+在下課之前要講一下等一下要講甚麼
+
+Reinforcement Learning 其實有一個 typical 的講法
+
+要先講 Markov Decision Process
+
+但如果先講 Markov Decision Process 的話
+
+講完 Markov Decision Process 其實就下課了
+
+你就只聽到 Markov Decision Process
+
+而且很多課有講 Markov Decision Process
+所以我覺得不要從 Markov Decision Process 講起
+
+在 Reinforcement Learning 裡面很紅的一個方法叫 Deep Q Network
+
+今天也不講 Deep Q Network
+
+為甚麼
+因為那個東西已經被打趴了
+
+現在最強的方法叫 A3C
+
+Deep Reinforcement 已經有點退流行了
+
+會發現在gym 裡面最強的那些 agent 都是用 A3C
+像我剛才看到的例子
+
+剛剛看到自己玩 Space Invader 的例子就是用 A3C learn
+
+所以我想說不如直接來講 A3C
+
+迎頭趕上的概念，直接來講最新的東西
+
+講 A3C 之前
+
+需要知道甚麼事情
+
+需要知道 Reinforcement Learning 的方法
+
+分成兩大塊
+
+一個是 Policy-based 的方法
+一個是 Value-based 的方法
+
+Policy-based 的方法應該是比較後來才有的
+
+應該是先有 Value-based 的方法
+
+所以一般教科書都是講 Value-based 的方法比較多
+講 Policy-based 的方法比較少
+
+如果你看 Sutton
+
+有一本 Deep Reinforcement Learning 的 Bible 是 Sutton 寫的
+
+它在 97 版的教科書裡面
+
+Policy 的方法講很少
+
+但它今年又再版
+
+它還在撰寫中
+
+我暑假載下來的教科書的內容
+
+跟最近載下來的內容完全不一樣，差很多
+
+它最近在改那本教科書
+
+就有一整個章節在講 Policy Gradient
+
+在 Policy-based 方法裡面
+
+會 learn 一個負責做事的 actor
+
+在 Value-based 的方法裡面會 learn 一個不做事的 critic
+
+它專門批評，不做事的
+
+但是要把 actor 跟 critic 加起來叫做 Actor-Critic 的方法
+
+現在最強的方法就是 Asynchronous Advantage Actor-Critic，縮寫叫 A3C
+
+所以等一下就講 Actor-Critic 這個方法
+
+你可能會問最強的 Alpha Go 是用甚麼方法
+
+如果仔細讀 Alpha Go paper，它是各種方法大雜燴
+
+它裡面其實有 Policy Gradient 方法、Policy-based 方法
+
+它也有 Value-based 的方法，它還有 Model-based 的方法，我就沒有講到 Model-based 的方法
+
+所謂 Model-based 的方法是指一個 Monte Carlo tree search 那一段
+
+算是 Model-based 的方法
+
+不過像 Model-based 方法就是要預測未來會發生甚麼事
+
+有一個對未來事件的理解，預測未來會發生甚麼事
+
+這種方法應該是只有在棋類遊戲比較有用
+
+如果是打電玩的話
+
+就沒有看到 Model-based 的方法有甚麼成功的結果
+
+打電玩裡面要預測未來會發生的狀況是比較難的
+
+未來會發生的狀況是難以窮舉
+
+不像圍棋雖然未來會發生的狀況很多
+
+但還是可以舉出來
+
+但是如果是電玩的話
+
+我就很少看到 Model-based 的方法
+
+看起來做 Model-based 的方法在電玩上是比較困難的
+
+以下是一些 reference 如果想學更多的話
+
+Sutton 的教科書在這裡
+
+David Silver 有十堂課
+
+它的內容就是 base on Sutton 的教科書講的
+
+他講的十堂課，每堂有一個半小時
+
+他沒講太多 Deep Reinforcement Learning 的東西
+
+但是他有一個 Deep Reinforcement Learning 的 tutorial
+
+video lecture 往下找就找到
+
+另外你可以找到這個 OpenAI、John Schulman 的 lecture
+
+他 lecture 講的是 Policy-based 的方法
+
+我們就先來講怎麼學一個 Actor
+
+所謂的 Actor 是甚麼
+
+開學的時候就有說過 Machine Learning 在做的事情就是找一個 function
+
+在 Reinforcement Learning 裡面
+
+Reinforcement Learning 也是 Machine Learning 的一種
+要做的事情也是找一個 function
+
+我沒有寫錯，我本來想說我應該寫 Actor，但這邊我沒有寫錯
+
+Actor 就是一個 function
+
+這個 Actor 通常就寫成 pi，用 pi 來代表這個 function
+
+這個 function 的 input 就是 machine 看到的 observation
+
+他的 output 就是 machine 要採取的 action
+
+observation 就是現在要找的 function 的 input
+
+action 就是現在要找的 function 的 output
+
+我們要透過 reward 幫助我們找出這個 function
+也就是幫助我們找出 Actor
+
+在有些文獻上 Actor 又叫作 Policy
+所以看到 Policy 的時候他指的就是 Actor
+
+找這個 function 有三個步驟
+
+Deep Learning 很簡單的就是三個步驟
+
+第一個步驟就是決定 function 長甚麼樣子
+
+決定你的 function space
+Neural Network 他決定了一個 function space
+
+所以 Actor 他可以就是一個 Neural Network
+
+如果你的 Actor 就是一個 Neural Network 那你就是在做 Deep Reinforcement Learning
+
+所以這個 Neural Network 的 input
+
+就是 Machine 看到的 observation
+
+這 observation 就是一堆 pixel 可以把他用一個 vector 來描述
+
+或者是用一個 matrix 來描述
+
+output 就是現在可以採取的 action
+
+或者是直接看下面這個例子可能會比較清楚
+
+output 是甚麼
+
+input 就是 pixel
+把 Neural Network 當作 Actor
+
+他可能不只是一個簡單的 Feed Forward Network 因為你的 input 現在是張 image
+
+所以裡面應該會有 Convolution Layer
+
+所以應該是會用 Convolutional Neural Network
+
+output 的地方呢
+
+現在有幾個可以採取的 action
+
+output 就有幾個 dimension
+
+假設現在在玩 Space Invader 這個遊戲
+
+可以採取的 action 就是左移、右移跟開火
+
+那 output layer 就只需要三個 dimension 分別代表左移、右移跟開火
+
+這個 Neural Network 怎麼決定 Actor 採取哪個 action
+
+通常做法是這樣，把 image 丟到 Neural Network 裡面去
+
+他就會告訴你每一個 output 的 dimension 也就是每一個 action 所對應的分數
+
+你可以採取分數最高的 action
+
+比如說 left 分數最高
+假設已經找好這個 Actor
+
+machine 看到這個畫面他可能就採取 left
+
+但是做 Policy Gradient 的時候
+
+通常會假設 Actor 是 stochastic
+
+Policy 是 stochastic
+
+所謂的 stochastic 的意思是你的 Policy 的 output 其實是個機率
+
+如果你的分數是 0.7、0.2 跟 0.1
+
+有 70% 的機率會 left
+
+有 20% 的機率會 right
+10% 的機率會 fire
+
+看到同樣畫面的時候，根據機率，同一個 Actor 會採取不同的 action
+
+這種 stochastic 的做法其實很多時候是會有好處的
+
+比如說要玩猜拳
+
+要玩猜拳的時候
+
+如果 Actor 是 deterministic，可能就只會出石頭一直輸跟小叮噹一樣
+
+所以有時候會需要 stochastic 這種 Policy
+
+在底下的 lecture 裡面都假設 Actor 是 stochastic 的
+
+用 Neural Network 來當 Actor 有甚麼好處
+
+傳統的作法是直接存一個 table
+
+這個 table 告訴我看到這個 observation 就採取這個 action
+
+看到另外一個 observation 就採取另外一個 action
+
+但這種作法要玩電玩是不行的
+
+因為電玩的 input 是 pixel，要窮舉所有可能 pixel 是沒有辦法做到的
+
+所以一定要用 Neural Network 才能夠讓 machine 把電玩玩好
+
+用 Neural Network 的好處就是 Neural Network 可以舉一反三
+
+就算有些畫面完全沒有看過
+
+machine 從來沒有看過
+
+因為 Neural Network 的特性
+給他 input 一個東西總是會有 output
+
+就算是他沒有看過的東西
+他也有可能得到一個合理的結果
+
+用 Neural Network 的好處是他比較 generalize
+
+再來第二個步驟就是要決定一個 function 的好壞
+
+也就是要決定一個 Actor 的好壞
+
+在 Supervised Learning 怎麼決定 function 的好壞
+
+假設給一個 Neural Network 
+他的參數假設已經知道就是 theta
+
+有一堆 training example
+假設在做 image classification
+
+就把 image 丟進去看 output 跟 target 像不像
+
+如果越像代表 function 越好
+
+會定義一個東西叫做 Loss
+
+算每一個 example 的 Loss 合起來就是 Total Loss
+
+需要找一個參數去 minimize 這個 Total Loss
+
+其實在 Reinforcement Learning 裡面，一個 Actor 的好壞的定義其實是非常類似的
+
+怎麼樣類似法
+
+假設有一個 Actor，Actor 就是一個 Neural Network
+
+這個 Neural Network 假設他的參數是 theta
+
+一個 Actor 會用 pi 下標 theta 來表示它
+
+一個 Actor 是一個 function 他的 input 就是一個 s
+
+這個 s 就是 machine 看到的、Actor 看到的 observation
+
+怎麼知道一個 Actor 表現好還是不好
+
+就讓 Actor 實際的去玩一下這個遊戲
+
+假設拿 pi( s )
+拿參數是 theta 這個 Actor
+
+實際去玩一個遊戲
+他就玩了一個 episode
+
+他說他看到 s1、take action a1、得到 r1
+再看到 s2、take action a2、得到 r2 等等等
+
+最後就結束了
+這個時候玩完遊戲以後
+
+他得到的 Total Reward 可以寫成 Rθ
+
+這個 Rθ 就是 r1 + r2 一直加到 rT
+
+把所有在每一個 step 得到的 reward合起來就是在這一個 episode 裡面得到的 Total Reward
+
+而 episode 裡面的 Total Reward 才是我們要 maximize 的對象
+
+我們不是要去 maximize 每一個 step 的 reward
+
+我們是要去 maximize 整個遊戲玩完會得到的 Total Reward
+
+但是就算拿同一個 Actor 來玩這個遊戲
+
+每次玩的時候 Rθ 其實都會是不一樣
+
+為甚麼？因為兩個原因
+
+首先 Actor 如果是 stochastic 看到同樣的場景
+也會採取不同的 action
+
+就算是同一個 Actor、同一組參數
+
+每次玩的時候得到的 Rθ 也會是不一樣
+
+再來遊戲本身也有隨機性
+
+就算採取同樣的 action，看到的 observation 每一次也可能都不一樣
+
+所以遊戲本身也有隨機性
+
+所以 Rθ 是一個 random variable
+
+所以我們希望做的事情不是去 maximize 某一次玩遊戲得到的 Rθ
+
+希望去 maximize 的其實是 Rθ 的期望值
+
+拿同一個 Actor 玩了千百次遊戲以後
+
+每次 Rθ 都不一樣但這個 Rθ 的期望值是多少
+
+這邊用 Rθ bar 來表示它的期望值
+
+希望這個期望值越大越好
+
+這個期望值就衡量了某一個 Actor 的好壞
+
+好的 Actor 他的期望值就應該要比較大
+
+這個期望值實際上要怎麼計算出來
+
+你可以這麼做
+
+假設一場遊戲就是一個 trajectory τ
+一場遊戲用 τ 來表示
+
+τ 是一個 sequence 裡面包含了 state、包含 observation，看到這個 observation 以後 take 的 action
+
+還有得到的 reward，還有新的 observation、take 的 action、得到的 reward 等等，他是一個 sequence
+
+R(τ) 代表這個 trajectory 在這場遊戲最後得到的 Total Reward
+
+把所有的小 r summation 起來就是 total 的 reward
+
+當我們用某一個 Actor 去玩這個遊戲的時候
+
+每一個 τ 都會有一個出現的機率
+
+這個大家可以想像嗎
+
+就是 τ 代表某一種可能的從遊戲開始到結束的過程
+
+他代表某一種過程
+這個過程有千千百百種
+
+但是當你選擇了一個 Actor 去玩這個遊戲的時候
+
+你可能只會看到某一些過程
+
+某一些過程特別容易出現
+某一些過程比較不容易出現
+
+比如說現在 Actor 是一個很智障的 Actor
+
+他看到敵人的子彈就要湊上去被自殺
+
+你看到的每一個 τ 都是你自己控制的太空船挪一下
+然後就去自殺了
+
+當你選擇 Actor 的時候就會有一些 τ 特別容易出現
+
+只有某一些遊戲的過程特別容易出現
+
+每一個遊戲出現的過程可以用機率來描述他
+
+這邊寫一個 P( τ | θ )
+
+就是當 Actor 的參數是 θ 的時候
+τ 這個過程出現的機率
+
+如果可以接受這樣子的話
+
+那 Rθ 的期望值，Rθ bar 就寫成
+
+summation over 所有可能的 τ
+所有可能的遊戲進行的過程
+
+當然這個非常非常的多
+尤其如果又是玩電玩
+
+他是連續的
+
+他有非常多的可能
+這個 τ 是難以窮舉
+
+現在假設可以窮舉他
+
+每一個 τ 都有一個機率用 P( τ | θ )
+
+每一個 τ 都有一個 reward R(τ)
+
+把這兩個乘起來
+再 summation over 所有遊戲可能的 τ 的話
+
+那就得到了這個 Actor 他期望的這個 reward
+
+實際上要窮舉所有的 τ 是不可能的
+所以怎麼做
+
+讓 Actor 去玩這個遊戲玩 N 場
+
+得到 τ1、τ2 到 τN
+
+這 N 場就好像是 N 筆 training data 這樣子
+
+玩 N 場這個遊戲就好像是從 P( τ | θ ) sample 出 N 個 τ
+
+假設某一個 τ 他的機率特別大
+
+他就特別容易在 N 次 sample 裡面被 sample 出來
+
+sample 出來的 τ 應該是跟機率成正比的
+
+當用這個 Actor 玩 N 場遊戲的時候
+
+就好像是從 P( τ | θ ) 這個機率裡面去做 N 次 sample 一樣
+
+最後得到的結果是甚麼
+
+最後就是把 N 個 τ 的 reward 都算出來
+
+然後再平均起來
+就可以拿這一項去近似這一項
+
+對不對
+這個大家應該沒有甚麼問題
+
+接下來只要記得 summation over N 次 sample 做平均
+
+對 N 次 sample 做平均
+
+其實就可以近似從 θ sample τ 出來
+
+再 summation over 所有的 τ
+
+summation over 所有的 τ 乘上機率這件事情
+
+跟 sample N 次這件事情是可以近似的
+
+接下來就進入最後第三步
+
+我們知道怎麼衡量一個 Actor
+
+接下來就是要選一個最好的 Actor
+
+怎麼選一個最好的 Actor
+其實就是用 Gradient Descent
+
+現在已經有我們的 Objective Function
+
+我們已經找到目標了
+目標就是要最大化這個 Rθ bar
+
+找一個參數最大化 Rθ bar
+
+Rθ bar 的式子也有了就寫在這邊
+
+接下來就可以用 Gradient Ascent 的方法找一個 θ
+
+讓 Rθ bar 的值最大
+
+這邊不做 Gradient Descent ，因為 Gradient Descent 要去 minimize 一個東西用 Gradient Descent
+
+maximize 一個東西用 Gradient Ascent
+
+怎麼做
+很簡單就先隨機的找一個初始的 θ0
+
+隨機找一個初始的 Actor
+然後計算在使用初始的 Actor 的情況下
+
+你的參數對 Rθ bar 的微分
+
+算出你的參數對 Rθ bar 的微分
+
+再去 update 你的參數得到 θ1
+
+接下來再算 θ1 對 Rθ bar 的微分
+
+然後再 update θ1 得到 θ2
+
+用這個 process 最後就可以得到一個可以讓 Rθ bar 最大的 Actor
+
+當然會有 local optimum 種種問題，就跟做 Deep Learning 的時候是一樣的
+
+所謂的 Rθ bar 的 gradient 是甚麼
+
+假設 θ 裡面就是一堆參數，有一堆 weight 有一堆 bias
+
+就是把所有的 weight、所有的 bias 都對 Rθ bar 做偏微分，把他通通串起來變成個 vector
+
+就是這個 gradient
+
+接下來就是實際來運算一下
+
+如果要計算 Rθ bar 的 gradient
+
+那 Rθ bar = summation over 所有的 τ 
+R( τ ) * P( τ | θ )
+
+這個 R(τ) 跟 θ 是沒任何關係的
+
+只有 P( τ | θ ) 跟 θ 才是有關係的
+
+所以做 gradient 的時候只需要對 P( τ | θ ) 做 gradient 就好
+
+R(τ) 不需要對 θ 做 gradient
+
+所以 R(τ) 就算是不可微的
+
+也沒差因為本來就沒有要微分他
+
+就算 R(τ) 他是個黑盒子
+不知道他的式子
+
+只知道把 τ 帶進去，R 的 output 會是甚麼也無所謂
+
+也能夠做
+因為我們在這邊完全不需要知道
+
+這邊就算 R(τ) 不可微
+
+或者是不知道他的 function 也沒差
+因為不需要對它做微分
+
+根本就不需要知道他長甚麼樣子
+
+我們只需要知道把 τ 放進去的時候他 output 的值會是多少就行了
+
+他可以完全徹頭徹尾就是個黑盒子
+
+實際上對我們來說 R(τ) 也確實徹頭徹尾是個黑盒子
+
+因為 R(τ) 是取決於
+
+我們會得到多少 reward
+那個 reward 是環境給我們的
+
+所以我們通常對環境是沒有理解
+
+比如說在玩 Atari 的遊戲裡面
+
+reward 是 Atari 的那個程式給我們的
+
+如果程式是有一些隨機的東西的話
+
+會根本搞不清楚程式的內容是甚麼
+
+其實就根本不知道 R(τ) 是長甚麼樣子
+
+不過反正你不需要知道他長甚麼樣子
+
+接下來怎麼做
+
+接下來要做一件事情
+做這件事情是為了要讓 P( τ | θ ) 出現
+
+把 P( τ | θ ) 放在分子的地方也放在分母的地方
+
+等於甚麼事都沒有做
+
+接下來這一項會等於這一項
+
+為甚麼
+
+dlog(f(x)) / dx = (1 / f(x)) * (df(x) / dx)
+
+所以對 log  P( τ | θ ) 做 gradient
+
+等於對 P( τ | θ ) 做 gradient 再除以 P( τ | θ )
+
+所以這一項就是這一項
+
+如果你看到 summation over 所有的 τ 再乘上 P( τ | θ ) 的話
+
+當看到紅色這個框框的時候可以把它換成 sampling
+
+所以這件事情可以換成拿 θ 玩 N 次遊戲得到 τ1 到 τN
+
+對 τ1 到 τN 都算出他的 R(τ)
+
+再 summation over 所有的 sample 出來的結果再取平均
+
+接下來的問題是怎麼計算這一項
+
+怎麼計算 log * P( τ | θ ) 的 gradient
+
+這一項也不難算可以很快地帶過去
+
+要算這一項要知道 P( τ | θ )
+
+怎麼算 P( τ | θ )
+
+首先要知道 P( τ | θ ) = p(s1)  也就是遊戲開始的畫面的出現的機率
+
+像 Space Invader 我記得每一次開始的畫面都是一樣的
+
+所以 p(s1) 就是只有某一個畫面的機率是 1
+其他都是 0
+
+有一些遊戲的畫面每次的起始畫面是不一樣的
+
+這邊需要有個機率
+
+接下來根據 θ
+
+在 s1 會有某一個機率採取 a1
+
+接下來根據在 s1 採取 a1 這件事情
+
+會得到 r1 然後跳到 s2
+這中間是有個機率的，取決於那個遊戲
+
+接下來在 s2 採取 a2 這個機率取決於你的 model θ
+
+接下來看到 s2 a2 得到 r2 s3
+
+這也是取決於那個遊戲
+
+所以整個畫起來就是這個樣子
+
+其中某些項跟 agent、Actor 是沒有關係的
+
+只有畫紅色底線這一項跟 Actor 是有關係的
+
+接下來就取 log
+
+取 log 就只是相乘變相加而已
+
+接下來可以對 θ 做 gradient
+
+跟 θ 無關的項
+
+跟 agent 無關的項只取決於遊戲的主機
+
+遊戲的部分那一項就可以直接被刪掉
+
+這兩項都跟 gradient 是無關的
+
+這一項可以刪掉，這一項可以刪掉
+
+只剩下這個部分
+
+所以最後算出來的結果就是
+
+Rθ bar 的 gradient
+
+它可以被 approximate 甚麼樣子
+
+sample 出 N 個 τ，每一個 τ 都算出他的 reward 再乘上每一個 τ 的出現的機率的 log 的 gradient
+
+出現的機率的 log 的 gradient 又可以把他算成是
+
+summation over 在這個 τ 裡面
+所有採取過的 action
+
+他的機率取 log 的 gradient
+
+這一項就等於這一項我只是把他置換一下
+
+把這個 summation 移出去
+把這個 R 乘進來
+
+可以寫成這樣的式子
+
+這個式子告訴我們甚麼
+
+這個式子告訴我們，現在要做的事情
+假設在 data 裡面
+
+在 s 上標 n 下標 t 這個 state
+
+我們曾經採取了 a 上標 n 下標 t 這個 action
+
+就計算這件事情根據我們的 model 現在發生的機率
+
+然後把它取 log 然後計算它的 gradient
+
+這項 gradient 前面會乘上一項
+乘上這一項是
+
+這一個 trajectory 在那一次玩遊戲裡面
+
+在看到這個 s 產生這個 a 的那一次遊戲裡面總共得到的 Total Reward
+
+這整個式子其實是非常直覺的
+
+用這一項去 update model 其實是非常直覺的
+
+因為它的意思是說
+假設某一次玩遊戲的過程中
+
+在 τn 這次玩遊戲的過程中
+
+我們在 s 上標 n 下標 t 採取 action a 上標 n 下標 t
+
+而最後導致的結果是整個遊戲的 R(τ) 是正的
+
+得到一個正的  reward
+就會希望說這個機率是越大越好
+
+我在某一次玩遊戲的時候
+我在看到某一個 observation 的時候
+
+採取某一個 action
+
+而最後整個遊戲得到好的結果
+
+就要調整我們的參數
+讓在這個 observation
+
+採取那個 action 的機率變大
+
+反之如果在玩遊戲的過程發現
+
+在某一個 state 採取某一個 action
+結果發現得到的 reward 居然是負的
+
+在之後看到同樣的 state 的時候、同樣的 observation 的時候
+
+我們就希望採取會讓我們看到 negative reward 的那個 action 它的機率變小
+
+這整個式子是非常直覺的
+
+這邊要注意的事情是
+
+這一項是在某一個時間點 t
+
+的 observation 採取的某一個 action
+
+但是我們必須要把它乘上整個 trajectory 的 reward
+
+而不是採取那個 action 以後所產生的 reward
+
+這件事情也是非常直覺
+直覺想就應該這麼做
+
+假設現在不是考慮整個 trajectory 的 reward
+
+而是考慮採取 action a 上標 n 下標 t 以後得到的 reward r 上標 n 下標 t 的話
+
+那會變成說
+
+只有 fire 會得到 reward
+
+其他的 action 只要採取 left 或 right 的移動
+得到的 reward 都是 0
+
+所以 machine 就永遠不會想要讓 left 跟 right 產生的機率增加，它只會讓 fire 機率增加
+
+所以 learn 出來的 agent 就只會一直在原地開火
+
+這個式子其實是很直覺的
+
+這邊還有一個問題就是為甚麼要取 log
+
+這件事情也是有辦法解釋的
+
+你看這一項它其實就是對 p 的微分再除掉 p 的這個機率
+
+它是微分再除掉機率
+
+你可能會想說加這一項多不自然
+
+把這一項就直接換成分子這一項不是感覺很好嗎
+
+為甚麼下面還要除一個 p( a | s ) 的機率
+
+你想想看這件事情是很有道理
+
+假設現在讓 machine 去玩 N 次遊戲
+
+那某一個 state 在第 13 次、第 15 次、第 17 次、第 33 次的遊戲裡面
+
+看到了同一個 observation
+
+因為 Actor 其實是 stochastic
+
+所以它有個機率，所以看到同樣的 s，不見得採取同樣 action
+
+所以假設在第 13 個 trajectory
+
+它採取 action a，在第 17 個它採取 b
+
+在 15 個採取 b
+在 33 也採取 b
+
+然後最後 τ 13 的這個 trajectory 得到的 reward 比較大是 2
+
+另外三次得到的 reward 比較小
+
+但實際上在做 update 的時候
+
+它會偏好那些出現次數比較多的 action
+
+就算那些 action 並沒有真的比較好
+
+對不對，因為是 summation over 所有 sample 到的結果
+
+如果 take action b 這件事情
+
+出現的次數比較多，就算它得到的 reward 沒有比較大
+
+machine 把這件事情的機率調高
+
+也可以增加最後這一項的結果
+
+雖然這個 action 感覺比較好
+
+但是因為它很罕見，所以調高這個 action 的機率
+
+最後也不會對你要 maximize 的對象 Objective 的影響也是比較小的
+
+machine 就會變成不想要 maximize action a 出現的機率
+轉而 maximize action b 出現的機率
+
+這就是為甚麼這邊需要除掉一個機率
+
+除掉這個機率的好處就是做一個 normalization
+
+如果有某一個 action 它本來出現的機率就比較高
+
+它除掉的值就比較大
+
+讓它除掉一個比較大的值
+
+machine 最後在 optimize 的時候
+
+就不會偏好那些機率出現比較高的 action
+
+這個聽起來都很 ok，但是這邊有一個問題
+
+什麼樣的問題
+
+假設 R(τ) 永遠是正的
+
+會發生甚麼事呢
+
+因為像玩 Space Invader
+
+得到的 reward 都是正的，殺了外星人就得到正的分數
+
+最糟就是殺不到外星人得到分數是 0
+
+所以這個 R(τ) 永遠都是正的
+
+在理想的狀況下
+
+這件事情不會構成問題
+為甚麼
+
+假設在某一個 state 可以採取三個 action a b c
+
+那這三個 action 採取的結果
+
+我們得到的 R(τ) 都是正的
+
+這個正有大有小
+
+假設 a 跟 c 的 R(τ) 比較大
+
+b 的 R(τ) 比較小
+
+經過 update 以後
+
+還是會讓 b 出現的機率變小
+
+a c 出現的機率變大
+
+因為這邊是個機率，所以它會做 normalization
+
+或是你為了要讓它機率裡的最後 network 的 output
+它是 soft-max layer
+
+就算是在算 gradient 的時候
+
+你想讓這三個的機率會增加
+
+但是增加量比較少的那個
+
+最後它的機率其實是會減少
+
+聽起來不太成一個問題
+
+但實作的時候，我們做的是 sampling
+
+所以某一個 state 可以採取 a b c 三個 action
+
+但是有可能只 sample 到 b 這個 action
+c 這個 action
+
+而 a 這個 action 就沒 sample 到
+
+很有可能 sample 就幾次而已
+
+所以可能 a 這個 action machine 從來沒玩過它、沒試過它，不知道它的 R(τ) 到底有多大
+
+這個時候就遇到問題了
+因為 b 跟 c 機率都會增加
+
+a 沒 sample 到，沒 sample 到機率就自動減少
+
+被 sample 到的在做玩 gradient 後的機率自動就會增加
+
+這樣就變成問題了
+
+所以怎麼辦
+這邊有一個很簡單的想法就是
+
+我們希望 R(τ) 有正有負
+
+不要都是正的
+怎麼避免都是正的呢
+
+要把 R(τ) 減掉一個 bias
+
+這個 bias 其實要自己設計
+
+到底應該要放甚麼值
+設計一下這個 bias
+
+讓你的 R(τ) 都是正的
+減掉一個正的 bias 讓它有正有負
+
+如果你的 trajectory 某一個 τn 它是特別好的
+
+這個 b 叫做 baseline，它好過 baseline 才把那個 action 的機率增加
+
+小於 baseline 把它 action 的機率減小
+
+這樣子就不會造成某一個 action 沒被 sample 到它的機率就會變小
+
+因為快要下課了所以不見得要講玩 Critic
+
+Critic 是甚麼
+Critic 就是
+
+learn 一個 network 它不做事
+
+其實也可以從 Critic 得到一個 Actor
+
+這個東西就是 Q Learning
+但今天就沒辦法講 Q Learning
+
+Critic 就是這樣子
+learn 一個 function
+
+這個 function 可以告訴你
+現在看到某一個 observation 的時候
+
+這個 observation 有多好這樣子
+
+比如說看到這樣子的 observation
+
+把它丟到 Critic 裡面去
+它可能會 output 一個很大的正值
+
+因為還有很多 alien 可以殺
+所以會得到很高的分數
+
+看到這個狀況可能較會得到相對比較少的值
+
+因為 alien 變得比較少而且屏障消失了
+
+這是屏障，屏障消失了，所以你可能很快就會死，分數就比較少
+
+總之 Actor 跟 Critic 可以合在一起 train
+
+合在一起 train 的好處就是簡單講這樣比較強這樣子
+
+這個不一定要在這堂課解釋完
+
+永遠可以留到下學期 MLDS 再講這樣子
+
+最後這後面還有很多
+
+最後只想 demo 一下到底如果用 Actor Critic 這種方法
+
+可以做到什麼樣的地步
+
+現在用 Actor Critic 這些東西大家都在玩 3D 遊戲了
+
+這個就是 machine 自己 learn 的
+然後它會走它沒有看過的迷宮
+
+它會知道要去吃綠色的平果
+
+machine 看到的，雖然這是個 3D 遊戲，它看到的就是 pixel，跟我們人一樣
+
+所以用 A3C 可以硬玩這種遊戲
+這個是硬玩一發賽車遊戲
+
+硬開個賽車
+
+它看到的就是 pixel 跟人一樣
+
+我記得它的 reward 是速度，速度越快 reward 就會越高
+
+所以它會拼命想要加速，那撞到東西就會減速，它會避免撞到東西
+
+比如說前面有些車然後它就避開
+
+所以最後的結果是滿驚人的
+
+這學期上課就上到這邊
+
+我本來想要講一個感性的結論
+但是沒有甚麼感性的結論
+
+已經快下課了不太好講甚麼感性的結論
+
+那我想要講一下
+
+其實這學期有個東西沒有教，知道是甚麼嗎
+
+是 Machine Learning 裡面比較偏向統計理論的部分
+
+比如說 VC-dimension
+
+但是電機系未來會有其他課教 Machine Learning 裡面比較統計的部分
+
+就我所知王老師有要開統計與機器學習
+
+但是它會講比較偏向統計理論的東西
+
+所以這學期內容是沒有有關統計理論的部分
+
+然後如果覺得我教的太簡單了
+
+那你就可以去聽王老師的課
+
+如果你覺得我教的太難了，聽不懂
+
+沒有關係，余老師要開機器學習導論是給大學生的
+
+所以以後可以先修機器學習導論
+
+以後電機系會有很多機器學習的課
+
+我上課的內容跟軒田的機器學習的基石還有技法
+
+其實我是盡量有錯開的
+
+就算你是修過基石和技法
+
+相信你在這門課裡面應該也是有聽到不少東西
+
+或者是你之後再去聽基石跟技法
+
+你會發現我講的東西跟軒田講的東西，其實是我盡量做到沒有太多東西重複
+
+這學期上課就上課這邊，謝謝大家
+
+臺灣大學人工智慧中心
+科技部人工智慧技術暨全幅健康照護聯合研究中心
+http://aintu.tw
+
