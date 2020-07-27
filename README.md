@@ -4,4 +4,5 @@
 http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML20.html  
   
 HTML  
-[1. Summary (L1 ~ L5 ML部分+L11)](https://abner0627.github.io/ML-Lecture/Summary/HTML/Summary_Introduction.html)
+[1. Summary Introduction](https://abner0627.github.io/ML-Lecture/Summary/HTML/Summary_Introduction.html)
+[2. Summary_Deep Learning](https://abner0627.github.io/ML-Lecture/Summary/HTML/Summary_Introduction.html)
