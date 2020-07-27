@@ -1,0 +1,644 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Summary (L1 ~ L5 ML部分+L11)</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2716fb9f-37be-49db-8f2d-b9a371be7287" class="page sans"><header><h1 class="page-title">Summary (L1 ~ L5 ML部分+L11)</h1></header><div class="page-body"><p id="497b1655-d631-4abb-9c05-3b0928907256" class="">
+</p><h1 id="08275446-3b1b-4806-b079-3a50f459f99b" class="">緣由</h1><p id="200b1526-3e9a-4a0a-9fd3-1aef25bc2208" class="">在影像辨識中我們期望可以做到輸入為一張圖片，經過一個function之後輸出為那張圖片中物品名稱，由於該function過於複雜人力無法處理，因此誕生了ML的相關技術。</p><h1 id="80aa00fe-88aa-4e84-b427-74c649d4f934" class="">機器學習的步驟</h1><p id="bce361b2-12aa-48ee-a2d9-daf5c39e6474" class="">設計機械學習的流程大致可分簡略分作下列步驟。</p><h2 id="751837bc-19e9-4c60-9c0e-ac2e3c00aac2" class="">一、決定問題的種類</h2><p id="79dda6ab-db64-469d-bfdc-6b06e596782f" class="">首先需要根據想要解決的問題決定要用何種ML的方法進行運用，意即我們所需要的function是什麼樣子，其大致可分作三類。</p><h3 id="80a5e199-9bd6-4569-91de-3b741af3a8b7" class="">1. Regression</h3><p id="58b7e1aa-bbae-46e6-a880-5b5fe4601031" class="">透過給機器多筆training data，透過通過regression找到的function期望他輸出一個scalar（例如預測結果）。</p><h3 id="097c3fb2-5e37-4650-b2e5-88061ad979b6" class="">2. Classification</h3><p id="a9d6ecd9-611a-48cf-adab-a3835107944b" class="">透過training data讓機器學會如何分類輸入的類別，又可分作兩小項。</p><h3 id="73e7661e-c4d8-43fc-a031-262005582fb6" class="">(1) Binary Classification</h3><p id="d1faed68-968a-4ebc-a3ed-9455c1ca33da" class="">讓機器輸出的結果是yes or no。（例如判斷輸入的郵件是不是垃圾郵件）</p><h3 id="7facc131-0e34-422b-9168-aa92b1a64647" class="">(2) Multi-class classification</h3><p id="479514ae-a195-4bf1-98cf-b1224b57b06b" class="">在該項問題中，機器要做的是選擇題，使他給出每一個選項符合輸入類別的機率（例如影像辨識）</p><h3 id="da55d846-6249-4a69-bfff-b3d067375062" class="">3. Structured Learning</h3><p id="a5838fbd-ad52-48b3-88f0-1198751ed656" class="">在Structured Learning裡，我們要機器輸出的是一個有結構性的東西。舉例來說，在人臉辨識的情境中，希望機器能標出不同的人的名稱。</p><h2 id="4ad02bed-cfb4-4d83-abd4-910263a47be7" class="">二、決定Leaning的方法</h2><p id="c1bcfb19-3a49-4eb9-9fb3-b48dd15d6e09" class="">再者我們要考慮要怎麼告訴機器我們需要找什麼樣的function，意即訓練機器的方法。（基於手上的data或是想要達成的目的作決定）</p><h3 id="8045e89e-5b02-4a79-ad3f-d02c133293b4" class="">1. Supervised Learning</h3><p id="f88a47a8-81ac-4745-9865-b0a8e99d812c" class="">用含有大量正確答案的資料告訴機器怎樣的判斷才是正確的。以影像辨識的問題來說，其training data可能有大量貓狗的圖片，並標註其為貓或狗，藉此讓機器知道「貓」與「狗」的不同。</p><h3 id="5b547a63-ff2e-46d8-a1b7-b1de1bcb9716" class="">2. Semi-supervised Learning</h3><p id="7480d6dc-8682-47ff-afde-44372ac129f4" class="">在training set內有少量的labeled data，又有大量的unlabeled data。在Semi-supervised Learning的技術裡面，這些沒有labeled的data，對機器學習也是有幫助的。</p><h3 id="5d5ac55d-0ee0-4183-9f54-79e5bd3571e9" class="">3. Unsupervised Learning</h3><p id="308a3008-bcdd-4cfa-8535-90ed8ae1d74d" class="">希望機器學到無師自通，在完全沒有任何label的情況下，機器到底能學到什麼樣的知識。例如給機器大量動物的圖片希望他能學會「貓」與「狗」的概念。</p><h3 id="cdae0b92-dddd-4040-984f-a20790d19738" class="">4. Transfer Learning</h3><p id="25e43e26-ea0b-4c1c-93e2-523276ee6edb" class="">同樣只有少量的有labeled的data；但是我們現在有大量的不相干的data（不是貓和狗的圖片，而是一些其他不相干的圖片），在這些大量的data裡面，它可能有label也可能沒有label。</p><p id="8ccb3c6d-9203-4ee3-a531-ceaae75c74da" class="">該技術要解決的問題是，這一堆不相干的data可以對結果帶來什麼樣的幫助。</p><h3 id="c446d2a8-4fdb-4160-8772-e7d54062ba56" class="">5. Reinforcement Learning</h3><p id="e3ae8654-cb06-4677-9cd0-7b5782f6a818" class="">在該技術中我們沒有告訴機器正確的答案是什麼，機器最終得到的只有一個分數，就是它做的好還是不好，但他不知道自己到底哪裡做的不好。其特點是learning from critics。</p><h2 id="7e567b5c-dad6-4a23-af08-24c30f62d6da" class="">三、限定Model的範圍</h2><p id="9af9a3f0-14fb-473e-8a34-3170faa88ce9" class="">在讓機器怎麼找出想要的function之前我們需要限定model的搜尋範圍，讓機器在限定的model內找出最好的一個。</p><h3 id="068b95ad-7e07-43b3-ba52-7b8ce4b8ce5a" class="">1. Linear Model</h3><p id="ff2c6420-f124-4b70-af78-5122a119f177" class="">最簡單的model：</p><figure id="53782b48-5111-4489-bacb-83b3aaec8ff5" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>y</mi><mi>i</mi></msub><mtext> </mtext><mo>=</mo><mtext> </mtext><msub><mi>w</mi><mi>n</mi></msub><msubsup><mi>x</mi><mi>i</mi><mi>n</mi></msubsup><mtext> </mtext><mo>+</mo><mtext> </mtext><msub><mi>w</mi><mrow><mo stretchy="false">(</mo><mi>n</mi><mtext> − </mtext><mn>1</mn><mo stretchy="false">)</mo></mrow></msub><msubsup><mi>x</mi><mi>i</mi><mrow><mo stretchy="false">(</mo><mi>n</mi><mtext> − </mtext><mn>1</mn><mo stretchy="false">)</mo></mrow></msubsup><mtext> </mtext><mo>+</mo><mtext> </mtext><mo>…</mo><mtext> </mtext><mo>+</mo><mtext> </mtext><mi>b</mi></mrow><annotation encoding="application/x-tex">y_i = w_nx_i^n + w_{(n − 1)}x_i^{(n − 1)} + … + b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"> </span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9613919999999999em;vertical-align:-0.247em;"></span><span class="mord"> </span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-2.4530000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.247em;"><span></span></span></span></span></span></span><span class="mord"> </span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.4em;vertical-align:-0.3551999999999999em;"></span><span class="mord"> </span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.34480000000000005em;"><span style="top:-2.5198em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mathdefault mtight">n</span><span class="mord mtight"> </span><span class="mord mtight">−</span><span class="mord mtight"> </span><span class="mord mtight">1</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3551999999999999em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.0448em;"><span style="top:-2.4231360000000004em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span><span style="top:-3.2198em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mathdefault mtight">n</span><span class="mord mtight"> </span><span class="mord mtight">−</span><span class="mord mtight"> </span><span class="mord mtight">1</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.276864em;"><span></span></span></span></span></span></span><span class="mord"> </span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord"> </span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner">…</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"> </span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord"> </span><span class="mord mathdefault">b</span></span></span></span></span></div></figure><blockquote id="49fce5cb-7041-4a98-b53b-d02ea4ce7ad8" class="">優：結構簡單、可以很快地找出best function、運算速度快、容易設計。</blockquote><blockquote id="e0b4c5be-65d1-4694-b49a-629533594646" class="">缺：在處理複雜的問題上表現較差，需要feature transform。</blockquote><h3 id="d87f80c8-4ada-4894-af1a-faed2248a532" class="">2. Non-linear Model</h3><p id="7bfb2ab8-b033-49ed-9570-72ca59e4bd5e" class="">最常用的model，其常見類別有下列各項。</p><h3 id="db44365a-5e64-43aa-a82c-a35b51c2f25a" class="">(1) SVM</h3><p id="63c97dad-7940-45a7-86e9-5ca074990f92" class="">
+</p><h3 id="2926d2a7-cf3a-40b1-aeb2-e53d6d606df7" class="">(2) Decision Tree</h3><h3 id="9f60922b-8ae5-4e55-8067-a9d2a2d8eee0" class="">(3) K-NN</h3><h3 id="c0b2bb9a-74ec-4cec-8d1e-555a7d98584e" class="">(4) Generative Model</h3><p id="196aaa5d-6a0d-430c-8b69-fc50bce495e3" class="">用於classification的問題，由於在該問題中單純透過機器分類對或錯定義出來的loss function無法微分（不能用gradient descent），因此採用機率的觀點來看待。
+意即去計算input屬於各個class的機率 P(Ci|xi)。
+在計算P(Ci|xi)時，我們須知P(xi|Ci)的機率，故再將training data的distribution假設為下列方法其一：</p><h3 id="c1b3c8d7-3a40-483d-8e2b-5b512cc1f526" class="">a. Naive Bayes Classifier</h3><p id="ff7885a1-c7ae-4db6-85e0-b4fa4f856c91" class="">假設每一個dimension的分佈函數都是一維的Gaussian distribution，使其covariance matrix變成diagonal。</p><blockquote id="901d7df2-a5b1-4126-b3b2-e1c04ce6b414" class="">優：減少需要的參數量</blockquote><blockquote id="311da774-c770-4e9f-8b5b-c5856869ce4d" class="">缺：若feature之間不是相互獨立的，其bias就會很大。</blockquote><h3 id="d567bb6d-06a4-4b67-bb0e-d2c649d0f2bf" class="">b. Gaussian Distribution</h3><p id="2e501053-ddc8-4193-8833-4a02cc4d953f" class="">將training data的distribution用μ(mean)與Σ(covariance)表示。</p><h3 id="1cd53707-fc57-4624-a809-36d2a470966b" class="">c. Bernoulli Distribution</h3><blockquote id="58e8c99d-4834-4218-8a5d-f2dc664aa44e" class="">優：由於假設了distribution的形式，因此可以補足data的不足。
+　　受有問題的data影響較小。
+　　priors probabilities和class-dependent probabilities可從不同的來源獲得。
+　　→減少data的收集量→把prior預測地更精確。</blockquote><blockquote id="f7ef5caa-a6e4-4df9-870c-e117b7481ab4" class="">缺：表現較Discriminative Model差。</blockquote><h3 id="c8a38d14-bf49-48ba-848a-70131eb43dd5" class="">(5) Discriminative Model (Logistic Regression)</h3><p id="1e10eecc-4d1d-435f-afea-13e88afa8481" class="">同樣用於classification的問題。
+進一步假設Gaussian Distribution 中的所有class都共用一個covariance，使其變成linear的形式，同樣由w(weight)與b(bias)控制，最後再經過sigmoid function處理。</p><blockquote id="609d4ade-55c8-4e0d-9317-18c9647a8731" class="">優：一般表現較Generative Model好。</blockquote><blockquote id="e9066ab8-c737-486e-ab77-613edd17517d" class="">缺：很依靠training data，因此受有問題的data影響較大。
+　　對feature分佈不好劃分的情況需使用Feature Transformation。</blockquote><blockquote id="753cf288-4d3f-4068-bfc5-fe2492cbe48d" class="">將多個Logistic Regression串接起來讓機器自己產生Transformation
+→Deep Learning</blockquote><h3 id="72e8606a-a2d9-43c5-b45a-d8170d1c4f96" class="">(6) Neural Network (Deep Learning)</h3><p id="7ed68cf1-abc0-485a-8013-e51823dbd9d7" class="">可想成將多個單一的function連接起來，前一個輸出為後者的輸入，通常分作input layer、hidden layer與output layer。</p><blockquote id="8baa6fe0-700e-40cb-89a1-68de3e2e6d41" class="">優：適合處理人類較為直覺的任務，意即無法很明確extract feature的問題。
+　　→影像辨識、語音辨識。</blockquote><blockquote id="dbba078a-a241-434c-a25c-32d0977ab258" class="">　　Modularization
+　　→將每個classifier的任務細分使需要的training data變少。</blockquote><blockquote id="7664ba97-a74b-4c88-919e-e8832d69f202" class="">　　End-to-end Learning
+　　→只給model input和output，而不告訴它中間每一個
+　　function要怎麼分工，讓機器自己去學，使人力變少。　</blockquote><blockquote id="fbc88bab-438a-423a-a5a2-f49b5860146e" class="">　　處理input特徵相似但output類別差很多或者相反的情況，其表現較好。</blockquote><blockquote id="f74ac740-4e5f-4c29-b4e0-378e09751785" class="">缺：結構複雜，不容易設計，且運算時間較長，通常會用GPU加速。</blockquote><h2 id="345a38a6-b3a2-47e7-a39f-9b7abdd3a0d4" class="">四、從範圍內找出好的function</h2><p id="43acf009-6aba-4011-bced-a765c11a6182" class="">訓練時機器會從決定好的model類型中透過定義loss function，找出最適合的function (or network)。依據問題的種類其長相不同，該課程目前為止以下列兩項最常見。</p><h3 id="f5a0b3a8-d253-4cc9-9e41-b09b0ae2c8f2" class="">1. Square Error</h3><figure id="3f2de363-9ce2-49c1-a57b-33611c95458f" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mo stretchy="false">(</mo><mi>f</mi><mo stretchy="false">)</mo><mo>=</mo><munder><mo>∑</mo><mi>n</mi></munder><mo stretchy="false">(</mo><msup><mover accent="true"><mi>y</mi><mo>^</mo></mover><mi>n</mi></msup><mo>−</mo><mi>f</mi><mo stretchy="false">(</mo><msubsup><mi>x</mi><mi>i</mi><mi>n</mi></msubsup><mo stretchy="false">)</mo><msup><mo stretchy="false">)</mo><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">L(f)=\sum_{n} (\hat{y}^n-f(x_i^n))^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">L</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.3000100000000003em;vertical-align:-1.250005em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.050005em;"><span style="top:-1.8999949999999999em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span style="top:-3.0500049999999996em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.250005em;"><span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.69444em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.19444em;"><span class="mord">^</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.1141079999999999em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-2.4530000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.247em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span></div></figure><p id="9193b340-724a-4308-bd74-cc7b7b62256e" class="">適合用於regression的問題，意即該輸出僅有scalar，基於training data所作的數值預測。</p><blockquote id="af681336-ad59-4dd7-9762-6b032a3f16f9" class="">優：容易微分使用gradient descent找optimal point。</blockquote><blockquote id="4e505b83-b515-4ed4-ae04-b5d369569b47" class="">缺：距離目標遠的時候，微分也是非常小的，移動的速度非常慢，容易卡住。</blockquote><h3 id="e66b6d48-96a2-4c74-aff3-4f823f81daa5" class="">2. Cross Entropy</h3><figure id="797739dd-c850-48e2-b01f-11ab5ce86b09" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mo stretchy="false">(</mo><mi>f</mi><mo stretchy="false">)</mo><mo>=</mo><munder><mo>∑</mo><mi>n</mi></munder><mi>l</mi><mo stretchy="false">(</mo><mi>f</mi><mo stretchy="false">(</mo><msubsup><mi>x</mi><mi>i</mi><mi>n</mi></msubsup><mo stretchy="false">)</mo><mo separator="true">,</mo><msup><mover accent="true"><mi>y</mi><mo>^</mo></mover><mi>n</mi></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">L(f)=\sum_{n} l(f(x_i^n), \hat{y}^n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">L</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.3000100000000003em;vertical-align:-1.250005em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.050005em;"><span style="top:-1.8999949999999999em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span style="top:-3.0500049999999996em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.250005em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-2.4530000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.247em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.69444em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.19444em;"><span class="mord">^</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span></div></figure><figure id="1626406f-19b7-4b82-9cb5-a05f10faced1" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi><mo stretchy="false">(</mo><mi>f</mi><mo stretchy="false">(</mo><msup><mi>x</mi><mi>n</mi></msup><mo stretchy="false">)</mo><mo separator="true">,</mo><msup><mover accent="true"><mi>y</mi><mo>^</mo></mover><mi>n</mi></msup><mo stretchy="false">)</mo><mo>=</mo><mo>−</mo><mo stretchy="false">[</mo><mover accent="true"><mi>y</mi><mo>^</mo></mover><mi>ln</mi><mo>⁡</mo><mrow><mi>f</mi><mo stretchy="false">(</mo><msup><mi>x</mi><mi>n</mi></msup><mo stretchy="false">)</mo></mrow><mo>+</mo><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><msup><mover accent="true"><mi>y</mi><mo>^</mo></mover><mi>n</mi></msup><mo stretchy="false">)</mo><mi>ln</mi><mo>⁡</mo><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>f</mi><mo stretchy="false">(</mo><msup><mi>x</mi><mi>n</mi></msup><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">l(f(x^n),\hat{y}^n)=-[\hat{y}\ln{f(x^n)}+(1-\hat{y}^n)\ln(1-f(x^n))]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.69444em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.19444em;"><span class="mord">^</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">−</span><span class="mopen">[</span><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.69444em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.19444em;"><span class="mord">^</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop">ln</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span><span class="mclose">)</span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.69444em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.19444em;"><span class="mord">^</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop">ln</span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mclose">)</span><span class="mclose">]</span></span></span></span></span></div></figure><p id="432c017b-f27c-4658-b373-43151d31eb18" class="">適合用於classification的問題，分析各選項的機率。</p><blockquote id="f1f201dd-5b7c-4b9f-87dc-77f5769c6c32" class="">優：距離目標越遠，微分值就越大，參數update的時候變化量就越大。</blockquote><h2 id="a91eecfa-1f0a-493e-a182-611efda14cff" class="">五、找出最小的Loss Function</h2><p id="295bb030-13a7-44e1-a8e1-742a5480177e" class="">透過不斷更新參數找出使loss function最小的一組參數。最常見有下列幾種方法。</p><h3 id="c33d7688-138b-490f-a8a6-bff008632def" class="">1. Gradient Descent</h3><p id="fd752706-0bae-43c2-a14d-9604bf10d565" class="">隨機選取一組起始的參數，透過計算參數的gradient乘上learning rate的值更新參數。</p><figure id="8ce99373-ac54-4776-88f2-749b89d6d752" class="image"><a href="Summary%20(L1%20~%20L5%20ML%E9%83%A8%E5%88%86+L11)%208ce99373ac54477688f2749b89d6d752/image1.png"><img style="width:222px" src="Summary%20(L1%20~%20L5%20ML%E9%83%A8%E5%88%86+L11)%208ce99373ac54477688f2749b89d6d752/image1.png"/></a></figure><blockquote id="569b67d5-5c57-4fb7-9ff4-3c08e6d8dda9" class="">缺：learning rate過大過小都會影響其表現。</blockquote><blockquote id="484d12ff-787c-415d-882f-dec46b5c5fe8" class="">　　無法針對每個參數分配一個learning rate。
+　　gradient越大，離最低點越遠在有多個參數的情況下不一定成立。
+　　可能不是停在global minimum→不適用於非convex。</blockquote><h3 id="48486908-534e-444e-a3e9-f5a625ffe4fb" class="">2. Adagrad</h3><p id="349aee43-435a-4132-88c7-39a24562151a" class="">將learning rate除以root mean square，使不同參數的learning rate分開考慮。</p><figure id="37ff793a-4f04-4183-819b-7f8383f85814" class="image"><a href="Summary%20(L1%20~%20L5%20ML%E9%83%A8%E5%88%86+L11)%208ce99373ac54477688f2749b89d6d752/image2.png"><img style="width:214px" src="Summary%20(L1%20~%20L5%20ML%E9%83%A8%E5%88%86+L11)%208ce99373ac54477688f2749b89d6d752/image2.png"/></a></figure><blockquote id="2dce917e-5b40-40a6-9d52-207897656bf7" class="">優：針對參數客製化。</blockquote><blockquote id="f3ed66a6-0c7e-40db-b116-2d37d02f7a04" class="">　　在不增加任何額外運算的前提下，想辦法去估測二次微分的值。</blockquote><blockquote id="3c24466c-1d4c-4a27-8420-e55ed3e798dc" class="">缺：速度慢。</blockquote><h3 id="375dd311-5fb9-44c1-b779-2c40e3ed1bbb" class="">3. Stochastic Gradient Descent</h3><p id="5ffd2f74-9adb-409d-8284-f1b73b6bab77" class="">隨機看到一個樣本點就update一次，其loss function不是所有樣本點的error平方和，
+而是這個隨機樣本點的error平方。</p><blockquote id="3ff30d72-817c-439f-8a87-61c83cc2610e" class="">優：速度較快。</blockquote></div></article></body></html>
