@@ -15,12 +15,13 @@ import torch.nn as nn
 
 
 #%% Read in training set
-raw_data = pd.read_csv('../data/train.csv',encoding='big5')
+fpath = 'C:\\Users\Abner\Documents\ML_HW_Data/01'
+raw_data = pd.read_csv(fpath + '/train.csv',encoding='big5')
 # header    參見:https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html?highlight=header
 raw_data = raw_data.to_numpy()
 # 將dataframe轉為array
 data = raw_data[:,3:]
-# 取其第3個column之後的數值
+# 取其第4個column之後的數值
 data[data=="NR"] = 0
 # 將NaN定為0
 month_data = {}  ## Dictionary (key:month , value:data)
@@ -38,7 +39,7 @@ x = np.empty(shape = (12 * 471 , 18 * 9),dtype = float)
 # 宣告x為前9個小時18個空氣成分的data
 # 每個月會有480個小時，每9小時形成一個data(1~9 2~10 3~11...471~480)，每個月會有471個data
 y = np.empty(shape = (12 * 471 , 1),dtype = float)
-# 宣告y為前9個小時PM2.5的data
+# 宣告y為第10個小時PM2.5的data
 
 for month in range(12): 
     for day in range(20): 
@@ -62,7 +63,6 @@ for i in range(len(x)): #12 * 471
         # len(x)為x的column個數
         if std_x[j] != 0:
             x[i][j] = (x[i][j] - mean_x[j]) / std_x[j]
-x = np.concatenate((np.ones([12 * 471, 1]), x), axis = 1).astype(float)
 
 #%% Functions
 # model
@@ -74,18 +74,18 @@ def lossfunc(ypre, ytar):
     return torch.sqrt(MSE(ypre, ytar))
 
 #%% Initialize parameters
-dim = 18 * 9 + 1
+dim = 18 * 9
 w = torch.randn((dim, 1), requires_grad=True)
 b = torch.randn(1, requires_grad=True)
 lr = 2.5
 ep = 1000
+x_in = torch.from_numpy(x).float()
+ytar = torch.from_numpy(y)
 
 #%% Optimizer
 optimizer = optim.Adagrad([w, b], lr)
 
 #%% Training
-x_in = torch.from_numpy(x).float()
-ytar = torch.from_numpy(y)
 
 for t in range(ep):
     # Set the gradients to 0.
@@ -106,8 +106,8 @@ w_array = w.detach().numpy()
 np.save('weight.npy', w_array)
 
 #%% Testing
-testdata = pd.read_csv('../data/test.csv', header = None, encoding = 'big5')
-test_data = testdata.iloc[:, 2:]
+testdata = pd.read_csv(fpath + '/test.csv', header = None, encoding = 'big5')
+test_data = testdata.iloc[:, 2:]    #去除文字
 test_data[test_data == 'NR'] = 0
 test_data = test_data.to_numpy()
 test_x = np.empty([240, 18*9], dtype = float)
@@ -125,5 +125,5 @@ test_x = np.concatenate((np.ones([240, 1]), test_x), axis = 1).astype(float)
 #%% Prediction
 w = np.load('weight.npy')
 ans_y = np.dot(test_x, w)
-np.save('ansy.npy', ans_y)
+# np.save('ansy.npy', ans_y)
 np.savetxt("ansy.csv", ans_y, delimiter=",")
