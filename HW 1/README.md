@@ -11,11 +11,11 @@
 
 註：資料前處理的部分皆參考sample code
 
-# Purpose
+## Purpose
 
 根據前9個小時的feature（共18項觀測指標），預測第10個小時的PM2.5數值。
 
-# Data
+## Data
 
 主要分train.csv與test.csv，前者是豐原站每個月的前 20 天所有資料；
 後者則是從豐原站剩下的資料中取樣出來。
