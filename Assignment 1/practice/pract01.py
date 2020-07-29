@@ -78,7 +78,7 @@ dim = 18 * 9 + 1
 w = torch.randn((dim, 1), requires_grad=True)
 b = torch.randn(1, requires_grad=True)
 lr = 2.5
-ep = 4000
+ep = 1000
 
 #%% Optimizer
 optimizer = optim.Adagrad([w, b], lr)
