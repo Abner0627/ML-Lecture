@@ -1,6 +1,6 @@
 # HW 1
 
-> data:  
+> data & kaggle:  
 [https://www.kaggle.com/c/ml2020spring-hw1](https://www.kaggle.com/c/ml2020spring-hw1)
 
 > into slide:  
