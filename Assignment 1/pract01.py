@@ -15,7 +15,7 @@ import torch.nn as nn
 
 
 #%% Read in training set
-raw_data = pd.read_csv('C:\\Users\Lab\Documents\GitHub\ML-Lecture\Assignment 1\data/train.csv',encoding='big5')
+raw_data = pd.read_csv('../data/train.csv',encoding='big5')
 # header    參見:https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html?highlight=header
 raw_data = raw_data.to_numpy()
 # 將dataframe轉為array
@@ -106,7 +106,7 @@ w_array = w.detach().numpy()
 np.save('weight.npy', w_array)
 
 #%% Testing
-testdata = pd.read_csv('C:\\Users\Lab\Documents\GitHub\ML-Lecture\Assignment 1\data/test.csv', header = None, encoding = 'big5')
+testdata = pd.read_csv('../data/test.csv', header = None, encoding = 'big5')
 test_data = testdata.iloc[:, 2:]
 test_data[test_data == 'NR'] = 0
 test_data = test_data.to_numpy()
