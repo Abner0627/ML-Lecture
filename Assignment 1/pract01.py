@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Apr 15 14:38:39 2020
-Sample code
-@author: https://colab.research.google.com/drive/131sSqmrmWXfjFZ3jWSELl8cm0Ox5ah3C
+Created on Wed Jul 29 11:52:56 2020
+Data processing is same as sample code
+@author: Lab
 """
 
 #%% Import package
 import numpy as np
 import pandas as pd
-import math
+import torch
+import torch.optim as optim
+import torch.nn as nn
 # import csv
+
 
 #%% Read in training set
 raw_data = pd.read_csv('C:\\Users\Lab\Documents\GitHub\ML-Lecture\Assignment 1\data/train.csv',encoding='big5')
@@ -28,6 +31,7 @@ for month in range(12):
         sample[:, day * 24 : (day + 1) * 24] = data[18 * (20 * month + day) : 18 * (20 * month + day + 1), :]
         # 於sample放入第month月第day天的18筆空氣成分24小時的data
     month_data[month] = sample
+
 
 #%% Preprocess
 x = np.empty(shape = (12 * 471 , 18 * 9),dtype = float)
@@ -58,53 +62,51 @@ for i in range(len(x)): #12 * 471
         # len(x)為x的column個數
         if std_x[j] != 0:
             x[i][j] = (x[i][j] - mean_x[j]) / std_x[j]
-x
-
-
-x_train_set = x[: math.floor(len(x) * 0.8), :]
-# math.floor(x)為對x取整數
-y_train_set = y[: math.floor(len(y) * 0.8), :]
-x_validation = x[math.floor(len(x) * 0.8) : , :]
-y_validation = y[math.floor(len(y) * 0.8) : , :]
-# 分成train_set與validation
-'''
-print(x_train_set)
-print(y_train_set)
-print(x_validation)
-print(y_validation)
-print(len(x_train_set))
-print(len(y_train_set))
-print(len(x_validation))
-print(len(y_validation))
-'''
-#%% Training
-dim = 18 * 9 + 1
-# 因為常數項的存在，所以 dimension (dim) 需要多加一欄
 x = np.concatenate((np.ones([12 * 471, 1]), x), axis = 1).astype(float)
-# np.concatenate 拼接矩陣    參見:https://numpy.org/doc/stable/reference/generated/numpy.concatenate.html?highlight=concatenate#numpy.concatenate
-# astype 修改類別    參見:https://numpy.org/doc/stable/user/basics.types.html?highlight=astype
-# np.ones 單位矩陣    參見:https://numpy.org/doc/stable/reference/generated/numpy.ones.html?highlight=ones#numpy.ones
-w = np.zeros([dim, 1])
-# 設定weight，一開始為0矩陣
-learning_rate = 100
-iter_time = 1000
-# 更新1000參數
-adagrad = np.zeros([dim, 1])
-eps = 0.0000000001
-# eps 項是避免 adagrad 的分母為 0 而加的極小數值
-for t in range(iter_time):
-    loss = np.sqrt(np.sum(np.power(np.dot(x, w) - y, 2))/471/12)#rmse
-    if(t%100==0) or t == iter_time - 1:
-        print(str(t) + ":" + str(loss))
-        # print出第n*100次的loss
-    gradient = 2 * np.dot(x.transpose(), np.dot(x, w) - y) #dim*1
-    adagrad += gradient ** 2
-    w = w - learning_rate * gradient / np.sqrt(adagrad + eps)
-np.save('weight_sample.npy', w)
-w
+
+#%% Functions
+# model
+def model(x):
+    return x.mm(w) + b
+
+def lossfunc(ypre, ytar):
+    MSE = nn.MSELoss()
+    return torch.sqrt(MSE(ypre, ytar))
+
+#%% Initialize parameters
+dim = 18 * 9 + 1
+w = torch.randn((dim, 1), requires_grad=True)
+b = torch.randn(1, requires_grad=True)
+lr = 2.5
+ep = 4000
+
+#%% Optimizer
+optimizer = optim.Adagrad([w, b], lr)
+
+#%% Training
+x_in = torch.from_numpy(x).float()
+ytar = torch.from_numpy(y)
+
+for t in range(ep):
+    # Set the gradients to 0.
+    optimizer.zero_grad()
+    # Compute the current predicted y's from x_dataset
+    ypre = model(x_in).double()
+    # See how far off the prediction is
+    loss = lossfunc(ypre, ytar)
+    # Compute the gradient of the loss with respect to A and b.
+    loss.backward()   
+    # Update A and b accordingly.
+    optimizer.step()
+    
+    if (t%100 == 0 or t == ep - 1):
+        print(str(t) + ":" + str(loss.detach().numpy()))
+
+w_array = w.detach().numpy()
+np.save('weight.npy', w_array)
 
 #%% Testing
-testdata = pd.read_csv('data/test.csv', header = None, encoding = 'big5')
+testdata = pd.read_csv('C:\\Users\Lab\Documents\GitHub\ML-Lecture\Assignment 1\data/test.csv', header = None, encoding = 'big5')
 test_data = testdata.iloc[:, 2:]
 test_data[test_data == 'NR'] = 0
 test_data = test_data.to_numpy()
@@ -118,9 +120,10 @@ for i in range(len(test_x)):
             test_x[i][j] = (test_x[i][j] - mean_x[j]) / std_x[j]
 # Normalization
 test_x = np.concatenate((np.ones([240, 1]), test_x), axis = 1).astype(float)
-test_x
+
 
 #%% Prediction
-w = np.load('weight_sample.npy')
+w = np.load('weight.npy')
 ans_y = np.dot(test_x, w)
-np.save('ansy_sample.npy', ans_y)
+np.save('ansy.npy', ans_y)
+np.savetxt("ansy.csv", ans_y, delimiter=",")
