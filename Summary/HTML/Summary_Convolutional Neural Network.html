@@ -1,0 +1,686 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Summary_Convolutional Neural Network</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="afd76cfa-fb67-4ad4-9d1a-5c9f0a69494a" class="page sans"><header><h1 class="page-title">Summary_Convolutional Neural Network</h1></header><div class="page-body"><nav id="54f24a73-cf3c-4983-b084-aaf90a5d22af" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#cda1ab8d-6092-4f45-a2d2-da24344d7f3a">Convolutional Neural Network (CNN)</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#76c60526-0293-401d-ba5e-ca8870e449fd">Three Property for CNN</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#63d67f66-1059-4859-ae4c-77c980bfd669">一、Some Patterns Are Much Smaller Than the Whole Image</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#bd04786e-5f3b-4490-a53f-92902c031f26">二、The Same Patterns Appear in Different Regions</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#04c9cf4e-a285-4c1c-88a1-0cf18f9dc7ce">三、Subsampling the Pixels Will Not Change the Object</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1702fa85-ba74-4eb1-9989-c3f2e14c08d0">The Whole CNN Structure</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0b4331f1-134d-44bc-936a-b0d55052e1b2">一、Convolution Layer</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#06d5467a-b09c-4f8d-9216-fc98a6dbc6f4">1. Convolution VS. Fully Connected</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#3c59d9db-253c-4c32-a504-db686f625d77">2. 補充：如何train此network</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c8ccad32-9f06-4f6d-b34a-aa57eb2a0b35">二、Max Pooling</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#50866318-53a5-4c29-b67f-a45fa7424e70">三、Flatten</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#e4b0c970-4c69-4ef0-a5c3-133f53cc140e">What Does CNN Learn？</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e5cbb432-7c19-4a27-89f5-005429267932">一、Filter</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a4b5731c-4c6b-4edb-a865-8c0811408231">二、Neuron</a></div></nav><h1 id="cda1ab8d-6092-4f45-a2d2-da24344d7f3a" class="">Convolutional Neural Network (CNN)</h1><p id="c5c665b0-0548-4619-a2a9-f7a1bd08b887" class="">進行圖像處理時，我們往往需要將其拉成vector當作input進行分析，
+然而即便是僅有100*100 pixel的彩色圖片，也需要100*100*3 dims.的vector才能表示這張圖片。
+因此直接用一般的fully connected的feedforward network來做圖像處理的時候，
+往往會需要太多的參數。這種時候會傾向使用CNN來解決該問題。</p><h1 id="76c60526-0293-401d-ba5e-ca8870e449fd" class="">Three Property for CNN</h1><p id="36fd1467-1c14-4561-b8c1-fe9b866c9b77" class="">並非所有參數過多的DNN問題都能用CNN簡化，
+僅有在處理的問題具有圖像的特性時，CNN才能成立，主要有三項假設。</p><h2 id="63d67f66-1059-4859-ae4c-77c980bfd669" class="">一、Some Patterns Are Much Smaller Than the Whole Image</h2><p id="43c8b349-b29e-4f66-b23e-14c1ffc28366" class="">在圖像處理的問題中，第一層hidden layer的neuron主要的工作是偵測有沒有一種pattern
+（圖案樣式）出現該image中。</p><p id="0d7adcc3-2318-49a8-a256-4f352bd428c1" class="">然而大部分的pattern其實是比整張image要小的，因此對一個neuron來說，
+其實並不需要看整張image才能偵測有沒有某一個pattern出現，
+只需要看這張image的一小部分即可。</p><p id="4dc12992-b572-42b2-80f4-c0ecc005b8ae" class="">例如要確認一張image中的生物是否為鳥類，第一層的hidden layer可能就會去找有沒有「鳥喙」出現，然而「鳥喙」只會出現在鳥的頭部，因此沒有必要看完整張image，
+只需要限定在該生物的頭部即可。</p><figure id="f31048fc-2973-4325-b228-1af341b5fe74" class="image"><img style="width:686px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Convolutional%20Neural%20Network/image1.png"/></a></figure><h2 id="bd04786e-5f3b-4490-a53f-92902c031f26" class="">二、The Same Patterns Appear in Different Regions</h2><p id="3bff53d8-ddf7-44e8-8a1c-a1437e433d3d" class="">同樣的pattern，可能會出現在image的不同地方，但是它們有同樣的形狀且代表的是同樣的含義，
+因此它們也可以用同樣的neuron、同樣的參數，被同一個detector檢測出來。
+所以我們可以要求這些功能幾乎一致的neuron共用一組參數，
+它們share同一組參數就可以幫助減少總參數的量。</p><p id="48d39b31-dc97-490c-ba6b-1dba4802ae0c" class="">舉例來說，我們已經知道找到「鳥喙」就能代表有一隻鳥在image中，無關他所在的位置，
+因此並不需要訓練兩個不同的detector去分別偵測image的各個地方有沒有「鳥喙」這件事情。</p><figure id="0291f4a7-1041-4ca5-ba14-050ed8e7dc71" class="image"><img style="width:669px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Convolutional%20Neural%20Network/image2.png"/></a></figure><h2 id="04c9cf4e-a285-4c1c-88a1-0cf18f9dc7ce" class="">三、Subsampling the Pixels Will Not Change the Object</h2><p id="42a6421d-dfd1-4d03-821c-c215309eaf7c" class="">假設對一張image做subsampling，例如把它奇數行與偶數列的pixel拿掉，
+image就可以變成原來的十分之一大小，而且並不會影響人對這張image的理解。
+所以我們可以利用subsampling這個概念把image變小，從而減少需要用到的參數量。</p><figure id="78135769-3d36-41f2-9b40-d50caf400d96" class="image"><img style="width:665px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Convolutional%20Neural%20Network/image3.png"/></a></figure><h1 id="1702fa85-ba74-4eb1-9989-c3f2e14c08d0" class="">The Whole CNN Structure</h1><p id="c7d13e1d-6bf7-4a13-8e8c-0354fe850636" class="">綜上所述，我們可以利用這些特性建立出CNN的結構藉此減少參數量。</p><p id="4c74ea73-c8b3-4da3-9495-65a3210d2522" class="">首先input一張image以後，它會先通過Convolution的layer，接下來再做Max Pooling，
+上述的兩層layer可以疊加多次，最後透過Flatten layer拉成vector後再丟到一般的FC network裡面。</p><figure id="d42433bb-65c9-49fa-b6cc-a6fe581b24fd" class="image"><img style="width:693px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Convolutional%20Neural%20Network/image4.png"/></a></figure><figure id="cdf2f39a-9773-430d-bafd-2ba1cc9f87f6" class="image"><img style="width:700px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Convolutional%20Neural%20Network/image5.png"/></a></figure><h2 id="0b4331f1-134d-44bc-936a-b0d55052e1b2" class="">一、Convolution Layer</h2><p id="6d40b03c-69f0-4331-bf90-a322dfe739a0" class="">該層layer利用了前述的第一與第二個特性，意即從image中找出特定的pattern，
+並對偵測同一個pattern但偵測範圍不同的neuron共用相同的參數。</p><p id="972e5d61-b2e4-4218-a109-0bee22e71262" class="">假設現在input是一張6*6的黑白圖片，因此每個pixel只需要用一個值來表示，
+在convolution layer裡面，有一堆filter matrix，裡面每一個element的值就是network的參數，
+它們的值都是通過training data學出來的；
+而這邊的每一個filter，其實就等同於是Fully connected layer裡的一個neuron。</p><p id="29a4d319-3e89-49a2-ab46-fd5aa677c3ee" class="">該例中每一個filter 的dim.為3*3，意味著它就是在偵測一個3*3的pattern，當它偵測的時候，
+並不會去看整張image，它只看一個3*3範圍內的pixel，就可以判斷某一個pattern有沒有出現，
+這就考慮了property 1。</p><figure id="bfae305f-d124-4c3c-94b9-43a87f6546de" class="image"><img style="width:671px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Convolutional%20Neural%20Network/Untitled.png"/></a></figure><p id="649441ce-a811-4d4c-83fe-b9a4300e45cf" class="">再者，每個filter都是從image的左上角開始，做一個slide window，每次向右挪動一定的距離，
+該距離就叫做stride（由使用者決定）。</p><p id="b150da0c-63a6-43ff-ba77-1c77026461af" class="">在此例中每次filter停下的時候，就跟image裡對應的3*3的matrix做內積，
+接著再挪動一格 (stride = 1)。直到當它碰到image最右邊的時候，
+就從下一行的最左邊開始重複進行上述操作。</p><p id="bb18acb8-adba-48c7-b56b-72631e04f950" class="">經過一整個convolution的process，最終得到下圖所示的紅色的4*4 matrix。</p><figure id="1202d2f6-55cb-4042-b14f-a640f4cba54b" class="image"><img style="width:669px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Convolutional%20Neural%20Network/image7.png"/></a></figure><p id="eff985b4-6415-47b5-a406-5e93e8fe6ec6" class="">此外以此例的filter 1為例，它斜對角的地方是1,1,1，所以它的工作就是detect有沒有連續的，
+從左上角到右下角的1,1,1出現在這個image裡面，如果有其內積便會呈現最大值（圖中藍色部分）。</p><p id="9f82b2f0-b815-4fc9-8737-6ccece510926" class="">而同一個pattern出現在image左上角的位置和左下角的位置，並不需要用到不同的filter，
+我們用filter 1就可以偵測出來，這就考慮了property 2。</p><p id="42de5b9a-0f1b-4098-b31f-a0618efa3b05" class="">最終經過數個filter處理後得到的多個4*4的matrix我們將其合在一起，
+並稱一片matrix為一個channel，合稱該matrix的集合為Feature Map。</p><figure id="565cad67-54e4-4478-9447-92d6410084db" class="image"><img style="width:683px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Convolutional%20Neural%20Network/image8.png"/></a></figure><p id="015c2c70-40b3-4921-b3a5-3210cc95d601" class="">同理，若今天處理的是彩色圖片的話，則input共有三個channel且filter也有三個channel；
+filter每完成一次detect就會產生三個channel的Feature Map。</p><figure id="8c4efcd5-01a1-499f-8fbb-12311370fb52" class="image"><img style="width:679px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Convolutional%20Neural%20Network/image9.png"/></a></figure><p id="6a2bd3fb-4582-47bb-ba39-61cff086ba1d" class="">然而如果今天同一個pattern它有不同的size，例如input的鳥類有大的鳥喙，也有小的鳥喙，
+則CNN並不能夠自動處理這個問題，需要事先將image經過適當的旋轉、縮放才能使用CNN處理之。</p><h3 id="06d5467a-b09c-4f8d-9216-fc98a6dbc6f4" class="">1. Convolution VS. Fully Connected</h3><p id="016b6e2e-1493-45f4-b3f7-8173f761912f" class="">在進行convolution時，其實就是把fully connected layer的一些weight拿掉。</p><p id="a90c0e8e-ba90-4226-850f-c6df1d3bbb76" class="">如下圖所示，我們把filter放在image的左上角，再去做內積，得到一個值3。</p><p id="ce0d6c9f-10cb-46cc-a8d0-fddcc3ceb43b" class="">這件事情等同於，我們現在把這個image的6*6的matrix拉直變成右邊這個vector。
+然後這些input經過紅色的neuron之後，得到的output是3。</p><p id="023a54e2-3522-44ed-ac81-a59c08200f59" class="">而這個neuron就只有連接到編號為1，2，3，7，8，9，13，14，15的這9個pixel而已，
+其餘pixel的weight皆為0。</p><figure id="d37aa47a-0d85-4fb9-9cf4-d18d0c467590" class="image"><img style="width:700px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Convolutional%20Neural%20Network/image10.png"/></a></figure><p id="a712d985-9858-4286-b21e-05fb9fc4bf52" class="">接著當我們把filter做stride = 1的移動的時候，通過filter和image matrix的內積之後，
+得到另外一個output值-1，我們假設這個-1是另外一個neuron的output，
+對應到編號2，3，4，8，9，10， 14，15，16這9個pixel；
+而他們所連接的與前一個neuron相同顏色的線，
+則表示具有相同的weight（皆是filter matrix的element）。</p><figure id="64b9be0a-52f8-4b81-8ef6-8f018e767057" class="image"><img style="width:700px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Convolutional%20Neural%20Network/image11.png"/></a></figure><h3 id="3c59d9db-253c-4c32-a504-db686f625d77" class="">2. 補充：如何train此network</h3><p id="6640662d-b5e6-49f9-bd23-a3606eeaf088" class="">（節錄自影片逐字檔）</p><p id="3e2e12a7-5eb3-48e1-addf-db208bb4a96f" class="">看到這裡你可能會問，這樣的network該怎麼搭建，又該怎麼去train呢？</p><p id="a69ecded-ecfe-4175-8859-5b0dc01d6e6c" class="">首先，第一件事情就是這都是用toolkit做的，所以你大概不會自己去寫；
+如果你要自己寫的話，它其實就是跟原來的Backpropagation用一模一樣的做法，
+只是有一些weight就永遠是0，你就不去train它，它就永遠是0</p><p id="789f742b-ca67-4aed-856f-fd3e4bc3ae0b" class="">然後，怎麼讓某些neuron的weight值永遠都是一樣呢？
+你就用一般的Backpropagation的方法，對每個weight都去算出gradient，
+再把本來要tight在一起、要share weight的那些weight的gradient平均，
+最後讓他們update同樣值就ok了。</p><h2 id="c8ccad32-9f06-4f6d-b34a-aa57eb2a0b35" class="">二、Max Pooling</h2><p id="cf57b94d-4b7b-4d8c-af41-8536f0a09805" class="">該層layer就是進行subsampling的任務。</p><p id="b2640585-eaa2-45c6-8a1a-204c93f8464d" class="">同樣以上述例子來說，根據filter 1，我們得到一個4*4的matrix，
+再根據filter 2，得到另外一個4 * 4的matrix。</p><p id="a364f802-3bd4-491e-847b-aacec5d61746" class="">接著把這兩個output每四個element分為一組，每一組裡面通過選取平均值或最大值的方式，
+把原來4個value合成一個value，這件事情相當於在image每相鄰的四塊區域內都挑出一塊來檢測。</p><figure id="0bcac5d8-06cd-4393-9682-91b8d0e90963" class="image"><img style="width:688px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Convolutional%20Neural%20Network/image12.png"/></a></figure><h2 id="50866318-53a5-4c29-b67f-a45fa7424e70" class="">三、Flatten</h2><p id="02fb633d-f007-414a-8097-ae7e97669b99" class="">最後Flatten layer的工作就是把feature map拉直，然後丟進一個FC Feedforward network。</p><figure id="ae137cd0-ff89-47e2-b823-635fe90b997d" class="image"><img style="width:590px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Convolutional%20Neural%20Network/image13.png"/></a></figure><h1 id="e4b0c970-4c69-4ef0-a5c3-133f53cc140e" class="">What Does CNN Learn？</h1><p id="92fd788c-dc86-41e3-a523-229908e2c3a6" class="">下圖是用Keras表示CNN的結構的流程圖。</p><figure id="a7a5ce1f-2977-4a2c-99e5-87ce83e20c5c" class="image"><img style="width:649px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Convolutional%20Neural%20Network/image14.png"/></a></figure><figure id="14a8be7d-fee5-443d-b084-a25e5418f6d8" class="image"><img style="width:669px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Convolutional%20Neural%20Network/image15.png"/></a></figure><p id="3aa0e7ab-d150-41dd-ad5c-ef091ca8b383" class="">假設我們想要得知在CNN中機器究竟學到了什麼，可以分成filter與最後丟進的NN的neuron，
+還有output來分析。三者所採用的方式皆相似。</p><h2 id="e5cbb432-7c19-4a27-89f5-005429267932" class="">一、Filter</h2><p id="147bc49b-94b2-47ca-9fc2-deb0bb3697ad" class="">舉上圖例子來說，在第二個convolution layer裡面的50個filter，
+每一個filter的output就是一個11*11的matrix。</p><p id="bab32075-9a23-4442-abed-0d4978d0de85" class="">假設我們現在把第k個filter的output拿出來，如下圖所示。
+這個matrix裡的每一個element，我們叫它<em>a_{</em>ij}^<em>k</em>，上標k表示這是第k個filter，
+下標ij表示它在這個matrix裡的第i個row，第j個column。</p><figure id="fd5aa328-3c44-42b8-9cf6-6bd86a905834" class="image"><img style="width:572px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Convolutional%20Neural%20Network/Untitled%205.png"/></a></figure><figure id="b52f3e40-4a13-4dc9-95c9-95efb436cee5" class="image"></a></figure><p id="d5d6e730-a3e4-43bc-9e04-92a6b070fdc2" class="">接下來我們定義一個叫做Degree of the activation of the k-th filter，
+這個值描述現在input的東西跟第k個filter有多接近，意即它對filter的激活程度有多少。</p><p id="59d61605-a1ce-449a-893e-32ade94eea0d" class="">寫作下列式子：</p><figure id="9f3ed81c-9b65-43a1-a2be-28e220574aac" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>a</mi><mi>k</mi></msup><mo>=</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mn>11</mn></munderover><munderover><mo>∑</mo><mrow><mi>j</mi><mo>=</mo><mn>1</mn></mrow><mn>11</mn></munderover><msubsup><mi>a</mi><mrow><mi>i</mi><mi>j</mi></mrow><mi>k</mi></msubsup></mrow><annotation encoding="application/x-tex">a^k=\sum_{i=1}^{11}\sum_{j=1}^{11}a_{ij}^k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8991079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8991079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:3.2148900000000005em;vertical-align:-1.4137769999999998em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.8011130000000004em;"><span style="top:-1.872331em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.050005em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.3000050000000005em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.277669em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.8011130000000004em;"><span style="top:-1.872331em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.050005em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.3000050000000005em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.4137769999999998em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.899108em;"><span style="top:-2.4530000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span><span style="top:-3.1130000000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.383108em;"><span></span></span></span></span></span></span></span></span></span></span></div></figure><p id="4565abeb-8a64-4d31-8628-320888a10e85" class="">也就是說我們input一張image，然後把這個filter和image進行convolution，
+output的11*11個值全部加起來，當作現在這個filter被activate的程度。</p><p id="58132bb1-f43f-4d93-86e2-85ae127e2d3e" class="">接著找一個image x*，它可以讓我們定義的activation的degree 最大，即：</p><figure id="18112c6a-0adb-4e5f-bab0-fe9b20ecb9fa" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>x</mi><mo>∗</mo></msup><mo>=</mo><mi>arg</mi><mo>⁡</mo><munder><mo><mi>max</mi><mo>⁡</mo></mo><mi>x</mi></munder><msup><mi>a</mi><mi>k</mi></msup></mrow><annotation encoding="application/x-tex">x^*=\arg\max_{x}a^k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.738696em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.738696em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∗</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.5991079999999998em;vertical-align:-0.7em;"></span><span class="mop">ar<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.43056em;"><span style="top:-2.4em;margin-left:0em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span></span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span><span class="mop">max</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.7em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8991079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span></span></span></span></span></div></figure><p id="0be73869-736c-4458-b5ad-123a7903c5a1" class="">該步驟可用gradient ascent實現。</p><p id="9e75f8b3-068e-4ab4-9e4c-9a30f21c695a" class="">所以50個filter理論上可以分別找50張image使對應的activation最大。
+而這些image有一個共同的特徵，它們裡面都是一些反覆出現的某種texture。</p><p id="26bf2561-37d2-4c5d-920e-97a37980a004" class="">比如說下圖第三張image上佈滿了斜條紋，這意味第三個filter的工作就是detect圖上有沒有斜條紋，所以圖中一旦出現一個小小的斜條紋，這個filter就會被activate，相應的output也會比較大。</p><p id="6552ff82-de9d-42be-ac44-135b360e01c9" class="">如果整張image上佈滿這種斜條紋的話，這個時候filter的activation程度是最大的，
+相應的output值也會達到最大。</p><figure id="7b2ebd2c-9967-4922-be68-e80325281dd2" class="image"><img style="width:572px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Convolutional%20Neural%20Network/Untitled%202.png"/></a></figure><p id="327ad91c-9d32-4b9c-bd14-e77fc2849f72" class="">因此每個filter的工作就是去detect某一種pattern，上圖所示的filter所detect的就是不同角度的線條，
+所以今天input有不同線條的話，某一個filter會去找到讓它activation程度最大的匹配對象，
+這個時候它的output就是最大的。</p><h2 id="a4b5731c-4c6b-4edb-a865-8c0811408231" class="">二、Neuron</h2><p id="5c60ae66-034d-452a-8693-e7f75b96ad8a" class="">方法同filter，定義出activation function之後，用gradient ascent的方法去找一張image x，
+把它丟到neural network裡面就讓<em>aj</em>的值可以被maximize。</p><p id="cd6934f7-89eb-4fcd-8a0b-4ee85767a791" class="">結果為下圖所示。</p><figure id="1b4b73f3-ae47-4e27-8f33-f1254e88d82b" class="image"><img style="width:537px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Convolutional%20Neural%20Network/image19.png"/></a></figure><p id="4a5d984b-9342-44bd-a496-3ef3a494b01e" class="">比較與filter所觀察到的情形，此處的image不再只是texture，而是類似一張完整的圖形。</p><p id="645f66c1-babd-4916-a907-c4ed532eb979" class="">那是因為每個filter考慮的只是圖上一部分的vision，所以它detect的是一種texture；
+但是在做完flatten以後，每一個neuron不再是只看整張圖的一小部分，它現在的工作是看整張圖，
+所以對每一個neuron來說， activation最大的image，不再是texture，而是一個完整的圖形。</p><p id="48384a2d-a71c-4126-a39b-0238062576d0" class="">三、Output</p><p id="53b29c65-44eb-4486-9755-1ec2052a5946" class="">同樣的找一張image x，使activation function y*最大。</p><figure id="0376c91d-baf2-460d-9fd9-7fce287dfb82" class="image"><img style="width:576px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Convolutional%20Neural%20Network/Untitled%203.png"/></a></figure><p id="3344d1cd-ad3e-4fc9-a351-c5723eb12892" class="">然而理論上每一個output的每一個dimension對應到一個數字，因此如果去找一張image x，
+讓它對應到數字1的那個output layer，它的neuron的output值最大，
+那這張image顯然應該看起來會像是數字1，但是結果卻並非是如此。</p><p id="245ef7e5-9573-494f-bfda-238fbd8b5ef6" class="">因為neural network經訓練之後，他所學到的東西一般都會與人類的認知相異，
+若要讓x*呈現的樣子更像是數字，我們必須對找出來的x做一些constraint。</p><p id="22526b9c-1888-4fea-98d5-193c5a0f6c65" class="">例如可以使用L1的regularization，希望找出來的image在大部分的地方是沒有塗顏色的，
+只有少數數字筆劃在的地方才有顏色出現。</p><figure id="23b1d0bd-4291-4c8e-8a02-0998d742659e" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>x</mi><mo>∗</mo></msup><mo>=</mo><mi>arg</mi><mo>⁡</mo><munder><mo><mi>max</mi><mo>⁡</mo></mo><mi>x</mi></munder><mo stretchy="false">(</mo><msup><mi>y</mi><mi>i</mi></msup><mo>−</mo><munder><mo>∑</mo><mrow><mi>i</mi><mo separator="true">,</mo><mi>j</mi></mrow></munder><mo stretchy="false">∣</mo><msub><mi>x</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo stretchy="false">∣</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">x^*=\arg\max_x(y^i-\sum_{i,j}\lvert x_{ij}\rvert)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.738696em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.738696em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∗</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.5746639999999998em;vertical-align:-0.7em;"></span><span class="mop">ar<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.43056em;"><span style="top:-2.4em;margin-left:0em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">x</span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span><span class="mop">max</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.7em;"><span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8746639999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:2.463782em;vertical-align:-1.413777em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.050005em;"><span style="top:-1.8723309999999997em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mpunct mtight">,</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span><span style="top:-3.0500049999999996em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.413777em;"><span></span></span></span></span></span><span class="mopen">∣</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mclose">∣</span><span class="mclose">)</span></span></span></span></span></div></figure><figure id="0c731b58-c13a-49f0-b3ba-8d1633bc502f" class="image"><img style="width:584px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Convolutional%20Neural%20Network/Untitled%204.png"/></a></figure><figure id="d57e2500-e8ce-40af-8b79-294fd4df53a6" class="image"></a></figure></div></article></body></html>
