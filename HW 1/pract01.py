@@ -75,15 +75,15 @@ def lossfunc(ypre, ytar):
 
 #%% Initialize parameters
 dim = 18 * 9
-w = torch.randn((dim, 1), requires_grad=True)
-b = torch.randn(1, requires_grad=True)
-lr = 2.5
+w = torch.zeros((dim, 1), requires_grad=True)
+b = torch.zeros(1, requires_grad=True)
+lr = 0.1
 ep = 1000
 x_in = torch.from_numpy(x).float()
 ytar = torch.from_numpy(y)
 
 #%% Optimizer
-optimizer = optim.Adagrad([w, b], lr)
+optimizer = optim.Adam([w, b], lr)
 
 #%% Training
 
@@ -102,8 +102,10 @@ for t in range(ep):
     if (t%100 == 0 or t == ep - 1):
         print(str(t) + ":" + str(loss.detach().numpy()))
 
+b_array = b.detach().numpy()
 w_array = w.detach().numpy()
-np.save('weight.npy', w_array)
+# np.save('weight.npy', w_array)
+# np.save('bias.npy', b_array)
 
 #%% Testing
 testdata = pd.read_csv(fpath + '/test.csv', header = None, encoding = 'big5')
@@ -118,12 +120,10 @@ for i in range(len(test_x)):
     for j in range(len(test_x[0])):
         if std_x[j] != 0:
             test_x[i][j] = (test_x[i][j] - mean_x[j]) / std_x[j]
-# Normalization
-test_x = np.concatenate((np.ones([240, 1]), test_x), axis = 1).astype(float)
-
 
 #%% Prediction
-w = np.load('weight.npy')
-ans_y = np.dot(test_x, w)
+# wpred = np.load('weight.npy')
+# bpred = np.load('bias.')
+ans_y = np.dot(test_x, w_array) + b_array
 # np.save('ansy.npy', ans_y)
 np.savetxt("ansy.csv", ans_y, delimiter=",")
