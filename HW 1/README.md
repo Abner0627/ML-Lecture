@@ -174,3 +174,7 @@ w = np.load('weight.npy')
 ans_y = np.dot(test_x, w)
 np.savetxt("ansy.csv", ans_y, delimiter=",")
 ```
+
+最終成果如下 (RMSE)：  
+
+[Result](https://www.notion.so/6a7fbb1a2819451fb3d99fb0dc4f5fb5)
