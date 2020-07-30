@@ -120,16 +120,16 @@ def lossfunc(ypre, ytar):
 dim = 18 * 9
 w = torch.zeros((dim, 1), requires_grad=True)
 b = torch.zeros(1, requires_grad=True)
-lr = 2.5
+lr = 0.1
 ep = 1000
 x_in = torch.from_numpy(x).float()
 ytar = torch.from_numpy(y)
-optimizer = optim.Adagrad([w, b], lr)
+optimizer = optim.Adam([w, b], lr)
 ```
 
 ## Training
 
-進行training並將得出的weight另存成 .npy，作為待會testing之用。
+進行training並將得出的weight與bias轉為numpy array，作為待會testing之用。
 
 ```python
 for t in range(ep):
@@ -143,12 +143,12 @@ for t in range(ep):
 		# 每100個epoch print一次loss的值
 
 w_array = w.detach().numpy()
-np.save('weight.npy', w_array)
+b_array = b.detach().numpy()
 ```
 
 ## Testing
 
-讀testing data並同樣排成以18個量測指標為row的矩陣，最後取normalize 。
+讀testing data並同樣排成以18個量測指標為row的矩陣 。
 
 ```python
 testdata = pd.read_csv('filepath/test.csv', header = None, encoding = 'big5')
@@ -163,15 +163,12 @@ for i in range(len(test_x)):
     for j in range(len(test_x[0])):
         if std_x[j] != 0:
             test_x[i][j] = (test_x[i][j] - mean_x[j]) / std_x[j]
-# Normalization
-test_x = np.concatenate((np.ones([240, 1]), test_x), axis = 1).astype(float)
 ```
 
-Load weight的數值進行預測，將結果存成 .csv上傳至kaggle
+使用訓練得出的weight與bias進行預測，將結果存成 .csv上傳至kaggle
 
 ```python
-w = np.load('weight.npy')
-ans_y = np.dot(test_x, w)
+ans_y = np.dot(test_x, w_array) + b_array
 np.savetxt("ansy.csv", ans_y, delimiter=",")
 ```
 
