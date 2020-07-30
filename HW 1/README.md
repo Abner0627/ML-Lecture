@@ -118,8 +118,8 @@ def lossfunc(ypre, ytar):
     return torch.sqrt(MSE(ypre, ytar))
 
 dim = 18 * 9
-w = torch.randn((dim, 1), requires_grad=True)
-b = torch.randn(1, requires_grad=True)
+w = torch.zeros((dim, 1), requires_grad=True)
+b = torch.zeros(1, requires_grad=True)
 lr = 2.5
 ep = 1000
 x_in = torch.from_numpy(x).float()
