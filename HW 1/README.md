@@ -177,4 +177,8 @@ np.savetxt("ansy.csv", ans_y, delimiter=",")
 
 最終成果如下 (RMSE)：  
 
-[Result](https://www.notion.so/6a7fbb1a2819451fb3d99fb0dc4f5fb5)
+| Method          | Public  | Private |
+|-----------------|---------|---------|
+| Pytorch_Adam    | 5.44949 | 7.46378 |
+| Simple_baseline | 8.73773 | 8.73773 |
+| Strong_baseline | 7.14231 | 7.14231 |
