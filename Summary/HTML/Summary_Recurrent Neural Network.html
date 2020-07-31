@@ -1,0 +1,755 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Summary_Recurrent Neural Network</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="41ec062a-4532-4769-a34a-bf80b43b953b" class="page sans"><header><h1 class="page-title">Summary_Recurrent Neural Network</h1></header><div class="page-body"><h1 id="6493721d-8254-480a-bbf1-bfc28a0ab245" class="">Recurrent Neural Network</h1><nav id="4481f3bc-8e53-4a3e-81ee-f2153fc244cf" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#6493721d-8254-480a-bbf1-bfc28a0ab245">Recurrent Neural Network</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#9997f9e1-5882-4389-b038-b77cff3bfaf2">Example</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#07ea7d46-16a1-4df6-89e4-0941c6d60db6">一、Toy Example</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ad4967e3-11e3-4a40-bfcf-440e8f4036a5">二、Slot Filling Problem</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#dc95843f-cffe-49db-972f-53204dc56790">Different Type of RNN</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ecc10cc7-fe06-45b7-a2d7-80331925fa08">一、Elman Network</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b71e44d6-e328-4ecf-b82f-ed1e22b59c2c">二、Jordan Network</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#29f80d8a-2a11-472c-998c-7767b6ecebcd">三、Bidirectional RNN</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e5674389-3658-486b-a2bc-80e12f62d6e3">四、Long Short-term Memory (LSTM)</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#8a1783c2-5c2d-4c29-a939-fd44072339a3">1. Example</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#da686b49-8384-4f1d-93fa-8dbc1a8f0e49">2. Neural Network</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#358a59ad-8ae2-46a3-810b-55c7304257d8">Learning</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#35018c9f-aab2-4a4f-b7b0-57b6ad10a506">一、Training</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#44ee5916-9df9-4990-afea-ac7149f73060">二、Difficulty</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#9f4a71a8-01d8-4e8c-8fdd-d3dc78a4eef4">三、Clipping</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#e4f7cd07-abc8-4bd6-a86c-aecafbba41e3">1. LSTM VS. RNN</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#491bbfec-f23c-476c-bcdc-a667a4141442">2. Gated Recurrent Unit (GRU)</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#6e446f43-b7a6-4909-8410-7411f498529f">More Applications</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e5e3b56c-2dfc-435b-900e-2ada7eb3d423">一、Many to One: Sentiment Analysis</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f09a8097-d119-42b9-9bb7-f41d3b95c0b7">二、Many to Many (Output is shorter)</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#8f206c53-4980-4662-b684-780998e06c3c">Connectionist Temporal Classification (CTC)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#fe959664-bc74-4adb-9a69-bca7b0835986">三、Many to Many (No Limitation)</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#52f5f726-f6d3-4334-830e-d5fbd7bb4a72">Deep &amp; Structured</a></div></nav><p id="3c7f1f4b-bbf0-4953-b64a-b5230d7342ad" class="">每一次hidden layer裡面的neuron產生output的時候，
+這個output都會被存到 memory裡，如下圖藍色方塊。</p><p id="0f07971f-f904-4f9b-a598-aa16927ea656" class="">下一次input進來的時候，這個hidden layer的neuron不是只會考慮input x1跟x2，
+它還會考慮存在這些memory裡面的值。
+意即對它來說除了x1跟x2以外，memory a1與a2的值也會影響到它的output。</p><figure id="0482a372-9cd1-4b18-87a8-a1010a04a5b3" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image1.png"><img style="width:365px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image1.png"/></a></figure><h1 id="9997f9e1-5882-4389-b038-b77cff3bfaf2" class="">Example</h1><h2 id="07ea7d46-16a1-4df6-89e4-0941c6d60db6" class="">一、Toy Example</h2><p id="a5d5f436-db99-4445-a16c-239b81faee83" class="">假設圖上的network所有的weight都是1，且其內所有的neuron都沒有任何的 bias，
+然後假設activation function都是linear。此處的input為[1, 1], [1, 1], [2, 2]。</p><p id="623c2ab7-e443-47ed-95e4-137acdc83b2c" class="">首先使用RNN前必須先給memory起始值，此處假設還沒有放任何東西之前，memory裡面的值是0。</p><p id="ac0c4bee-7ff0-48d7-9805-75bc6457bd81" class="">輸入第一個input [1, 1]時，對綠色neuron來說，它除了接到input [1 1]以外，
+還接到memory的[0, 0]，所以其output為2。</p><p id="03233a0d-c374-4940-9687-2ee98b78f704" class="">接下來因為所有的weight都是1，所以紅色neuron它們的output就是4。也就是說當input為[1 1] 的時候，它的output就是[4, 4]。</p><figure id="4a61810b-87c9-4de7-8287-bd8128731f2e" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image2.png"><img style="width:400px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image2.png"/></a></figure><p id="f38525a0-abc7-45c4-8b60-6bd6d3cbd5ac" class="">接著RNN會把這些綠色neuron的output存到memory裡面，所以memory裡面的值就被update成2。若接下來再輸入[1 1] 的時候，綠色neuron的輸入有4個，[1, 1]跟[2, 2]，然後得到的結果為6。
+那最後紅色neuron的輸出就是6 + 6為12。因此第二次再輸入[1, 1]時，輸出就是[12, 12]。</p><figure id="520e555d-b6e4-426d-b402-f290913fc4ba" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image3.png"><img style="width:393px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image3.png"/></a></figure><p id="638ead72-c897-48e5-9841-fdf0735d1cce" class="">接下來[6, 6]又會被存到memory裡，而我們的input是[2, 2]。
+這邊每一個綠色的neuron，它考慮的4個input：[2, 2]跟[6, 6]，得到的值為16。
+那紅色neuron的output就是32。</p><figure id="2642ed93-1c28-4212-96e5-c5a05b433812" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image4.png"><img style="width:407px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image4.png"/></a></figure><p id="a570ea26-d970-4a62-9c30-742f7daf1e5b" class="">RNN在考慮每個input時，並不是independent的，因此在做RNN的input sequence順序非常重要。</p><h2 id="ad4967e3-11e3-4a40-bfcf-440e8f4036a5" class="">二、Slot Filling Problem</h2><p id="4a6d68e8-f8d3-44f9-bf43-f3af5e821fd2" class="">假設有一個使用者說arrive Taipei on November 2nd，那arrive就變成一個vector，
+丟到neural network裡面，其output為a1。</p><p id="af5a6e4d-ecd5-4721-82c1-398b6ea20c8c" class="">然後根據這個a1，我們產生 y1，這個y1就是arrive屬於哪一個slot的機率。
+接下來a1會被存到memory裡。</p><p id="9269c97e-18a4-454a-826c-f2c2fffee710" class="">當Taipei會變成input時，那這個hidden layer會同時考慮Taipei這個input，
+以及存在memory裡面的a1，得到a2。</p><p id="8ff12afa-0d3a-431d-b0e5-9a77879e477a" class="">再根據a2產生y2，代表Taipei屬於哪一個slot的機率。以此類推。</p><figure id="f6c2822f-613f-419c-86f8-c583e9106ebf" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image5.png"><img style="width:551px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image5.png"/></a></figure><p id="0940cf50-bade-4a6f-b159-4c4eb7690696" class="">因此透過RNN可以做到輸入同一個詞彙時，區分其output數值的問題。
+舉例而言，同樣是輸入Taipei這個詞彙，但是因為紅色Taipei前面接的是 leave；
+而綠色Taipei前面接的是arrive。</p><p id="df1bc35c-bd07-4c9f-a80e-2c692748177a" class="">因為leave跟arrive它們的vector不一樣，所以hidden layer的output不同；
+同理存在memory的值也會不同。</p><figure id="95b492b4-77b1-4f92-84a7-ee26b46e3fab" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image6.png"><img style="width:551px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image6.png"/></a></figure><h1 id="dc95843f-cffe-49db-972f-53204dc56790" class="">Different Type of RNN</h1><h2 id="ecc10cc7-fe06-45b7-a2d7-80331925fa08" class="">一、Elman Network</h2><figure id="0ba68b0a-d5d2-4c5d-8878-a159d807e9eb" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image7.png"><img style="width:240px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image7.png"/></a></figure><p id="b65c893f-260d-4f97-9f94-a39490b29970" class="">前述提出的RNN架構即是Elman Network。
+也就是把hidden layer的值存進memory，在下一個時間點再讀出來。</p><h2 id="b71e44d6-e328-4ecf-b82f-ed1e22b59c2c" class="">二、Jordan Network</h2><figure id="7ec1b7e3-3d47-4d40-970b-ce1a785b2130" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image8.png"><img style="width:242px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image8.png"/></a></figure><p id="f4d59702-b44b-4814-9ad2-04296d6b3dc4" class="">該架構把整個network output的值存在memory裡面。
+然後它再把output的值，在下一個時間點讀進來。</p><p id="4685a71f-7a99-4b73-9863-36a1a675f1bd" class="">由於Elman Network的hidden layer沒有目標值，所以不好控制它學到什麼樣的hidden information，
+也就是不知道它學到把什麼東西放到memory裡面。</p><p id="08c50fa7-e2dc-4c55-bd84-e0631b0b7b5c" class="">而Jordan Network是有target的，我們比較清楚放在memory裡面的東西是什麼，
+因此可以得到比較好的performance。</p><h2 id="29f80d8a-2a11-472c-998c-7767b6ecebcd" class="">三、Bidirectional RNN</h2><figure id="f22650d2-d6d1-458f-93ca-032d537fe63e" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image9.png"><img style="width:541px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image9.png"/></a></figure><p id="4291ff1e-08c1-4555-b16a-14d77fad3fb6" class="">在前述RNN中input一個句子的話，它就是從句首一直讀到句尾。
+假設句子裡面的每一個詞彙都用xt來表示的話，就是先讀xt再讀xt+1，最後再讀xt+2。</p><p id="393771f8-d4f6-45a4-906c-b061b93481df" class="">但其實它的讀取方向可以是反過來的，它可以先讀xt+2再讀xt+1，最後再讀xt。
+所以可以同時train一個正向的RNN與一個逆向的RNN，然後把這兩個RNN的hidden layer拿出來，
+都接給同一個output layer，最後得到yt、yt+1與yt+2。</p><p id="883ad5ad-5e9b-4282-a9a8-131cc83af2e6" class="">用Bidirectional RNN的好處在於network在產生output的時候，它看的範圍比較廣。
+如果只有正向的network，在產生yt,跟yt+1的時候，它只看過了x1一直到xt+1的部分。</p><p id="4b7f97fd-ba20-4d34-a5a0-dab8c9da70ae" class="">但如果是Bidirectional RNN，在產生yt+1的時候，它不只是看了x1一直到xt+1所有的input，
+也看了從句尾一直到xt+1的input。</p><p id="07be3c5f-b103-446e-82df-c0851998fd70" class="">等同於network是看了整個input的sequence，因此會比只看句子的一半，有更好的performance。</p><h2 id="e5674389-3658-486b-a2bc-80e12f62d6e3" class="">四、Long Short-term Memory (LSTM)</h2><figure id="b7bcd3aa-bf3f-48ee-acce-a7bc2e51937d" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image10.png"><img style="width:547px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image10.png"/></a></figure><p id="3e089eec-e255-4246-b4f4-131041ed3f23" class="">LSTM有3個gate。</p><p id="5b543b0d-c26b-4a79-ab14-1a8fe48b9ed0" class="">當neural network的其他部分的output想要被寫到memory cell裡面的時候，
+它必須先通過一個input gate。</p><p id="5d90d727-9121-4600-b1b4-592236c75759" class="">當它要被打開的時候，才能夠把值寫到memory cell裡面。
+至於這個input gate打開還是關起來，是由neural network自己學的。</p><p id="f878c899-8515-4716-aea6-1f9fe0a854f6" class="">輸出的地方也有一個output gate，決定其他的neuron可不可以從memory裡面把值讀出來。
+當output gate為關閉的時候，就沒有辦法把值讀出來，同樣也是由network自己學習。</p><p id="514892ad-efec-4135-9a59-1b9e77306630" class="">而第三個gate稱forget gate。它決定什麼時候memory要把過去記得的東西format掉。</p><p id="002092ae-2682-448d-957d-ffc98e5656e1" class="">因此整個LSTM可以看成它有4個input與1個output。
+這4個input分別是：想要被存到memory cell裡面的值（仰賴input gate要不要讓這個information過去）、操控input gate的訊號、操控output gate的訊號以及操控forget gate的訊號。</p><figure id="f46a1e50-e101-41a4-a007-3a92845f3ed4" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image11.png"><img style="width:523px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image11.png"/></a></figure><p id="58612c5e-12aa-41cb-b6eb-b131a5b30bf3" class="">更進一步來看它的架構的話，假設現在要被存到cell裡面的input叫做z，</p><p id="a2c9aef0-4b1b-413a-832a-ef2bf2f45ef5" class="">操控input gate的signal為zi，操控forget gate的數值澤是zf，而操控output gate的數值是zo。
+綜合這些東西以後，最後會得到一個output，寫作a。</p><p id="4591fd72-9fd8-4944-b50e-e069df98e84c" class="">接著假設現在cell裡面在有這4個輸入之前已經存了值c。
+而z通過一個activation function得到g(z)，然後把zi通過另外一個activation function，得到 f(zi)。</p><p id="8cacf4c4-efcd-447c-84b3-5b36efab8400" class="">而這3個zi、zf與zo他們通過的activation function f，通常會選擇sigmoid function，
+它的意義就是其值是介在0~1之間，代表了這個gate被打開的程度。
+如果這個f的output是1，就代表這個gate是處於被打開的狀態。反之就是關閉的。</p><p id="6324dc2e-c8c0-44cd-9d0a-d88ed8f3e41e" class="">把g(z)乘上input gate的值f(zi)，得到g(z) * f(zi)。
+而forget gate 的zf通過這個sigmoid activation function亦得到f(zf)。
+接著把存在memory裡面的值c乘上f(zf)，得到c * f(zf)，再加上g(z) * f(zi)得到c&#x27;，
+代表新的存在memory裡面的值。</p><p id="23edb769-c6d7-42f4-b147-7e9a754cef1a" class="">根據到目前為止的運算可以發現，f(zi)就是控制g(z)可不可以輸入的一個關卡。
+因為假設f(zi) = 0，那g(z) * f(zi)就等於0，就好像是沒有輸入一樣。
+若f(zi) = 1，那就等於是直接把g(z)當作輸入。</p><p id="158665f4-bfd1-4338-909b-d39661323861" class="">而同樣地，f(zf)就是決定說要不要把存在memory裡面的值洗掉。
+假設f(zf) = 1，也就是forget gate是被開啟時，這個時候c會直接通過，
+就等於是把之前存的值記憶下來。</p><p id="5f3c6194-758b-4e58-b351-af9136cab7a8" class="">那如果是f(zf) = 0，也就是forget gate被關閉的時候，0乘上c，
+過去存在memory裡面的值就會變成0。</p><p id="ffdda819-362c-4ddd-9b88-f026e5d4d780" class="">上述兩個值加起來，寫到memory裡面得到c&#x27;，其通過h之後，得到h(c&#x27;)。</p><p id="2b90701d-6342-4f86-a4c4-86c740a12757" class="">另一方面，output gate受zo所操控，其通過f得到f(zo)。
+若f(zo) = 1的話，我們會把f(zo)跟h(c&#x27;)乘起來，等同於是h(c&#x27;)通過output gate。
+如果f(zo) = 0，則此處output會變成0，
+代表存在memory的值沒有辦法通過output gate被讀取出來。</p><h3 id="8a1783c2-5c2d-4c29-a939-fd44072339a3" class="">1. Example</h3><p id="3fb777d1-8b4d-4b6f-9e58-5d2e9c5299c6" class="">假設在network裡面，只有一個LSTM cell，且input都是三維的vector；output 都是一維的vector。</p><p id="8041a2d7-fb40-4716-8b74-6e71b7c74ff9" class="">當第二個dimension x2的值是1的時候，x1的值就會被寫到memory裡面（藍色方塊）。
+而x2的值是-1的時候，memory就會被reset。</p><p id="c01935bd-4e9c-4a12-8473-462b7688e456" class="">另一方面，假設x3等於1的時候，output gate會打開，才能夠看到輸出。</p><p id="40ec54b0-2b49-429e-af4c-91574c64af49" class="">所以假設原來存在memory裡面的值是0，當x2 = 1的時候，3會被存到memory裡面去。
+接著第四次x2 = 1時，x1 = 4會被存到memory裡面，所以其值總合為7。</p><p id="68164faf-7e93-4ae2-8901-3de0133f94f6" class="">第六次時，x3 = 1，所以7會被輸出。</p><p id="482d7ed1-64b4-45dc-9a64-3d991a372b13" class="">第七次的時候，x2 = -1，則把memory裡面的值洗掉，因此看到-1之後的下一個時間點，
+其memory的值就變成0。</p><figure id="e058f6ca-383c-4004-ab71-7b1f5c6d9438" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image12.png"><img style="width:434px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image12.png"/></a></figure><p id="77229341-f2ca-4f6f-915b-cf66aec2059f" class="">我們知道LSTM的memory cell總共有4個scalar input，為三維的input vector 乘上linear transform以後得到的結果。也就是乘上三個weight再加上bias後，就得到它的input。</p><p id="f4d35156-c55b-470a-9d43-48ffa84b90a4" class="">而這些乘上的值與bias，是透過 training data去學到的。</p><figure id="e065c924-b94a-4fe6-818b-f03329578383" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image13.png"><img style="width:534px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image13.png"/></a></figure><p id="de7739a7-0576-44ff-bc07-f47aaa1b2b5d" class="">舉上圖為例，在network的input中，x1的weight為1其他都是0，所以這邊直接把x1當作輸入。</p><p id="4c78ad99-2a33-45f8-b0f5-2a9273490997" class="">在input gate的地方，它是x2 * 100且bias為-10。
+也就是說，假設x2沒有值的時候，因為bias是-10，那通過activation function以後，
+它的值會接近0，所以通常input gate是被關閉的。</p><p id="18fac301-113d-4051-ad94-9aff476cd623" class="">只有在x2有值（假設為1）的時候，它就會比bias的這個-10還要大，
+此時input就會是很大的正值，代表input gate被打開。</p><p id="bdce668d-684d-4297-8f3d-9b8e266ee4b0" class="">在forget gate部分，它平常都是被打開的（bias為10），所以會一直記得東西，
+只有在x2給它一個很大的負值的時候，會壓過這個bias，才會把forget gate關起來。</p><p id="ba05fb9e-7c72-4773-bd52-e085919f92d7" class="">output gate平常也都是被關閉的，因為它的bias是很大的負值。
+但若x3有一個很大的正值的話，它就可以壓過bias，把output gate打開。</p><p id="041b0010-1511-4dbd-b634-6b09d2d068e2" class="">（詳見講義P.20 ~ P.25）</p><h3 id="da686b49-8384-4f1d-93fa-8dbc1a8f0e49" class="">2. Neural Network</h3><p id="04d23665-b3de-4976-a9a7-54dc791de6aa" class="">在原來的neural network中會有很多的neuron，我們會把input乘上很多不同的weight，
+當作是不同neuron的輸入。每一個neuron它都是一個function，輸入一個scalar，
+就會輸出另外一個scalar。</p><p id="0562e702-575d-4651-9ea9-fbd5ec003ed9" class="">對LSTM來說，可以把它的memory cell想成是一個neuron。</p><figure id="b5888f7f-d2c4-44be-97ee-01fde179bcea" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image14.png"><img style="width:353px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image14.png"/></a></figure><p id="ca38343b-17e0-4a5c-b596-6c1873c9c910" class="">如果今天要用一個LSTM的network，我們的事情就只是把原來一個簡單的neuron，
+換成一個LSTM的cell。而現在的input x1與x2 它會乘上不同的weight，當作LSTM不同的輸入。</p><p id="d508b83d-b7ff-46f9-8fa1-5d8c71cbb427" class="">假設只有兩neuron，那x1與x2乘上某一組weight之後，會去操控第一個LSTM的output gate；乘上另外一組weight，操控第一個LSTM的input gate。</p><p id="c73cebed-a81a-48bb-ac33-505779bd7ddb" class="">LSTM的input與forget gate的input亦然。</p><figure id="16bde819-9e94-4074-aebe-0323b15aba16" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image15.png"><img style="width:533px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image15.png"/></a></figure><p id="3f6854e2-9873-483b-952b-632354217a44" class="">對一個LSTM來說，它有4個不一樣的input。
+但在原來的neural network裡，一個neuron就是一個input以及一個output；
+而在LSTM裡面它需要4個input才能產生一個output。</p><p id="0bd691ba-4b32-4f73-abfd-5a4d091b6e05" class="">就好比有一台機器，它只要插一個電源線就可以跑；那LSTM就要插4個電源線才能跑。</p><figure id="d6faed0f-0f08-4278-b446-aaa2b0d3596f" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image16.png"><img style="width:506px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image16.png"/></a></figure><p id="878a32fd-4d25-490e-86ad-46e7d2336ec6" class="">進一步說明之，假設現在有一整排的LSTM，它們每一個人的memory都存了一個值。
+若把所有的scalar接起來之後，就變成一個vector，寫作ct-1。
+也就是說，每一個memory裡面存的scalar，就是代表這個vector裡面的一個dimension。</p><p id="e7bb1ed8-5dca-44d6-a55e-a6054f1dd454" class="">接著在時間點t輸入一個vector xt，這個vector會先進行linear transform（乘上一個matrix），
+最終得到另外一個vector z。z這個vector中每一個 dimension就代表了操控每一個LSTM的input，
+所以z的dimension就正好是LSTM memory cell的數目，。</p><p id="15043c01-5401-4780-b206-dc187604cef6" class="">因此z的第一維就丟給第一個 cell，第二維就丟給第二個cell，以此類推，zf、zi與zo同理。</p><p id="2b88c898-a193-464a-aecd-383e9828b98b" class="">結合network的觀念與LSTM的運算流程，可畫成下列架構：</p><figure id="2dd8367b-2d99-4405-bfc6-e59b2430ca41" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image17.png"><img style="width:540px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image17.png"/></a></figure><p id="cac11c83-cdf1-486d-bd02-5b846f850c71" class="">而這些memory cell的運作是可以共同一起被運算的。</p><p id="82e87ce8-e055-43e9-81cd-fe92b5b8c48c" class="">已知input的部分為，zi通過 activation function之後與z相乘（element-wise product）。
+同樣地，zf通過activation function之後，跟已經存在於cell的值相乘。
+將上述兩個值加起來得到ct（ct = z * zi + zf * ct-1）。</p><p id="9e97298b-15ee-4e37-9199-c27a893035a4" class="">而output gate部分，zo通過activation function後，與ct通過activation function相乘得到yt
+（yt = h(ct) * f(zo)）。</p><figure id="7fe225d2-e0ab-4e0c-9a57-56807fe173c6" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image18.png"><img style="width:538px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image18.png"/></a></figure><p id="9ceb754f-afa2-4811-b370-c4caac144167" class="">此外LSTM會把上一個時間點的output接進來，當作下一個時間點的input。</p><p id="83a5fdf7-3942-4548-98c2-9f6ff0bdcf67" class="">意即下一個時間點操控這些gate的值，不是只看那個時間點的input x，
+也看前一個時間點的output h。</p><p id="e10c4667-1bff-4c81-b831-caf0ca31c937" class="">而通常還會加上一個變數稱作「peephole」，用處在於把存在memory cell裡面的值也拉過來。
+也就是說，除了繼承給下一個時間點外，也作為其input考慮。</p><p id="f379d7c7-8c19-494b-8fa7-58bf107c69f8" class="">所以在操縱LSTM的4個gate的時候，同時考慮了x、h與c這3個vector。
+相乘後作為linear transform的input，再去操控 LSTM。</p><h1 id="358a59ad-8ae2-46a3-810b-55c7304257d8" class="">Learning</h1><p id="c273c019-3ddf-4d1f-b936-c031a1e75c9b" class="">在做learning時，必須定一個cost function來評估model參數的好壞，
+意即選一個可以使lost最小的參數。</p><figure id="e1f3a967-dc8f-45d8-8db1-c76b86391a0c" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image19.png"><img style="width:449px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image19.png"/></a></figure><p id="483cc59e-1e10-4631-9805-34f2510a4a62" class="">試舉例說明在RNN中如何定這個lost。假設要處理的問題為Slot Filling，那training data為sentence，
+基於sentence label告訴machine，「arrive」屬於「other」這個slot；
+然後「Taipei」屬於「destination」這個slot；而「November」與「2nd」屬於「time」的slot。</p><p id="dbaa234e-ddbe-416d-beca-3d9a65db82b5" class="">接下來我們會希望當「arrive」丟到RNN後得出的output y1，
+並對應到其中一項reference vector算它們的cross entropy。</p><p id="adbc99d5-824a-4100-ac31-0ee8b75189ed" class="">比如說該例有40個slot，那這個reference vector的dimension就是40。</p><p id="193374cb-a01b-4661-ad9b-19d2114d806d" class="">而現在輸入的這個word「arrive」應屬於「other」slot，
+那對應到「other」的那個dimension就是1，其他則為0。</p><p id="365561ff-e70b-4e8b-9d9f-50c9a23aa81e" class="">因此當輸入x1（arrive）時，經過RNN後輸出的y1，
+它要跟reference vector（other）距離越近越好。
+所以RNN的output跟reference vector的cross entropy 和，就是需要minimize的對象。</p><p id="5aed4e28-939f-4941-b97f-f00fb119c0e0" class="">但需要注意的是，你在丟x2之前，一定要先丟x1，否則無法知道存在memory裡面的值是多少。
+同樣地，在做training的時候，也不能把你source裡面的word sequence打散，
+而是要當作一個整體來看。</p><h2 id="35018c9f-aab2-4a4f-b7b0-57b6ad10a506" class="">一、Training</h2><figure id="512f7a3c-f85a-484f-b274-c38d9d797855" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image20.png"><img style="width:398px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image20.png"/></a></figure><p id="0ff8d898-5633-4e8b-8249-81e3d8aa728d" class="">進行training時其實也是用gradient decent，意即如果我們已經定出了lost function L，
+當需要update network裡面的某一個參數w的時候，就去計算w對L的偏微分，
+把這個偏微分計算出來之後，就用gradient decent去update每一個參數。</p><p id="69962410-a1c6-4604-87c1-783115122d34" class="">在feed forward network使用GD的時候，要用一個比較有效的演算法稱back propagation；
+而在RNN裡面，GD的原理是一模一樣的，但是為了要計算方便，會使用BPTT演算法，
+意即在GD中考慮了時間的information。</p><h2 id="44ee5916-9df9-4990-afea-ac7149f73060" class="">二、Difficulty</h2><p id="76363b83-faa5-49b0-aeb4-263be004c093" class="">RNN的training是比較困難的。一般而言，在做training時會希望learning curve 為下圖藍線的趨勢。</p><figure id="122f288f-36c0-40ee-8f1b-14fe3b534355" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image21.png"><img style="width:404px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image21.png"/></a></figure><p id="7a874e2a-cc8a-4404-8d9e-cc834a694c2b" class="">這邊的縱軸為total loss，橫軸則是training epoch的數目。
+一般情形下，希望說隨著epoch越來越多，參數不斷的被update，loss會慢慢下降最後趨向收斂。</p><p id="befabc82-1103-48ff-b9c1-ebaac93beb73" class="">然而在訓練RNN時，有時候會出現上圖綠線的趨勢。
+起因源自於RNN的error surface（total loss對參數的變化）。</p><p id="54b7252b-85cb-4cfe-95fd-6ce3ef7258fd" class="">RNN的error surface非常崎嶇，意即該error surface有些地方非常平坦，
+但有一些地方，非常的陡峭。</p><figure id="2d470eb6-004b-4f1f-9f12-08e54c604f63" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image22.png"><img style="width:427px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image22.png"/></a></figure><p id="955855f1-1e27-4c0e-a8df-e4f44bea3533" class="">假設橙色的那個點為初始點，使用GD調整參數後會跳到下一個橙色的點。
+平坦的地方時，可能會因為gradient都很小，所以learning rate調得比較大；
+但當位於懸崖邊界時，跳過一個懸崖之後gradient突然暴增，
+因此很大的gradient 再乘上很大的learning rate使參數就update很多，有可能會得出NaN的結果。</p><h2 id="9f4a71a8-01d8-4e8c-8fdd-d3dc78a4eef4" class="">三、Clipping</h2><p id="78161499-b8bd-4067-a374-03e1f2994b14" class="">當gradient大於某一個threshold時候，就不要讓它超過那個threshold。由於 gradient不會太大，
+因此就算是踩在這個懸崖上參數就不會飛太遠，如此仍然可以繼續做RNN的training。
+如上圖綠點所示。</p><p id="8df00313-7f5f-45d0-b9ae-d7ab8a9dd865" class="">而為何RNN會有如此特性，可以直觀的使用gradient的大小說明之。
+也就是透過把某一個參數做小小的變化，看他對network output的變化有多大，
+並藉此測出這個參數的gradient大小。</p><figure id="4518af40-c285-472a-bffb-3a6fe61e68f3" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image23.png"><img style="width:512px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image23.png"/></a></figure><p id="2bc3a43a-cf13-4e31-88a2-c2449fa17149" class="">舉一個簡單的RNN而例，假設該架構只有一個linear neuron，
+它只有一個input沒有bias且input與output weight皆是1；
+而transition部分的 weight是w，也就是從memory接到neuron的input weight是w。</p><p id="a0bf103a-9e9b-409a-aba6-5f52294a8bc9" class="">另外假設這個network的輸入是[1 0 0 0 0 0]，只有第一個時間點輸入 1，接下來都輸入0。
+因此在最後一個時間點，第1000個時間點，的output值為w的999次方。</p><p id="8fd214ea-109c-4a49-8e15-524713b6b4de" class="">再假設w為我們要learn的參數，我們想要知道它gradient的大小，
+也就是當我們改變w的值的時候對network output有多大的影響。</p><p id="136f5f45-a755-4a81-b18b-349094c3c235" class="">w = 1的時候，network在最後時間點的output ，y1000，也是1；
+而w = 1.01的時候，y1000是1.01的999次方，約等於20000。
+故知w有一點小小的變化時，對它的output影響是非常大的，所以w有很大的gradient。
+此時會需要小一點的learning rate。</p><p id="72c9c7ea-f8b5-4ecb-aa2f-0e567c7fae87" class="">但是如果把w設成0.99，y1000就為0；把w設為0.01，那y1000還是等於0。
+這個時候又需要一個很大的learning rate。</p><p id="2ac763d5-dd23-4139-a982-9fe675c9d0bc" class="">也就是說在1這個地方有很大的gradient，但在0.99的地方gradient就突然變得非常小，
+使error surface變的很崎嶇（因為gradient是時大時小的）。</p><p id="9691c1c5-c452-4ac0-b326-7f2b2ce379ed" class="">因此RNN training的問題，其實是來自於在transition的時候，
+它他把同樣的東西在時間和時間轉換的時候反覆使用。
+也就是從memory接到neuron的那一組weight，在不同的時間點都是反覆被使用。
+因此這個w只要一有變化，它有可能完全沒有造成任何影響，也可能造成巨大的影響。</p><p id="ab8f872b-7166-4d26-8db3-da92daeba283" class="">因應該問題現在廣泛被使用的技巧就是LSTM，它可以讓error surface不要那麼崎嶇。
+它會把那些比較平坦的地方拿掉藉此解決gradient vanishing，但無法解決gradient explode。</p><p id="3c257403-115e-42de-8c36-25054f4c70b3" class="">也就是說有些地方仍然變化會是非常劇烈的，但是不會有特別平坦的地方，
+所以可以把learning rate設的小一點。</p><h3 id="e4f7cd07-abc8-4bd6-a86c-aecafbba41e3" class="">1. LSTM VS. RNN</h3><p id="019799ff-33c7-4c96-b256-ee9be524ec04" class="">至於LSTM為何可以做到解決gradient vanish的問題理由在於，
+RNN跟LSTM它們在面對memory的時候，處理的方式不一樣。</p><p id="1a6c968c-0360-42ba-a93a-46480d193dc0" class="">RNN在每一個時間點memory裡面的資訊都會被洗掉，neuron的output都會被放到memory裡面去。</p><p id="058d31aa-3577-4378-9d4f-9d9f6c6b8131" class="">而在LSTM裡面不一樣，它是把原來的memory乘上一個值，再把input的值加起來放到cell裡面去，
+所以它的memory和input是相加的。</p><p id="09adbbb1-bf19-4a20-9b0a-4619d1c6854e" class="">也就是說，再LSTM中，如果weight可以影響到memory的話，這個影響會永遠都存在，
+所以就不會有gradient vanishing的問題。</p><p id="42e09b56-0610-491e-8b71-377389a9b064" class="">除非forget gate決定要把memory的值洗掉，然而一般在訓練LSTM時，
+不要給forget gate特別大的 bias，確保forget gate在多數的情況下是開啟的，
+只有少數情況會被format掉。</p><figure id="50b83a93-d481-4cd0-b653-f53d4ebb5860" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image24.png"><img style="width:483px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image24.png"/></a></figure><h3 id="491bbfec-f23c-476c-bcdc-a667a4141442" class="">2. Gated Recurrent Unit (GRU)</h3><p id="ab002aad-ad9a-4cd8-b6a5-4d37aef58346" class="">此外有另一個版本，使用gate操控memory的cell，稱作Gated Recurrent Unit。
+它只有兩個gate，所以GRU相較於LSTM需要的參數量比較少。
+也因此GRU在training是比較robust的。
+因此在train LSTM的時候，發現over fitting的情況很嚴重，可以試用GRU改善之。</p><p id="ec228e49-fadd-42bd-be9d-697555e2e697" class="">GRU的精神簡而言之就是「舊的不去，新的不來」。
+它會把input gate跟forget gate連動起來，當input gate被打開的時候，forget gate被打開，
+存在memory的值就會被洗掉；當forget gate沒有要format值時，input gate就會被關起來。
+也就是你要把存在memory裡面的值清掉之後，才可以把新的值放進來。</p><h1 id="6e446f43-b7a6-4909-8410-7411f498529f" class="">More Applications</h1><h2 id="e5e3b56c-2dfc-435b-900e-2ada7eb3d423" class="">一、Many to One: Sentiment Analysis</h2><p id="63515b60-9767-43a1-8a95-d93c5c8cf065" class="">RNN可以做到更複雜的事。例如它可以input一個sequence，而output只是一個vector。</p><figure id="d6e8cea2-757e-4050-b613-2df5b9631217" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image25.png"><img style="width:482px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image25.png"/></a></figure><p id="6d05ea16-a4c5-4fc4-b45e-67935c520fe3" class="">打個比方來說，某家公司想要知道他們的產品在網路上評價如何，
+他們可以寫一個爬蟲把它們產品有關係的網路文章都爬下來，
+接著使用RNN去分類這些文章哪是正向或是負向的。</p><p id="338f22d4-12d1-46c3-8ac5-d1bbd123495d" class="">它的input是一個character sequence，然後在最後一個時間點把hidden layer拿出來，
+再通過幾個transform得到最後的sentiment analysis的prediction。</p><h2 id="f09a8097-d119-42b9-9bb7-f41d3b95c0b7" class="">二、Many to Many (Output is shorter)</h2><p id="8085597a-d1a0-444b-b3e6-c1d0e0bc62b5" class="">該例的input與output都是sequences，但output sequence比input sequence短。</p><figure id="2dc5a359-89f1-4025-86d3-c57228360bd6" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image26.png"><img style="width:487px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image26.png"/></a></figure><p id="72f83328-b3ff-4bfa-9dbf-e7e714e4f46e" class="">以語音辨識為例，其input是一串acoustic feature sequence。一般處理聲音訊號的方式為，
+在聲音訊號裡面每隔一小段時間，就把它用一個vector來表示，例如0.01秒。
+而它的output就是character的sequence。</p><p id="58d60939-ace5-4109-a954-0ef52c712b7c" class="">若是用原來的RNN把這一串input丟進去，它充其量只能做到每一個vector對應到哪一個character。
+因此會發生output產生不必要的疊字（分割時間極短）。</p><p id="e7be175d-51e6-499a-9d51-913e6d5a0b49" class="">此處用trimming把重複的東西拿掉即可，但無法辨識實際上出現疊字的情形。</p><h3 id="8f206c53-4980-4662-b684-780998e06c3c" class="">Connectionist Temporal Classification (CTC)</h3><figure id="39c4098c-86a4-483c-8ec2-9b29e5f1e0da" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image27.png"><img style="width:517px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image27.png"/></a></figure><p id="82087874-6eb6-4d7d-a9a1-27a6a59b4900" class="">該方法可解決上述情形，在output的時候不只包含所有的character，還多 output一個符號，
+叫做「Null」。</p><p id="7757e317-de15-4e43-9014-3a93f1005916" class="">在做訓練的時候，training data就會告訴你說，
+這一串acoustic feature會對應到某一串character sequence。</p><p id="91943731-ee8c-4e1a-91f3-d28972259ce8" class="">但無法得知「好」是對應第幾個frame到第幾個frame或「棒」是對應到第幾個frame。</p><p id="60634ba0-64e1-4019-8fe6-70e2f2f147ee" class="">解法為窮舉所有可能的alignment。簡單來說假設所有的狀況都是可能的，
+在training的時候，就全部都當作正確的一起去train，如下圖所示。</p><figure id="59df0f72-1f81-488c-afbc-bc84b45af993" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image28.png"><img style="width:453px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image28.png"/></a></figure><h2 id="fe959664-bc74-4adb-9a69-bca7b0835986" class="">三、Many to Many (No Limitation)</h2><p id="cc1b44a3-a1e6-4596-99f7-b235c899eafb" class="">該例子不確定input或output 誰長誰短。
+比如說machine translation，其input為英文的word sequence，
+並要把它翻成中文的character sequence。</p><figure id="c7c40dcd-aa25-49d4-80ad-163277e31b3b" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image29.png"><img style="width:483px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Recurrent%20Neural%20Network/image29.png"/></a></figure><p id="4c2bbd6b-be12-4e38-8ae5-a154579ef5c8" class="">現在假如 input的是「machine learning」用RNN讀過去之後，
+在最後一個時間點memory就存了所有input sequence的information，
+然後接下來讓machine吐一個character。</p><p id="33531f13-a5a9-4342-a56e-843606136728" class="">如上圖所示，它吐的第一個character就是「機」，接著該output當作input把memory的值讀進來，
+它就會output「器」。</p><p id="e55d3af8-cc1d-4c0b-85d4-d83de66d3eb4" class="">如此循環下去後，若要阻止它繼續產生詞彙，就要多加一個symbol代表停止。</p><p id="761d8de5-98c7-4568-b4b1-16429d38f430" class="">該方法的好處在於，直接input聲音訊號，然後model就得到辨識的結果，無須透過語音辨識，
+因此在collect translation的training data時會比較容易。</p><p id="de82d9a4-71c7-41e0-a59a-d8ec16caf161" class="">（實例繁多，另見講義P.50 ~ P.79與逐字稿）</p><h1 id="52f5f726-f6d3-4334-830e-d5fbd7bb4a72" class="">Deep &amp; Structured</h1><p id="630bd1f2-a60d-4482-acee-936103c12119" class="">（補充單元，參見講義P.80 ~ P.87與逐字稿）</p></div></article></body></html>
