@@ -1,0 +1,689 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Summary_Support Vector Machine</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="27a0a29e-f99e-47d0-b2bb-4fecc564e238" class="page sans"><header><h1 class="page-title">Summary_Support Vector Machine</h1></header><div class="page-body"><nav id="31c8b6ee-6bc0-475f-99db-18bfeff26c0c" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#d4fb9573-6a4d-4e01-a0ed-003917048f1c">Support Vector Machine</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#0d23479a-40b1-42ee-b52a-c7079b5e6304">Binary Classification</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3b4c4180-cff7-4849-9754-8b8fa56eccfd">一、Square Loss</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#348edd2f-4956-4005-820d-d618f231a4e9">二、Sigmoid + Square Loss</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#26dda2d0-0518-4894-8cbf-33e160eef54e">三、Sigmoid + Cross Entropy (Logistic Regression)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0c0f97d8-f00a-4154-a159-c18b72819da2">四、Hinge Loss</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#fdd68266-515d-40be-8cf6-eb50866f0f87">Linear SVM</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#017e45e9-5b6b-4f55-92f2-7c64d41c9dfa">一、Gradient Descent</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#0e564bdd-ab60-4fd9-8483-880bd5909800">Another Formulation</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#ee8cb091-51c9-4023-bf8b-f1e1ddeca542">Kernel Method</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1e0ee2b1-0e56-4da5-b509-c3bbcba577e0">一、Kernel Trick</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#32f8873a-59b8-49ab-b2b5-5963908f836c">二、Radial Basis Function Kernel (RBF Kernel)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6a1eab33-5932-4fe9-a3ab-72d158b941a9">三、Sigmoid Kernel</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f2c066ba-b8e8-4885-9d3d-3a30b25d1646">四、Deep Learning VS. SVM</a></div></nav><h1 id="d4fb9573-6a4d-4e01-a0ed-003917048f1c" class="">Support Vector Machine</h1><p id="0eb7f239-6494-4a3d-8795-31d9f0fe0d19" class="">SVM主要有兩個特色：Hinge Loss與Kernel Trick。</p><figure id="77afe6ba-63ce-47de-9416-486486500d50" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image1.png"><img style="width:257px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image1.png"/></a></figure><h1 id="0d23479a-40b1-42ee-b52a-c7079b5e6304" class="">Binary Classification</h1><p id="0171f329-758e-47db-884b-1ee9068fe789" class="">處理Binary Classification的問題時，第一個step是假設一個function g(x)，
+這個g(x)裡面有另外一個function f(x)。</p><p id="eb9394f4-3452-4d6d-b35e-84588817fe62" class="">當f(x) &gt; 0 時，output為+1，代表某個class；當f(x) &lt; 0，output為-1，代表另外一個class。</p><figure id="8425f24f-70a7-468b-a664-324fad067494" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/Untitled.png"><img style="width:450px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/Untitled.png"/></a></figure><p id="0a2f54f6-18e8-4dc5-a17b-5a6850c235eb" class="">由於該例為supervised problem，因此每一筆training data有label <em>ŷ</em>（此處用+1跟-1表示）。
+而最理想的Loss Function寫作：</p><figure id="52b47021-4701-40f9-ba3b-2ac9b27b688e" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mo stretchy="false">(</mo><mi>f</mi><mo stretchy="false">)</mo><mo>=</mo><munder><mo>∑</mo><mi>n</mi></munder><mi>δ</mi><mo stretchy="false">(</mo><mi>g</mi><mo stretchy="false">(</mo><msup><mi>x</mi><mi>n</mi></msup><mo mathvariant="normal">≠</mo><msup><mover accent="true"><mi>y</mi><mo>^</mo></mover><mi>n</mi></msup><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">L(f)=\sum_nδ(g(x^n\neq \hat{y}^n))</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">L</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.3000100000000003em;vertical-align:-1.250005em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.050005em;"><span style="top:-1.8999949999999999em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span><span style="top:-3.0500049999999996em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.250005em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03785em;">δ</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel"><span class="mrel"><span class="mord"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.69444em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="rlap"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="inner"><span class="mrel"></span></span><span class="fix"></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span></span><span class="mrel">=</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.69444em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.19444em;"><span class="mord">^</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mclose">)</span></span></span></span></span></div></figure><p id="b5c8b910-34c7-4b82-b943-52ad6d7b8acb" class="">其中δ表示裡面這件事情如果為真的話，delta function的output就是1；
+如果g不等於y，δ的output就是1。</p><p id="c13c50c5-e3a1-457b-9d9d-e070a8f2fc6a" class="">所以loss就變成g在training set上總共犯了幾次錯誤，因此我們會希望他犯的錯誤是越小越好。
+但是在該task裡面要做optimization是相當困難的，因為其loss是不可微分，
+無法用Gradient Descent來解它，因此此處delta function需要用其他loss function近似之。</p><h2 id="3b4c4180-cff7-4849-9754-8b8fa56eccfd" class="">一、Square Loss</h2><p id="b17b66a1-7837-4f92-a953-72cd0084ad81" class="">它的loss定法是，希望當<em>ŷn</em> = 1的時候，f(x)跟1越接近越好；<em>ŷn</em> = − 1時，
+f(x)跟-1越接近越好。</p><figure id="f14a2813-c7ac-4ba6-a59b-5aea915b84ec" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/Untitled%201.png"><img style="width:375px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/Untitled%201.png"/></a></figure><p id="931e8178-e34f-489e-a8de-612bab3cc8a5" class="">所以square loss可以寫成：</p><figure id="48d19fe9-4e52-4a62-a2f0-bdc4a631d53b" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi><mo stretchy="false">(</mo><mi>f</mi><mo stretchy="false">(</mo><msup><mi>x</mi><mi>n</mi></msup><mo stretchy="false">)</mo><mo separator="true">,</mo><mtext> </mtext><msup><mover accent="true"><mi>y</mi><mo>^</mo></mover><mi>n</mi></msup><mo stretchy="false">)</mo><mtext> </mtext><mo>=</mo><mtext> </mtext><mo stretchy="false">(</mo><msup><mover accent="true"><mi>y</mi><mo>^</mo></mover><mi>n</mi></msup><mi>f</mi><mo stretchy="false">(</mo><msup><mi>x</mi><mi>n</mi></msup><mo stretchy="false">)</mo><mtext> − </mtext><mn>1</mn><msup><mo stretchy="false">)</mo><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">l(f(x^n), \hat{y}^n) = (\hat{y}^nf(x^n) − 1)^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"> </span><span class="mord"><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.69444em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.19444em;"><span class="mord">^</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mord"> </span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.1141079999999999em;vertical-align:-0.25em;"></span><span class="mord"> </span><span class="mopen">(</span><span class="mord"><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.69444em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.19444em;"><span class="mord">^</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mord"> </span><span class="mord">−</span><span class="mord"> </span><span class="mord">1</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span></div></figure><figure id="208f5614-f71b-49c3-8094-562c5c483401" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mo stretchy="false">(</mo><mi>f</mi><mo stretchy="false">)</mo><mo>=</mo><munder><mo>∑</mo><mi>n</mi></munder><mi>l</mi><mo stretchy="false">(</mo><mi>f</mi><mo stretchy="false">(</mo><msup><mi>x</mi><mi>n</mi></msup><mo stretchy="false">)</mo><mo separator="true">,</mo><msup><mover accent="true"><mi>y</mi><mo>^</mo></mover><mi>n</mi></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">L(f)=\sum_nl(f(x^n),\hat{y}^n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">L</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.3000100000000003em;vertical-align:-1.250005em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.050005em;"><span style="top:-1.8999949999999999em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span><span style="top:-3.0500049999999996em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.250005em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.69444em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.19444em;"><span class="mord">^</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span></div></figure><p id="0c2fbf75-0513-451c-9cac-d9d309b74976" class="">因此把square loss的function畫出來會呈現下圖紅線趨勢（不合理）。</p><figure id="e4a4d3bb-4e1d-429b-879a-e2eb77a76302" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image4.png"><img style="width:564px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image4.png"/></a></figure><h2 id="348edd2f-4956-4005-820d-d618f231a4e9" class="">二、Sigmoid + Square Loss</h2><p id="a913b6f5-ce7f-4520-a809-1b44479ef5f3" class="">此處sigmoid function就用來σ表示，我們希望<em>ŷn</em> = 1的時候，<em>σ</em>(<em>f</em>(<em>x</em>))會趨近於1；
+等於-1的時候，<em>σ</em>(<em>f</em>(<em>x</em>))會趨近於0。</p><figure id="555bbe1d-f0d3-4ed0-b6c6-2ed4482a1c00" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image5.png"><img style="width:483px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image5.png"/></a></figure><p id="20119aca-234a-4a44-b3a4-f68810fd6297" class="">其式子就是下圖藍線：</p><figure id="51164ab3-1515-485b-8976-04681ab45eaf" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image6.png"><img style="width:544px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image6.png"/></a></figure><h2 id="26dda2d0-0518-4894-8cbf-33e160eef54e" class="">三、Sigmoid + Cross Entropy (Logistic Regression)</h2><p id="d015dc38-630d-46d9-9a40-07a16a192e55" class="">然而在做Logistic Regression的時候，使用square loss作為loss表現較為差勁。
+因此在一般情況下，我們會偏好使用cross entropy。</p><figure id="8ae7a9e3-60b6-4ccc-9902-5059246e850e" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image7.png"><img style="width:500px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image7.png"/></a></figure><p id="5e0b3ef9-74c9-4a26-b850-7266a6b36e77" class="">其<em>σ</em>(<em>f</em>(<em>x</em>))代表了一個distribution，而ground truth是另外一個distribution，
+這樣distribution之間的cross entropy，就是需要去minimize的loss。</p><p id="d72e0168-8e98-42a1-a7d7-e607370cee92" class="">這個function可以寫成：</p><figure id="8cd48a29-ff8c-4abb-9243-b94db0de83a2" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>l</mi><mo stretchy="false">(</mo><mi>f</mi><mo stretchy="false">(</mo><msup><mi>x</mi><mi>n</mi></msup><mo stretchy="false">)</mo><mo separator="true">,</mo><mtext> </mtext><msup><mover accent="true"><mi>y</mi><mo>^</mo></mover><mi>n</mi></msup><mo stretchy="false">)</mo><mtext> </mtext><mo>=</mo><mtext> </mtext><mi>ln</mi><mo>⁡</mo><mrow><mo stretchy="false">(</mo><mn>1</mn><mtext> </mtext><mo>+</mo><mtext> </mtext><mi>exp</mi><mo>⁡</mo><mtext> </mtext><mrow><mo stretchy="false">(</mo><mtext>−</mtext><msup><mover accent="true"><mi>y</mi><mo>^</mo></mover><mi>n</mi></msup><mi>f</mi><mo stretchy="false">(</mo><msup><mi>x</mi><mi>n</mi></msup><mo stretchy="false">)</mo><mo stretchy="false">)</mo></mrow><mo stretchy="false">)</mo></mrow></mrow><annotation encoding="application/x-tex">l(f(x^n), ŷ^n) = \ln{(1 + \exp {(−ŷ^nf(x^n))})}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"> </span><span class="mord"><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.69444em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.19444em;"><span class="mord">^</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mord"> </span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"> </span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop">ln</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mopen">(</span><span class="mord">1</span><span class="mord"> </span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"> </span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop">exp</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"> </span><span class="mord"><span class="mopen">(</span><span class="mord">−</span><span class="mord"><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.69444em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.19444em;"><span class="mord">^</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mclose">)</span></span><span class="mclose">)</span></span></span></span></span></span></div></figure><p id="e43e3b84-536c-4222-b17d-a95ecda21715" class="">當<em>ŷnf</em>(<em>xn</em>)趨近無窮大的時候，exponential負的無窮大是0，因此變成ln(1+0) 得到結果是0；
+若<em>ŷnf</em>(<em>xn</em>)為很大的負值的時候，得到結果還是無窮大。</p><p id="284965a0-7053-4417-bd62-5f931e8a2175" class="">其式子為下圖綠線。此處另除上一個ln 2 ，讓它變成ideal loss的upper bound。
+因此雖然沒有辦法minimize ideal loss（黑線），但是可以去minimize它的upper bound，
+就可以順便達到該目的。</p><figure id="c5e6289e-7399-4d27-8d7e-865cc7c493ec" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image8.png"><img style="width:550px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image8.png"/></a></figure><p id="64b51204-86e1-4894-ac2e-01fde06edb9d" class="">另外比較square error與cross entropy loss function，會發現假設把<em>ŷnf</em>(<em>xn</em>)從-2移到-1的時候，
+前者的變化很小，但在後者的變化就非常大。</p><p id="473a50fc-93c0-4f09-a302-5e1dc7338ead" class="">所以對sigmoid function來說，在這種極端的case下，其值為很大的負值時，
+照理說應該要有很大的gradient，但是在square error中並不是如此。</p><p id="52ee797f-daed-42e2-ab4e-23892f76a448" class="">在<em>ŷnf</em>(<em>xn</em>)非常negative的時候，調整其值對最後total loss影響不大。
+所以就算調整了negative的值，也沒有辦法得到太多的回報，
+因此會傾向不想調整那些非常negative的值。</p><p id="c126b0c0-78d9-45cb-a54d-41a4123e796f" class="">然而對cross entropy來說，它的努力是可以得到回報的，
+所以會傾向把原來很negative的值往正的地方推，
+在實作上用cross entropy會比square error還更容易training。</p><h2 id="0c0f97d8-f00a-4154-a159-c18b72819da2" class="">四、Hinge Loss</h2><p id="5e7eb3ad-558f-4d92-97d4-8a632cd753e5" class="">hinge loss假設該處的loss function是maximum。</p><p id="99bee17e-a440-4cb7-9b8e-4db37ae4cafa" class="">當<em>ŷn</em> = 1的時候，loss function就是max(0, 1-f(x))，只要1-f(x) &lt; 0則loss function即為0；
+反之<em>ŷn</em> = − 1時，loss function訂為max(0, 1+f(x))，當1+f(x) &lt; 0則loss function為0。</p><figure id="495a0016-5c8c-4de9-a502-c1c272efcbf4" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image9.png"><img style="width:700px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image9.png"/></a></figure><p id="55abe5ed-42ff-4a8f-add0-f075a2754952" class="">所以用 hinge loss做training的時候，對一個positive的example來說f(x) &gt; 1就是完美的case；
+對negative example來說，則希望f(x) &lt; -1。</p><p id="4692a16e-2e52-4e08-83ee-e5520ee6553d" class="">將hinge loss作圖後將呈圖中紫線的趨勢。</p><figure id="9e3cef8e-83b8-432f-a048-38f6187eadbe" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image10.png"><img style="width:700px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image10.png"/></a></figure><p id="bc8ce4c7-5098-4135-a438-6ad448e91c77" class="">在這條線上只要<em>ŷnf</em>(<em>xn</em>) &gt; 1的時候就已經夠好了，其loss已經為0再更大都沒有幫助；
+但如果1 &gt; <em>ŷnf</em>(<em>xn</em>) &gt; 0，則machine在做classification的時候他已經可以得到正確的答案，
+但是對hinge loss來說這樣還不夠好，它必須比正確的答案還要好過一段距離（margin）。</p><p id="0cde8af5-9c7e-4777-adc4-2a4d8a2044b7" class="">也就是說當<em>ŷ</em><em>n</em><em>f</em>(<em>x</em><em>n</em>)還沒有大於1的時候，仍會有penalty存在，促使machine讓<em>ŷ</em><em>n</em><em>f</em>(<em>x</em><em>n</em>) &gt; 0</p><p id="72175086-fb67-49e7-a6bb-f3438664e1c5" class="">另外假設hinge loss的基準點為1的情況在於，使其變成ideal loss的upper bound之後，
+只要minimize hinge loss，就可能可以得到minimize ideal loss function的效果。</p><h1 id="fdd68266-515d-40be-8cf6-eb50866f0f87" class="">Linear SVM</h1><p id="9b863316-7e26-43b4-9237-333b71250c87" class="">linear SVM假設現在的function為linear，而f(x)寫作下列形式：</p><figure id="ce2db079-c94d-45ca-be53-0048f94b2015" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><munder><mo>∑</mo><mi>i</mi></munder><msub><mi>w</mi><mi>i</mi></msub><msub><mi>x</mi><mi>i</mi></msub><mo>+</mo><mi>b</mi><mo>=</mo><mrow><mo fence="true">[</mo><mtable rowspacing="0.15999999999999992em" columnalign="center center" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mi>w</mi></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mi>b</mi></mstyle></mtd></mtr></mtable><mo fence="true">]</mo></mrow><mo>⋅</mo><mrow><mo fence="true">[</mo><mtable rowspacing="0.15999999999999992em" columnalign="center center" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mi>x</mi></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>1</mn></mstyle></mtd></mtr></mtable><mo fence="true">]</mo></mrow><mo>=</mo><msup><mi>w</mi><mi>T</mi></msup><mo>⋅</mo><mi>x</mi></mrow><annotation encoding="application/x-tex">f(x)=\sum_iw_ix_i+b=\left[\begin{array}{cc}w\\b\end{array}\right]\cdot\left[\begin{array}{cc}x\\1\end{array}\right]=w^T\cdot x
+
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.327674em;vertical-align:-1.277669em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.0500050000000003em;"><span style="top:-1.872331em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span><span style="top:-3.050005em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.277669em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.40003em;vertical-align:-0.95003em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">[</span></span><span class="mord"><span class="mtable"><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.45em;"><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span></span></span><span style="top:-2.4099999999999997em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault">b</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.9500000000000004em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">]</span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:2.40003em;vertical-align:-0.95003em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">[</span></span><span class="mord"><span class="mtable"><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.45em;"><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault">x</span></span></span><span style="top:-2.4099999999999997em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.9500000000000004em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">]</span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8913309999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8913309999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span></span></div></figure><p id="9852ee1d-1106-4d31-b394-79c16ddd7e5a" class="">接著我們把w跟b串起來的vector直接就用新的w來表示，
+代表需要透過training data找出來的model參數；而x跟1串起來的vector就當作一個新的feature。</p><p id="d4cd16ef-4e57-4d9a-99d2-6255a5605ac5" class="">在SVM裡採用了hinge loss作為loss function，通常還會另外加上regularization term。
+這個loss function是一個convex function
+（因為hinge loss與L2 regularization皆是convex function）。</p><figure id="9fb1d38d-368c-4da7-9b57-2f41beced746" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image11.png"><img style="width:700px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image11.png"/></a></figure><p id="2680fa35-88f6-4ec2-8c94-c14add84cefc" class="">所以gradient descent來說，convex function很容易進行optimization，
+因為不管從哪個地方做initialization，最後找出來的結果都會是一樣的。</p><p id="2d3f64fe-688f-44f6-b82d-8740eab856c0" class="">另外如果比較Logistic Regression跟Linear SVM的差別，唯一不同的地方在於怎麼定Loss Function。若用Hinge Loss就是Linear SVM；用Cross Entropy就是 Logistic Regression。
+因此在做Deep Learning的時候，如果不是用Cross Entropy當作Loss Function，
+而是用Hinge Loss的話，其實就是deep版本的SVM。</p><h2 id="017e45e9-5b6b-4f55-92f2-7c64d41c9dfa" class="">一、Gradient Descent</h2><p id="74ed5541-b857-4186-8297-fd79cfd96d79" class="">只要能夠對model裡的loss做weight wi的偏微分，就能使用Gradient Descent。</p><p id="9a81bfcd-1cb5-4bd7-8942-77b7bc367c80" class="">首先SVM的Loss function寫作下列形式：</p><figure id="9c1d378b-675e-4945-ad9d-f2548f853266" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image12.png"><img style="width:700px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image12.png"/></a></figure><p id="e389df20-6dfb-426e-b5bb-b6fce22886ec" class="">接著對Loss function做wi的偏微分，如下式：</p><figure id="4fa41f73-c7d8-4c33-baf4-429eb299c7cb" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mrow><mi mathvariant="normal">∂</mi><mi>l</mi><mo stretchy="false">(</mo><mi>f</mi><mrow><mo fence="true">(</mo><msup><mi>x</mi><mi>n</mi></msup><mo fence="true">)</mo></mrow><mo separator="true">,</mo><msup><mover accent="true"><mi>y</mi><mo stretchy="true">^</mo></mover><mi>n</mi></msup><mo stretchy="false">)</mo></mrow><mrow><mi mathvariant="normal">∂</mi><msub><mi>w</mi><mi>i</mi></msub></mrow></mfrac><mo>=</mo><mfrac><mrow><mi mathvariant="normal">∂</mi><mi>l</mi><mo stretchy="false">(</mo><mi>f</mi><mrow><mo fence="true">(</mo><msup><mi>x</mi><mi>n</mi></msup><mo fence="true">)</mo></mrow><mo separator="true">,</mo><msup><mover accent="true"><mi>y</mi><mo stretchy="true">^</mo></mover><mi>n</mi></msup><mo stretchy="false">)</mo></mrow><mrow><mi mathvariant="normal">∂</mi><mi>f</mi><mo stretchy="false">(</mo><msup><mi>x</mi><mi>n</mi></msup><mo stretchy="false">)</mo></mrow></mfrac><mfrac><mrow><mi mathvariant="normal">∂</mi><mi>f</mi><mo stretchy="false">(</mo><msup><mi>x</mi><mi>n</mi></msup><mo stretchy="false">)</mo></mrow><mrow><mi mathvariant="normal">∂</mi><msub><mi>w</mi><mi>i</mi></msub></mrow></mfrac></mrow><annotation encoding="application/x-tex">\frac{\partial l(f\left( x^{n} \right),{\widehat{y}}^{n})}{\partial w_{i}} = \frac{\partial l(f\left( x^{n} \right),{\widehat{y}}^{n})}{\partial f(x^{n})}\frac{\partial f(x^{n})}{\partial w_{i}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.263em;vertical-align:-0.8360000000000001em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.427em;"><span style="top:-2.3139999999999996em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord" style="margin-right:0.05556em;">∂</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord" style="margin-right:0.05556em;">∂</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;">)</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord"><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.67056em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span><span class="svg-align" style="width:calc(100% - 0.11112em);margin-left:0.11112em;top:-3.43056em;"><span class="pstrut" style="height:3em;"></span><span style="height:0.24em;"><svg width='100%' height='0.24em' viewBox='0 0 1062 239' preserveAspectRatio='none'><path d='M529 0h5l519 115c5 1 9 5 9 10 0 1-1 2-1 3l-4 22
+c-1 5-5 9-11 9h-2L532 67 19 159h-2c-5 0-9-4-11-9l-5-22c-1-6 2-12 8-13z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.724852em;"><span style="top:-3.12346em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.8360000000000001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.363em;vertical-align:-0.936em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.427em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord" style="margin-right:0.05556em;">∂</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.590392em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord" style="margin-right:0.05556em;">∂</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;">)</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord"><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.67056em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span><span class="svg-align" style="width:calc(100% - 0.11112em);margin-left:0.11112em;top:-3.43056em;"><span class="pstrut" style="height:3em;"></span><span style="height:0.24em;"><svg width='100%' height='0.24em' viewBox='0 0 1062 239' preserveAspectRatio='none'><path d='M529 0h5l519 115c5 1 9 5 9 10 0 1-1 2-1 3l-4 22
+c-1 5-5 9-11 9h-2L532 67 19 159h-2c-5 0-9-4-11-9l-5-22c-1-6 2-12 8-13z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.724852em;"><span style="top:-3.12346em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.936em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.427em;"><span style="top:-2.3139999999999996em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord" style="margin-right:0.05556em;">∂</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord" style="margin-right:0.05556em;">∂</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.8360000000000001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></div></figure><p id="e049f7e0-febf-4359-afa0-3d008771c3f2" class="">由於<em>f</em>(<em>xn</em>)就是一個linear fnction，為兩個vector的Inner Product，
+所以如果用 wi對<em>f</em>(<em>xn</em>)做偏微分的話，得到的其實就是xn的第i個dimension的值。</p><figure id="f6e5e3dd-5650-4af0-b121-a89465e10a7a" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mrow><mi mathvariant="normal">∂</mi><mi>f</mi><mo stretchy="false">(</mo><msup><mi>x</mi><mi>n</mi></msup><mo stretchy="false">)</mo></mrow><mrow><mi mathvariant="normal">∂</mi><msub><mi>w</mi><mi>i</mi></msub></mrow></mfrac><mo>=</mo><msubsup><mi>x</mi><mi>i</mi><mi>n</mi></msubsup></mrow><annotation encoding="application/x-tex">\frac{\partial f(x^{n})}{\partial w_{i}} = x_{i}^{n}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.263em;vertical-align:-0.8360000000000001em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.427em;"><span style="top:-2.3139999999999996em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord" style="margin-right:0.05556em;">∂</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord" style="margin-right:0.05556em;">∂</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.8360000000000001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.9613919999999999em;vertical-align:-0.247em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-2.4530000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.247em;"><span></span></span></span></span></span></span></span></span></span></span></div></figure><p id="efae7754-7d5a-4f3e-aa33-e366cd4c6c5c" class="">接著前面對Hinge Loss做偏微分的解為：</p><figure id="00c4c15f-a05e-4a81-943a-6f35527e0674" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image13.png"><img style="width:700px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image13.png"/></a></figure><p id="fa8deff2-9a26-4db5-a6e8-72668bdfd618" class="">由於它有兩個operation region，因此可以operate在0是maximum的case，
+也可以operate在1 − <em>ŷnf</em>(<em>xn</em>)是maximum的case。
+而決定何時operate在哪一個 case則depend現在的model <em>wT</em>的值是多少。</p><p id="69467b1d-6a81-4f26-8d84-ccbb69b5fe1c" class="">假設<em>ŷnf</em>(<em>xn</em>) &lt; 1則作用在下圖紫色斜線的region，因此對<em>f</em>(<em>xn</em>)做偏微分得到的值為 − <em>ŷn</em>；
+若作用於其他region，得到的偏微分值皆為0。</p><figure id="a451064f-a937-4c4b-82f4-237af83d2461" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image14.png"><img style="width:700px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image14.png"/></a></figure><p id="0fc1433e-4ab4-4840-b60d-d051ac140976" class="">綜上所述，對L(f)做偏微分以後得到的值為：</p><figure id="7f771a27-03bf-43aa-b7ec-d241b4bb2d62" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image15.png"><img style="width:700px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image15.png"/></a></figure><p id="099d3259-4cfa-4b0c-9171-93e7625ee776" class="">亦即加總所有的Training Data之後，再看每一筆的<em>ŷ</em><em>n</em><em>f</em>(<em>x</em><em>n</em>)是不是小於1。</p><p id="44bef6ca-301b-417b-a5d5-db6a88c882f8" class="">另外由於紅底線部分取決於現在的參數是什麼，因此可以把它寫作cn(w)。</p><h3 id="0e564bdd-ab60-4fd9-8483-880bd5909800" class="">Another Formulation</h3><p id="496bd250-d828-4d51-a671-8c8138ff9c30" class="">如果把Hinge Loss換成<em>εn</em>來取代它的話（<em>εn</em> = <em>max</em>(0, 1 − <em>ŷnf</em>(<em>xn</em>))），
+同樣目標是要minimize Total Loss。</p><p id="7c0497a0-9595-4e6a-a186-6c412538ce11" class="">從定義上來看，我們會取0跟1 − <em>ŷnf</em>(<em>xn</em>)裡面取大的那一個當作<em>εn</em>，
+在minimize Total Loss的情形下，等同於下列表示法：</p><figure id="76e79f19-4f8c-4f40-b840-58a8b5f7b274" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image16.png"><img style="width:487px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image16.png"/></a></figure><p id="dc1fa202-6ad0-4627-a2de-186528f01b8d" class="">由於現在要去minimize L(f)，因此只能選一個最小的<em>εn</em>讓L(f)能夠最小，
+並同時符合上圖紅框的constrain，所以最終<em>εn</em>必須等於0跟1 − <em>ŷnf</em>(<em>xn</em>)裡面最大的一項。</p><p id="e188fbfc-5943-4ee2-930e-25f27d5b1c61" class="">該表示法即為一般常見的SVM型態。希望<em>ŷ</em><em>n</em><em>f</em>(<em>x</em><em>n</em>)為同號的同時，必須另外滿足margin 1。</p><p id="9a238d2e-c3d4-457d-ba09-6269dae1c2a2" class="">然而在某些情況下無法滿足該margin，因此會再放寬其條件，
+只須滿足減去一個slack variable <em>εn</em>（必須為正值）之後的margin即可。</p><p id="6986f983-6d5c-497f-9c87-b64983636070" class="">而上圖紅框則為Quadradic programming problem，所以除Gradient Descent外，
+亦可用Quadratic Programming的solver解之。</p><h1 id="ee8cb091-51c9-4023-bf8b-f1e1ddeca542" class="">Kernel Method</h1><p id="b4a06e01-db4b-4317-995b-8b8546d4d05c" class="">實際上我們找出來可以minimize Loss Function的weight w*，其實是data的 linear combination，
+寫作總和所有training data的vector point xn，並都乘上一個 weight <em>αn</em>*。</p><figure id="e5107dbe-5d46-4130-898d-1ac976fd24bb" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image17.png"><img style="width:603px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image17.png"/></a></figure><p id="2febb6c6-02a7-41a8-85dd-b05c417383f9" class="">也就是說找出來的model其實data point的Linear Combination。</p><p id="fbcaa38c-6a0a-4afe-87d4-4090dfd7dbfe" class="">若用Gradient Descent的方法說明之則為：</p><figure id="5daa43d0-6a56-4bd2-bb6c-fb18027b522b" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image18.png"><img style="width:700px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image18.png"/></a></figure><p id="cce00c25-1ff6-43a0-8d3e-3493d7c9dd9f" class="">假設現在w有k維且update的式子都是一樣的，唯一不同的地方在於最後乘上去的value xn。</p><p id="a5fa3387-03a1-423f-b863-cf21490423fa" class="">若把w1到wk串成一個vector；<em>x</em>1<em>n</em>到<em>xin</em>也串成一個vector，得到的結果就是每次update w的時候，
+都是把w減掉learning rate乘上xn的總和再乘上一個weight。</p><p id="b7a08a47-38c7-4142-957e-e8d28218f6af" class="">假設在initialize的時候w是一個zero vector，每次在update w時，
+都是加上data points的Linear Combination，最後得到的解就是用Gradient Descent解出來的w。</p><p id="201ed9fe-6455-44d7-b37b-28ea8f6a77ef" class="">而cn(w)代表的是f對Loss Function的偏微分。
+此處選用Hinge Loss作為Loss Function，因此該項往往都是0（作用在max = 0的region）。</p><p id="54ec2616-16ec-4ae8-bd5b-2b5bb8502de3" class="">故最後解出來的w*，它的Linear Combination weight可能會是sparse的。
+意即可能有很多的data point它對應的α*值等於0，
+而其他α*值不等於0的xn就被稱作support vector。
+這也是為何SVM相較於其他方法可能比較robust的原因。</p><p id="382af35c-0dc8-4461-9c26-c679ec55b64c" class="">把w寫成data point的Linear Combination最大的好處在於可以使用kernel trick。</p><p id="dddbdab5-94e0-4315-ae8b-daa02edda3ba" class="">我們已經知道w就是data point的Linear Combination，因此可以把所有的data point，
+從x1到xN排成一個matrix X，而α1到αN就是一個vector。
+兩兩相乘後就會得到X column的Linear Combination w。</p><figure id="787b8f57-261d-4116-9ee9-41c7e750710c" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image19.png"><img style="width:700px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image19.png"/></a></figure><p id="6255eff5-d9ab-418b-91ef-3394c789b700" class="">接著可以藉此改寫function，本來的function寫作<em>wTx</em>，而上述又知<em>w</em>= <em>Xα</em>，所以<em>f</em>(<em>x</em>) = <em>αTXTx</em>。</p><figure id="aa4644c5-d54e-4175-a3c3-c6bcad25c0ac" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image20.png"><img style="width:700px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image20.png"/></a></figure><p id="2e137fdc-65e7-426d-b0a0-e572db41dd1e" class="">最後得到的結果如下：</p><figure id="c668c734-cdda-4c4a-988b-514ee317b9cf" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mrow><mo fence="true">(</mo><mi>x</mi><mo fence="true">)</mo></mrow><mo>=</mo><munderover><mo>∑</mo><mi>n</mi><mrow></mrow></munderover><mrow><msub><mi>α</mi><mi>n</mi></msub><mo stretchy="false">(</mo><msup><mi>x</mi><mi>n</mi></msup><mo>⋅</mo><mi>x</mi><mo stretchy="false">)</mo></mrow></mrow><annotation encoding="application/x-tex">f\left( x \right) = \sum_{n}^{}{\alpha_{n}(x^{n} \cdot x)}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">(</span><span class="mord mathdefault">x</span><span class="mclose delimcenter" style="top:0em;">)</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.60001em;vertical-align:-1.250005em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3500050000000001em;"><span style="top:-1.8999949999999999em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span style="top:-3.0500049999999996em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.300005em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.250005em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault" style="margin-right:0.0037em;">α</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.0037em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathdefault">x</span><span class="mclose">)</span></span></span></span></span></span></div></figure><p id="408a599b-279d-4c73-b9ca-9eace78e5e80" class="">此外由於α是sparse的，因此計算inner product時只需考慮α不等於0的vector就好。</p><p id="e4f0ad9e-3756-41ac-9d2e-80664411df4e" class="">接著會將<em>xn</em> • <em>x</em>這個式子寫作另一個function <em>k</em>(<em>xn</em>, <em>x</em>)，稱作Kernel function，
+則此處的問題就變成找一組最好的<em>αn</em>使total loss最小。</p><p id="8cfd632c-ac0d-447b-acbf-b516d290247e" class="">在原本的total loss中，有兩個input分別為<em>ŷ</em><em>n</em>與<em>f</em>(<em>x</em><em>n</em>)，而後者就可以使用上式替換之，記為：</p><figure id="6ae2ca57-319c-4551-b448-0a5ad04b5316" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image21.png"><img style="width:410px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image21.png"/></a></figure><figure id="e4a20ee6-be08-4f9b-9eef-6751c4f23f15" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image21.png"><img style="width:410px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image21.png"/></a></figure><p id="247875d8-047d-4f0f-a1c7-6e5e735a305a" class="">所以我們不再需要真的知道vector x是多少，只需要得知它與另一個vector的內積即可
+（Kernel function）。</p><h2 id="1e0ee2b1-0e56-4da5-b509-c3bbcba577e0" class="">一、Kernel Trick</h2><p id="27ff3e0b-0934-49d5-954d-2f582d441372" class="">假設有一筆二維的data x，對它進行Feature Transform以後其結果為𝜙(x)。
+同理對z做完Feature Transform之後，x與z的Kernel function計算如下：</p><figure id="9c4c4110-fd8c-4e90-9b64-3e2d12446ba8" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/Untitled%202.png"><img style="width:594px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/Untitled%202.png"/></a></figure><p id="84841eb1-6e1d-4e07-85c2-105a6f99461a" class="">故知若x與z為k維的vector，將其投影到一個更高維的平面，
+該空間會考慮所有feature倆倆之間的關係，投影後的vector就記作𝜙(x)與𝜙(z)。</p><figure id="015bca4e-47bb-4cd5-b9a7-d9173910a70f" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image23.png"><img style="width:273px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image23.png"/></a></figure><figure id="97d9c6e5-e559-4d0b-ad01-d7a9175f89b3" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image24.png"><img style="width:249px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image24.png"/></a></figure><p id="3cbb4d65-b684-4f99-9123-d8f41acd5012" class="">因此使用Kernel Trick可以直接算出Feature Transform之後，𝜙(x)與𝜙(z)的內積值，減少運算量。</p><h2 id="32f8873a-59b8-49ab-b2b5-5963908f836c" class="">二、Radial Basis Function Kernel (RBF Kernel)</h2><p id="c24585c1-34e6-4dfb-972e-703d40c6e7da" class="">該方法旨在處理無窮多維的平面上運算Kernel Trick的問題，即𝜙()為無限多維的vector。
+然而在該情況容易出現overfitting的情形，因此使用時須多注意。</p><figure id="68b9743a-c8f7-4113-932f-53b945da42cf" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/Untitled%203.png"><img style="width:609px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/Untitled%203.png"/></a></figure><h2 id="6a1eab33-5932-4fe9-a3ab-72d158b941a9" class="">三、Sigmoid Kernel</h2><p id="4917a5cd-8020-4e29-8cf1-df8f3c47de2d" class="">Sigmoid Kernel式子為K(x, z) = tanh(x · z)。當要把x拿來做testing帶到f裡面的時候，
+其實是計算x與所有training data裡面xn的Kernel function，然後再乘上αn。</p><p id="3051af24-f289-4008-b67f-100078a8a99f" class="">如果用的是Sigmoid Kernel的話，就是把data裡面所有的xn跟x做內積，
+套上Hyperbolic Tangent後再乘αn，最後總和之後的結果。</p><figure id="1c453354-0c0a-47ea-a297-c48e99e231f2" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mrow><mo fence="true">(</mo><mi>x</mi><mo fence="true">)</mo></mrow><mo>=</mo><munderover><mo>∑</mo><mi>n</mi><mrow></mrow></munderover><mrow><msub><mi>α</mi><mi>n</mi></msub><mi>K</mi><mo stretchy="false">(</mo><msup><mi>x</mi><mi>n</mi></msup><mo separator="true">,</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><mo>=</mo><munderover><mo>∑</mo><mi>n</mi><mrow></mrow></munderover><mrow><msub><mi>α</mi><mi>n</mi></msub><mi>t</mi><mi>a</mi><mi>n</mi><mi>h</mi><mo stretchy="false">(</mo><msup><mi>x</mi><mi>n</mi></msup><mo>⋅</mo><mi>x</mi><mo stretchy="false">)</mo></mrow></mrow><annotation encoding="application/x-tex">f\left( x \right) = \sum_{n}^{}{\alpha_{n}K(x^{n},x)} = \sum_{n}^{}{\alpha_{n}tanh(x^{n} \cdot x)}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">(</span><span class="mord mathdefault">x</span><span class="mclose delimcenter" style="top:0em;">)</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.60001em;vertical-align:-1.250005em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3500050000000001em;"><span style="top:-1.8999949999999999em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span style="top:-3.0500049999999996em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.300005em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.250005em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault" style="margin-right:0.0037em;">α</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.0037em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault" style="margin-right:0.07153em;">K</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">x</span><span class="mclose">)</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.60001em;vertical-align:-1.250005em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3500050000000001em;"><span style="top:-1.8999949999999999em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span style="top:-3.0500049999999996em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.300005em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.250005em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault" style="margin-right:0.0037em;">α</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.0037em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault">t</span><span class="mord mathdefault">a</span><span class="mord mathdefault">n</span><span class="mord mathdefault">h</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathdefault">x</span><span class="mclose">)</span></span></span></span></span></span></div></figure><p id="33fbc5dc-4093-4ad6-925a-b4d372f7c1c7" class="">而這個f(x)就可以想成其實是一個只有一層hidden layer的NN，把 x拿進來之後會跟所有xn做內積，
+再通過Hyperbolic Tangent (activation function)，乘上αn後取其總和。</p><p id="a198615f-d45f-4c31-9a66-4f30c50f3274" class="">因此問題變為，找出這些αn把它Weighted Sum起來可以得到最後的f(x)。</p><figure id="e3a83653-f63c-4bc7-9a98-cc25f35f3e87" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/Untitled%204.png"><img style="width:824px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/Untitled%204.png"/></a></figure><h2 id="f2c066ba-b8e8-4885-9d3d-3a30b25d1646" class="">四、Deep Learning VS. SVM</h2><p id="f6a1fe1b-7cd8-4f4c-942f-0b705707b71b" class="">在Deep Learning中，前幾層layer可以看作是Feature Transformation，
+而最後一層layer則是Linear Classifier。</p><figure id="ae682a47-dc21-4392-97ff-1deee809928a" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image30.png"><img style="width:700px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image30.png"/></a></figure><p id="ce558f15-e8f7-4326-8e7d-1a5c3a13650a" class="">SVM做的也是很類似的事情。</p><p id="93b4b36e-2fb9-4ff7-a8d5-415e57f8b19f" class="">它前面先apply一個Kernel Function，把feature轉到high dimension上後，
+就可以apply Linear Classifier，而在SVM裡面Linear Classifier一般都會用Hinge Loss。</p><p id="2fd39107-c965-4c83-bdbf-44def9c58356" class="">另外，事實上SVM的kernel是可以learn的，因此可做到把不同kernel combine起來，
+他們中間的weight是可以讓機器自己去學的。</p><figure id="7a867061-6d84-4a8e-826b-b13c9c6c1260" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image31.png"><img style="width:700px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Support%20Vector%20Machine/image31.png"/></a></figure></div></article></body></html>
