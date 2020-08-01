@@ -10,6 +10,7 @@ import numpy as np
 import torch
 import torch.optim as optim
 import torch.nn as nn
+import time
 
 # =============================================================================
 # X_train_fpath = './data/X_train'
@@ -39,7 +40,7 @@ X_train = np.load('X_train.npy')
 Y_train = np.load('Y_train.npy')
 X_test = np.load('X_test.npy')
 
-
+start = time.clock()
 #%% Functions
 def _normalize(X, train = True, specified_column = None, X_mean = None, X_std = None):
     '''
@@ -77,40 +78,58 @@ def lossfunc(ypre, ytar):
     CE = nn.BCEWithLogitsLoss()
     return CE(ypre, ytar)
 
+def shuffle(X, Y):
+    # This function shuffles two equal-length list/array, X and Y, together.
+    randomize = np.arange(len(X))
+    np.random.shuffle(randomize)
+    return (X[randomize], Y[randomize])
+
 #%% Normalize training and testing data
 X_train, X_mean, X_std = _normalize(X_train, train = True)
 X_test, _, _= _normalize(X_test, train = False, specified_column = None, X_mean = X_mean, X_std = X_std)
 
 #%% Parameter
-dim = X_train.shape[1]
-x = torch.from_numpy(X_train).float()
 Y_train = np.reshape(Y_train, (X_train.shape[0], 1))
-ytar = torch.from_numpy(Y_train)
+dim = X_train.shape[1]
+
 w = torch.zeros((dim, 1), requires_grad = True)
 b = torch.zeros(1, requires_grad = True)
 
-lr = 0.1
-ep = 100
+lr = 15
+ep_sh = 70
+ep = 50
+mot = 0.9
+opt = optim.SGD([w, b], lr, momentum = mot)
 
-
-train_loss = np.zeros([ep,1])
-opt = optim.Adam([w, b], lr)
 #%% Training
-for t in range(ep):
-    opt.zero_grad()
-    ypre = model(x, w, b)
-    loss = lossfunc(ypre, ytar)
-    loss.backward()
-    opt.step()
-    eploss = loss.detach().numpy()
-    if (t%10 == 0 or t == ep-1):
-        print(str(t) + "_loss:" + str(eploss))
+for sh in range(ep_sh):
+    X_train, Y_train = shuffle(X_train, Y_train)
+   
+    for t in range(ep):
+        x = torch.from_numpy(X_train).float()
+        ytar = torch.from_numpy(Y_train)
         
+        opt.zero_grad()
+        ypre = model(x, w, b)
+        
+        loss = lossfunc(ypre, ytar)
+        loss.backward()
+        opt.step()
+        eploss = loss.detach().numpy() 
+        if (t%10  == 0 or t == ep-1):
+            print("shuffle_epoch: " + str(sh) + "\n" + str(t) + "_loss: " + str(eploss))
+
+acc = 1 - np.mean(np.abs(ypre.detach().numpy() - ytar.detach().numpy()))  
+print("accuracy:" + str(acc))   
 #%%Test
 xt = torch.from_numpy(X_test).float()
 ytpre = np.round(model(xt, w, b).detach().numpy()).astype(np.int)
+
+end = time.clock()
+print("\n" + "cost: " + str(end-start))
 
 with open(output_fpath.format('logistic'), 'w') as f:
     f.write('id,label\n')
     for i, label in  enumerate(ytpre):
         f.write('{},{}\n'.format(i, label))
+
