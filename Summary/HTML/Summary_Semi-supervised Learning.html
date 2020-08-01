@@ -1,0 +1,675 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Summary_Semi-supervised Learning</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="239e0f4b-3eae-4799-9f1e-e95bb5c5d1e2" class="page sans"><header><h1 class="page-title">Summary_Semi-supervised Learning</h1></header><div class="page-body"><h1 id="3ed36968-ac93-49bc-a025-32cbe8da8a1d" class="">Semi-Supervised Learning</h1><p id="2fc04a6e-85f9-44ba-828a-9f6aeb5c4266" class="">在所有的data中，unlabeled data的數量遠大於labeled data時所使用的學習模式。
+又可細分為Transductive learning與Inductive learning。
+前者的unlabeled data就是它的testing set；而後者則完全不使用testing data。</p><h2 id="cb47ff8e-66cc-4d8f-ac40-18fc70bf8d2b" class="">一、Semi-supervised Learning for Generative Model</h2><p id="3854a860-fc41-45ac-a363-ba8812b1f00c" class="">首先初始化參數，這裡可以使用labeled data估測一個值或者random取值。</p><figure id="5157c762-5123-4832-9169-31d5f3d2f94f" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>θ</mi><mtext> </mtext><mo>=</mo><mtext> </mtext><mrow><mi>P</mi><mo stretchy="false">(</mo><msub><mi>C</mi><mn>1</mn></msub><mo stretchy="false">)</mo><mo separator="true">,</mo><mi>P</mi><mo stretchy="false">(</mo><msub><mi>C</mi><mn>2</mn></msub><mo stretchy="false">)</mo><mo separator="true">,</mo><mtext> </mtext><msub><mi>μ</mi><mn>1</mn></msub><mo separator="true">,</mo><mtext> </mtext><msub><mi>μ</mi><mn>2</mn></msub><mo separator="true">,</mo><mtext> </mtext><mi mathvariant="normal">Σ</mi></mrow></mrow><annotation encoding="application/x-tex">θ = {P(C_1), P(C_2), μ_1, μ_2, Σ}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span><span class="mord"> </span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"> </span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"> </span><span class="mord"><span class="mord mathdefault">μ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"> </span><span class="mord"><span class="mord mathdefault">μ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"> </span><span class="mord">Σ</span></span></span></span></span></span></div></figure><p id="0dbc4ca6-e8b1-4598-babc-79008563e655" class="">接著根據現有的θ估算每一筆unlabeled data屬於class 1的機率。(E)</p><figure id="2b454883-cd21-419b-9744-f0353604ef7b" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mi>θ</mi></msub><mo stretchy="false">(</mo><msub><mi>C</mi><mn>1</mn></msub><mi mathvariant="normal">∣</mi><msup><mi>x</mi><mi>u</mi></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">P_θ(C_1|x^u)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">θ</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">∣</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7143919999999999em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">u</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span></div></figure><p id="39546485-9a84-4173-b908-2e96fbf28d7c" class="">算出這個機率以後，再來就是要update model。與原先沒有unlabeled data的情況相比，
+此處需考慮unlabeled data裡C1出現的次數。(M)</p><figure id="aec89f4f-1ecf-4c7f-9de6-ecc4274e0100" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Semi-supervised%20Learning/image1.png"><img style="width:581px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Semi-supervised%20Learning/image1.png"/></a></figure><p id="7dd113e6-c473-405b-8bc6-81a86141aeab" class="">此處獲得μ1之後又可重回第一步更新Pθ(C1|xu)，反覆重複上述步驟之後直到收斂為止。
+該方法稱EM algorithm。</p><h3 id="69fc4fb2-0b50-4d24-939c-b4a41c600855" class="">Why?</h3><p id="bdc83162-4f4e-470f-99a0-fff759164791" class="">這裡可以想成，我們要找一個θ去maximize Log的likelihood，
+然而該式子並非convex所以解它的時候變成要用EM algorithm解。</p><figure id="eb38ecd1-6759-4f38-b849-68c2995f1265" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Semi-supervised%20Learning/image2.png"><img style="width:591px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Semi-supervised%20Learning/image2.png"/></a></figure><h2 id="f87cb633-c28d-4582-bcef-52a5e7cb33b2" class="">二、Semi-supervised Learning for Low-density Separation</h2><p id="4f01f4bb-a82a-4bcf-add8-ad0a14f5f5a0" class="">該方法的精神就是非黑即白，意思是說在class之間會有一個非常明顯的鴻溝，
+labeled data以及unlabeled data都可以明確被分在某一個class中。
+而鴻溝的劃分取決於density的密度。</p><h3 id="dac5aea0-dc6c-47ba-9129-084524b2cfab" class="">1. Self-training</h3><p id="41f944a8-9029-4768-9632-d82509c35e42" class="">首先從labeled data去train一個model，這個model叫做f*。
+接著根據這個f*，將xu丟入去label unlabeled data得出yu，這些得到的labeled data稱Pseudo-label。
+最後再取一部份的Pseudo-label加labeled data set裡面。
+（可以給每一筆 unlabeled data provide weight比較它們的confidence）</p><figure id="2995ce8b-ff28-4229-889b-6a050efe32b4" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Semi-supervised%20Learning/image3.png"><img style="width:567px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Semi-supervised%20Learning/image3.png"/></a></figure><h3 id="cb0f6579-7d51-4416-8e64-a52b283a2542" class="">(1) Self-training VS. Generative Model</h3><p id="43b2c440-8365-4f4f-80b7-deefde20f480" class="">兩者的差別在於做Self-training的時候用的是Hard label；
+在做 Generative model的時候用的是Soft label。</p><p id="26468d18-5119-48d0-a38d-cef76aa51444" class="">舉例來說，Self-training會強制assign一筆training data，它一定是屬於某一個class；
+但是Generative model的時候會根據它的posterior probability，
+可能有部分屬於class 1，有部分屬於class 2。</p><figure id="3fa5c46a-f699-49b5-9d3f-6a77a63231c8" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Semi-supervised%20Learning/image4.png"><img style="width:623px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Semi-supervised%20Learning/image4.png"/></a></figure><p id="7c1deaf0-c95d-44a6-8d5a-949dc0ad61ea" class="">而做NN時，Soft label表現較差。</p><h3 id="b9a30778-e22f-4fc2-ab98-255e75d685ae" class="">2. Entropy-based Regularization</h3><p id="e3f9577c-b195-4b4b-954f-94f43f6d5919" class="">用neural network的時候，output是一個distribution，
+而不是限制說這個output 一定要是class 1或是class 2。</p><p id="9f847546-37ba-4a25-9306-533da91a3155" class="">但是必須假設這個output的distribution它一定要很集中，假設我們現在做5個 class的分類，
+如果output都是在class 1的機率很大，而4在其它class的機率很小，那這個結果是好的。</p><p id="945bcbcf-d470-4fef-9888-0f11564c26d4" class="">至於要怎麼用數值的方法來evaluate這個distribution到底是好的還是不好，
+這邊要用的東西叫做Entropy，所以我們需要做的事情是希望這個model的output在labeled data上，
+它的分類要正確；但是在unlabeled data上，它的output的entropy要越小越好。</p><p id="e090b0b6-0b7e-4167-8979-e13da91c2c4a" class="">所以根據這個假設可以設計loss function，希望找一組參數在labeled data上的 model的output，
+跟正確的model的output距離越近越好，這裡就是用cross entropy來evaluate它們之間的距離。</p><p id="01bf161b-2be4-48da-a40f-0ed777b8398b" class="">在unlabeled data的部分則希望這些unlabeled data的entropy越小越好。</p><p id="3ba7a0f3-dd7c-4fba-a6b5-7453cf2c4e3c" class="">此外在這兩項中間可以乘一個weight來考慮要偏向unlabeled data多一點還是少一點。</p><figure id="a9c476fd-cde6-4170-bb38-cfad68270a77" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Semi-supervised%20Learning/image5.png"><img style="width:622px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Semi-supervised%20Learning/image5.png"/></a></figure><h2 id="1545620c-0107-4cc7-95d2-0434cdd7d499" class="">三、Outlook:Semi-supervised SVM</h2><p id="003f9f4b-7ebb-45ca-9c80-5f7459de1345" class="">SVM在處理該問題時，會窮舉所有可能的label裡面，哪一個可能性可以讓你的margin最大，
+同時又minimize error。</p><p id="da106591-2329-47e0-8188-c74224b25242" class="">舉例來說，這邊有4筆 unlabeled data，每一筆它都可以是屬於class 1，也可以是屬於class 2，
+窮舉它所有可能的label之後為下圖所示。</p><p id="1ce2385b-d7f8-4707-a305-4000f85116f2" class="">然後對每一個可能的結果都做一個 SVM，再去看哪一個unlabeled data 的可能性，
+可以讓margin 最大，同時又 minimize error。</p><p id="a66b0bcd-ec35-430a-8904-090217652684" class="">像是第一個分類正確但margin 較大，而第三個假設不僅分類錯誤且margin也較大，
+因此選擇第二個假設。</p><figure id="faf77e87-864d-4898-9230-11d1c146edeb" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Semi-supervised%20Learning/image6.png"><img style="width:581px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Semi-supervised%20Learning/image6.png"/></a></figure><h2 id="85bb9060-0a1e-430d-a0b2-75314e4c355c" class="">四、Semi-supervised Learning for Smoothness Assumption</h2><p id="60f9f73d-2461-4aa5-84d2-4c920e73b549" class="">該方法的精神就是近朱者赤，意即x的分布是不平均的，而它在某些地方是很集中，
+某些地方又很分散。如果x1和x2在一個high density的region裡很接近的話，
+則x1的label y1\hat跟x2的label y2\hat，它們才會很像。</p><figure id="e2c0164f-cd79-4029-bdcf-acee5c3b40c6" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Semi-supervised%20Learning/image7.png"><img style="width:314px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Semi-supervised%20Learning/image7.png"/></a></figure><p id="18525266-b4c7-4b10-851b-753dd98b5ce8" class="">進一步說明，high density的region表示兩個input data中間有許多相似的data不斷「演化」過去；
+反之若兩者之間相似的data很少，代表它們之間為low density region，即兩者並不相似。</p><figure id="01fdb818-195c-4f97-9f9a-59dff971d741" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Semi-supervised%20Learning/image8.png"><img style="width:470px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Semi-supervised%20Learning/image8.png"/></a></figure><h3 id="18885189-036c-4fb3-9d05-107bfd8d6a81" class="">1. Cluster and then Label</h3><p id="06c02e67-7fa3-4dec-9e65-7406dfdb24c7" class="">將所有labeled data cluster之後，在將unlabeled data透過classifier加上label。
+（如果單純使用pixel來做clustering表現較差，需要有很好的方法，來描述image，
+例如用Deep Autoencoder call feature然後再call clustering）</p><figure id="9987441c-b348-4707-9bce-a0bd3d48f612" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Semi-supervised%20Learning/image9.png"><img style="width:523px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Semi-supervised%20Learning/image9.png"/></a></figure><h3 id="ab2aa573-3734-45ab-9c47-60adf66fb7f6" class="">2. Graph-based Approach</h3><p id="d6300cf3-a082-4271-a72e-e9cefc1fcc58" class="">計算某一點與其neighbor之間的similarity，之後將similarity高的點connect在一起，
+建成graph之後即可得知所有data的high density path。</p><p id="0cdd7bd6-b3c1-43b2-8f17-749ffb33b8cb" class="">建graph的方法有很多種，像是K Nearest Neighbor。
+該方法先設定一個k值，接著每一個point都跟它最近的、相似度最像的k個點做相連。</p><p id="6b64bb2c-4109-4753-9d34-8704c170dcfb" class="">而e-Neighborhood則是設定某一個threshold，
+每一個點只有跟它相似度超過該threshold的點才會被相連。</p><p id="829d48c4-324e-4dbb-96b7-5cd1f6490e31" class="">另外所謂的edge也不是只有相連和不相連，這樣binary的選擇而已。
+可以給 edge一些weight，讓edge跟要被連接起來的兩個data point之間的相似度是成正比的。</p><p id="79f71861-d480-4344-8c56-f92379ed476b" class="">至於如何定義該相似度可以使用RBM function，先算xi跟xj如果你都把它們用vector來表示的話，
+算它們的Euclidean distance前面乘一個參數，再乘一個負號，最終取exponential。</p><p id="400882cd-0b2c-417c-ac54-39bcc46ab239" class="">取exponential這件事情在經驗上，可以給你比較好的performance。
+因為這個 function，它下降的速度是非常快的，所以只有當xi跟xj非常靠近的時候，
+它的similarity才會大；距離稍微遠一點similarity就會下降很快，變得很小，以避免連到不相干的link（橘色點與綠色點）。</p><figure id="58518a19-726a-4da6-b8b6-54cccf13ee63" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Semi-supervised%20Learning/image10.png"><img style="width:624px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Semi-supervised%20Learning/image10.png"/></a></figure><p id="652039ff-4022-45a8-95d5-74bd872102e9" class="">Graph-based的approach還有一個特點就是它會像傳染病一樣傳遞class過去。
+以下圖為例，假設該圖已知x為class 1，那其周圍的點就會被歸在class 1，
+而它們相鄰的點被歸在class 1的機率亦會跟著上升。</p><p id="4a7c532c-b849-4ed5-a778-6333cd4a6294" class="">然而要讓graph-based這種Semi-supervised的方法有用，data的數量要夠多；
+否則information就無法傳過去。</p><figure id="09a60ba1-cb11-411b-971a-c99b813de0d5" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Semi-supervised%20Learning/image11.png"><img style="width:605px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Semi-supervised%20Learning/image11.png"/></a></figure><p id="3b3424d0-3b69-48c4-b45d-5ab0e0e2c4e3" class="">至於要如何判斷在該graph structure的label標得好不好，就必須定義label在graph上的smoothness，
+這個值越小表示定出來的label越好。</p><figure id="b4cee796-3d72-435c-8e2b-90c717857dc6" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Semi-supervised%20Learning/image12.png"><img style="width:630px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Semi-supervised%20Learning/image12.png"/></a></figure><p id="60f9efea-f18a-47fd-a3ab-fbf8794c8c1a" class="">我們可以再整理一下上述smoothness的式子。
+把y串成一個vector，而它包括labeled data與unlabeled data，因此為(R + U)個dimension，
+於是S就可以寫成vector y乘上matrix L在乘上y的transpose。</p><p id="f07f3a0f-0530-4701-9a7c-fc49e2c10275" class="">L是一個(R +U)*(R + U)的matrix，稱作Graph Laplacian，可表示為兩個matrix的相減，D-W。</p><p id="11d1a73d-4c1c-46f2-81c4-d58d8d65795f" class="">W就是這些data point兩兩之間weight的connection的關係建成的matrix；
+D則是把W的每一個row合起來放在diagonal的地方，建成的diagonal matrix。</p><figure id="12d38211-3963-4645-948d-910206522ed9" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Semi-supervised%20Learning/image13.png"><img style="width:623px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Semi-supervised%20Learning/image13.png"/></a></figure><p id="dcb58c68-a29a-49f6-a7d1-e18b8d49c46c" class="">最後loss function考慮的除了labeled data的距離(cross entropy)外，
+還需再加上unlabeled data的smoothness乘上某一個可調的參數 λ。
+它其實就象徵了一個Regularization。</p><p id="081959fb-4882-4c49-962c-7a7bb33af031" class="">至於算smoothness時候，不一定要算在output的地方。
+以一個deep neural network為例，可以把smoothness放network的任何地方，
+除了假設output 是 smooth外；
+也可以同時假設某一個hidden layer接出來，再乘上一些別的transform，讓它也要smooth；
+或是使每一個hidden layer的output都要是smooth的，
+最後同時把這些smooth通通都加到neural network上面即可。</p><figure id="865fc47b-a8eb-4fb8-9765-50cd3aaef3cb" class="image"><a href="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Semi-supervised%20Learning/image14.png"><img style="width:600px" src="https://abner0627.github.io/ML-Lecture/Summary/HTML/Img/Summary_Semi-supervised%20Learning/image14.png"/></a></figure></div></article></body></html>
