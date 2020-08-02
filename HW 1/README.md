@@ -1,6 +1,6 @@
 # HW 1
 
-> data & kaggle:  
+> data:  
 [https://www.kaggle.com/c/ml2020spring-hw1](https://www.kaggle.com/c/ml2020spring-hw1)
 
 > into slide:  
@@ -22,15 +22,16 @@
 
 ## Training Data
 
-<img src = "https://abner0627.github.io/ML-Lecture/HW%201/img/Untitled.png">  
+![https://abner0627.github.io/ML-Lecture/HW%201/img/Untitled.png](https://abner0627.github.io/ML-Lecture/HW%201/img/Untitled.png)
 
-在training data的部分，row為每月前20天的18項觀測指標（計12 * 20 * 18 = 4320項）；column為其每天24小時量測的數值（計24項）。
+在training data的部分，row為每月前20天的18項觀測指標（計12 * 20 * 18 = 4320項）；
+column為其每天24小時量測的數值（計24項）。
 
-因此raw data為4320 * 24的矩陣。
+因此training data為4320 * 24的矩陣。
 
 ## Testing Data
 
-<img src = "https://abner0627.github.io/ML-Lecture/HW%201/img/Untitled%201.png">  
+![https://abner0627.github.io/ML-Lecture/HW%201/img/Untitled%201.png](https://abner0627.github.io/ML-Lecture/HW%201/img/Untitled%201.png)
 
 testing data為剩下的資料sample出每筆連續10小時，共240筆的觀測數值（240 * 18 = 4320項）。
 而第10小時的PM2.5數值當作預測的答案。
@@ -61,8 +62,8 @@ data = raw_data[:,3:]
 data[data=="NR"] = 0
 ```
 
-接著把每個月20天的資料以18項量測指標為row重新排列，如下圖示。最終得到18 * 480的矩陣。
-而將1~12月的所有18 * 480的矩陣以dictionary方式儲存
+接著把每個月20天的資料以18項量測指標為row重新排列，如下圖示，最終得到18 * 480的矩陣。
+而另將1~12月的所有18 * 480的矩陣以dictionary的方式儲存 (month_data)。
 
 ```python
 month_data = {}
@@ -73,7 +74,7 @@ for month in range(12):
     month_data[month] = sample
 ```
 
-<img src = "https://abner0627.github.io/ML-Lecture/HW%201/img/Untitled%202.png">  
+![https://abner0627.github.io/ML-Lecture/HW%201/img/Untitled%202.png](https://abner0627.github.io/ML-Lecture/HW%201/img/Untitled%202.png)
 
 ## Parameters and model
 
@@ -94,7 +95,7 @@ for month in range(12):
             y[month * 471 + day * 24 + hour,0] = month_data[month][9 ,day * 24 + hour + 9]
 ```
 
-<img src = "https://abner0627.github.io/ML-Lecture/HW%201/img/Untitled%203.png">  
+![https://abner0627.github.io/ML-Lecture/HW%201/img/Untitled%203.png](https://abner0627.github.io/ML-Lecture/HW%201/img/Untitled%203.png)
 
 對x取normalize 。
 
@@ -107,7 +108,7 @@ for i in range(len(x)):
             x[i][j] = (x[i][j] - mean_x[j]) / std_x[j]
 ```
 
-定義model與loss functions並設定參數。
+定義model與loss functions (RMSE)並設定參數以及optimizer (Adam)，此處以pytorch進行實作。
 
 ```python
 def model(x):
@@ -118,10 +119,10 @@ def lossfunc(ypre, ytar):
     return torch.sqrt(MSE(ypre, ytar))
 
 dim = 18 * 9
-w = torch.zeros((dim, 1), requires_grad=True)
-b = torch.zeros(1, requires_grad=True)
-lr = 0.1
-ep = 1000
+w = torch.zeros((dim, 1), requires_grad=True)    # weight
+b = torch.zeros(1, requires_grad=True)    # bias
+lr = 0.1    # learning rate
+ep = 1000    # epoch，訓練次數
 x_in = torch.from_numpy(x).float()
 ytar = torch.from_numpy(y)
 optimizer = optim.Adam([w, b], lr)
@@ -129,15 +130,15 @@ optimizer = optim.Adam([w, b], lr)
 
 ## Training
 
-進行training並將得出的weight與bias轉為numpy array，作為待會testing之用。
+進行training並將得出的weight與bias轉成numpy array，作為待會testing之用。
 
 ```python
 for t in range(ep):
-    optimizer.zero_grad()
-    ypre = model(x_in).double()
-    loss = lossfunc(ypre, ytar)
-    loss.backward()   
-    optimizer.step()
+    optimizer.zero_grad()    # initailize optimizer
+    ypre = model(x_in).double()    # training prediction
+    loss = lossfunc(ypre, ytar)    # calculate loss function
+    loss.backward()    # backpropagation
+    optimizer.step()    # update all parameters (e.g. weight, bias, etc.)
     if (t%100 == 0 or t == ep - 1):
         print(str(t) + ":" + str(loss.detach().numpy()))
 		# 每100個epoch print一次loss的值
@@ -148,11 +149,11 @@ b_array = b.detach().numpy()
 
 ## Testing
 
-讀testing data並同樣排成以18個量測指標為row的矩陣 。
+讀testing data並同樣排成以18個量測指標為row的矩陣。
 
 ```python
 testdata = pd.read_csv('filepath/test.csv', header = None, encoding = 'big5')
-test_data = testdata.iloc[:, 2:]    #去除文字
+test_data = testdata.iloc[:, 2:]    # 去除文字
 test_data[test_data == 'NR'] = 0
 test_data = test_data.to_numpy()
 test_x = np.empty([240, 18*9], dtype = float)
@@ -165,14 +166,16 @@ for i in range(len(test_x)):
             test_x[i][j] = (test_x[i][j] - mean_x[j]) / std_x[j]
 ```
 
-使用訓練得出的weight與bias進行預測，將結果存成 .csv上傳至kaggle
+使用訓練得到的weight與bias行預測，將結果存成 .csv上傳至kaggle。
 
 ```python
 ans_y = np.dot(test_x, w_array) + b_array
 np.savetxt("ansy.csv", ans_y, delimiter=",")
 ```
 
-最終成果如下 (RMSE)：  
+最終成果如下 (RMSE)：
+可將training data分作training set與validation set，以便在上傳kaggle前就能評估model的效能，
+藉此改善其在private score的精度。  
 
 | Method          | Public  | Private |
 |-----------------|---------|---------|
