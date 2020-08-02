@@ -197,9 +197,15 @@ with open(output_fpath.format('logistic'), 'w') as f:
 
 ## Result
 
-最終結果如下：
+最終結果如下 (Accuracy)：
 若為改善其精度，可考慮採用sample code的mini-batch方式進行訓練，除增加運算速度外，
 另可增加參數更新的次數。
 （將資料分成數個batch，每看過一個batch之後就更新一次參數，同時改變learning rate）
 接著亦可從原始資料的詳細內容著手，對影響重大的feature分開處理（如年齡與工作年資），
-稱特徵工程 (feature engineering)
+稱特徵工程 (feature engineering)  
+
+| Method          | Public  | Private |
+|-----------------|---------|---------|
+| Pytorch_SGD    | 0.88415 | 0.88132 |
+| Strong_baseline | 0.89052 | 0.89102 |
+| Simple_baseline | 0.88617 | 0.88675 |
