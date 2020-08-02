@@ -1,12 +1,12 @@
 # HW 2
 
-> data:
+> data:  
 [https://www.kaggle.com/c/ml2020spring-hw2](https://www.kaggle.com/c/ml2020spring-hw2)
 
-> into slide:
+> into slide:  
 [https://docs.google.com/presentation/d/1dQVeHfIfUUWxMSg58frKBBeg2OD4N7SD0YP3LYMM7AA/edit#slide=id.g7e958d1737_0_6](https://docs.google.com/presentation/d/1dQVeHfIfUUWxMSg58frKBBeg2OD4N7SD0YP3LYMM7AA/edit#slide=id.g7e958d1737_0_6)
 
-> sample code:
+> sample code:  
 [https://colab.research.google.com/drive/1JaMKJU7hvnDoUfZjvUKzm9u-JLeX6B2C](https://colab.research.google.com/drive/1JaMKJU7hvnDoUfZjvUKzm9u-JLeX6B2C)
 
 註：資料前處理的部分皆參考sample code
