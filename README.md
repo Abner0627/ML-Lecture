@@ -2,7 +2,7 @@
 本筆記皆參閱自李宏毅老師之Machine Learning開放課程。  
 http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML20.html  
 
-![http://speech.ee.ntu.edu.tw/~tlkagk/HW.png](http://speech.ee.ntu.edu.tw/~tlkagk/HW.png)  
+<img src="http://speech.ee.ntu.edu.tw/~tlkagk/HW.png" width = "732" height = "594" alt="Learning Map" align=center />  
   
 ## HTML  
 [1. Summary Introduction](https://abner0627.github.io/ML-Lecture/Summary/HTML/Summary_Introduction.html)  
