@@ -56,7 +56,7 @@ import torch
 import torch.optim as optim
 import torch.nn as nn
 
-raw_data = pd.read_csv('filepath/train.csv',encoding='big5')
+raw_data = pd.read_csv('.data/train.csv',encoding='big5')
 raw_data = raw_data.to_numpy()    # 將dataframe轉為array
 data = raw_data[:,3:]
 data[data=="NR"] = 0
