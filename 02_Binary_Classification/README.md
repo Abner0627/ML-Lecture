@@ -13,24 +13,24 @@
 
 ## Purpose
 
-根據受試者的40項個人資料進行分類，預測該受試者之年薪是否有高於50,000美元。
+根據受試者的40項個人資料進行分類，預測該受試者之年薪是否有高於50,000美元。<br />
 為二元分類的問題。
 
 ## Training Data
 
 ![https://abner0627.github.io/ML-Lecture/02_Binary_Classification/img/Untitled.png](https://abner0627.github.io/ML-Lecture/02_Binary_Classification/img/Untitled.png)
 
-在training data的部分，row代表受試者的編號（共計54256位），
+在training data的部分，row代表受試者的編號（共計54256位），<br />
 column則包含該受試者的基本資料，並標註該受試者之年薪是否高於50,000美元。
 
-此處資料經過處理後變為54256 * 510的矩陣，其中510項columns就是其input。
+此處資料經過處理後變為54256 * 510的矩陣，其中510項columns就是其input。<br />
 此外data的詳細資料可從"train.csv"中得知，如上圖所示。
 
 ## Testing Data
 
 ![https://abner0627.github.io/ML-Lecture/02_Binary_Classification/img/Untitled%201.png](https://abner0627.github.io/ML-Lecture/02_Binary_Classification/img/Untitled%201.png)
 
-testing data為另外27622位受試者的資料，與training data不同該筆資料並無data，
+testing data為另外27622位受試者的資料，與training data不同該筆資料並無data，<br />
 是此次作業需要預測的目標。
 
 同樣testing data亦做過資料處理，為27622 * 510的矩陣。
@@ -73,19 +73,19 @@ with open(X_test_fpath) as f:
 
 定義在該訓練中會被用到的model與functions。
 
-"_normalize"對資料進行正規化，並由使用者決定是否只對特定的column進行，
-或是否輸出其mean與std。
-另外為求data處理方式相同，此處testing data須使用training data的mean與std。
+"_normalize"對資料進行正規化，並由使用者決定是否只對特定的column進行，<br />
+或是否輸出其mean與std。<br />
+另外為求data處理方式相同，此處testing data須使用training data的mean與std。<br />
 該函式的詳細說明可參見sample code。
 
-"model"與"lossfunc"定義了訓練時的模型與損失函數，此處用pytorch進行實作。
-前者為linear model並通過sigmoid function之後使其值介於0~1之間，如下示：
+"model"與"lossfunc"定義了訓練時的模型與損失函數，此處用pytorch進行實作。<br />
+前者為linear model並通過sigmoid function之後使其值介於0~1之間，如下示：<br />
 i為受試者編號，n為510項input。
 
 ![https://abner0627.github.io/ML-Lecture/02_Binary_Classification/img/Untitled%202.png](https://abner0627.github.io/ML-Lecture/02_Binary_Classification/img/Untitled%202.png)
 
-"shuffle"在每次訓練迴圈之前會打亂X與Y的順序。但仍使每筆X的row皆對應到原先的Y，
-即受試者與其對應的label是固定的。
+"shuffle"在每次訓練迴圈之前會打亂X與Y的順序。但仍使每筆X的row皆對應到原先的Y，<br />
+即受試者與其對應的label是固定的。<br />
 同樣可參見sample code看詳細說明。
 
 ```python
@@ -125,11 +125,11 @@ X_test, _, _= _normalize(X_test, train = False, specified_column = None, X_mean 
 
 ## Parameters
 
-首先將Y_train拉成54256 * 1的矩陣，使其與model出來的預測值長度相符。
+首先將Y_train拉成54256 * 1的矩陣，使其與model出來的預測值長度相符。<br />
 接著決定weight與bias的長度，分別為510 * 1與1 * 1。
 
-設定learning rate (lr)；
-然後決定要打亂X_train與Y_train的順序多少次，使資料順序對training的影響變小；
+設定learning rate (lr)；<br />
+然後決定要打亂X_train與Y_train的順序多少次，使資料順序對training的影響變小；<br />
 接著設定要訓練的次數 (ep)。
 
 最終定義optimizer，此處選用SGD加快速度，其momentum為預設值0.9。
@@ -151,7 +151,7 @@ opt = optim.SGD([w, b], lr, momentum = mot)
 
 ## Training
 
-在每次進入training的迴圈時，皆打亂資料順序，計ep_sh = 70次。
+在每次進入training的迴圈時，皆打亂資料順序，計ep_sh = 70次。<br />
 並在進入迴圈後每10個epoch就print出其loss值，最終再計算training data的準確率 (acc)。
 
 ```python
@@ -197,11 +197,11 @@ with open(output_fpath.format('logistic'), 'w') as f:
 
 ## Result
 
-最終結果如下 (Accuracy)：
-若為改善其精度，可考慮採用sample code的mini-batch方式進行訓練，除增加運算速度外，
-另可增加參數更新的次數。
-（將資料分成數個batch，每看過一個batch之後就更新一次參數，同時改變learning rate）
-接著亦可從原始資料的詳細內容著手，對影響重大的feature分開處理（如年齡與工作年資），
+最終結果如下 (Accuracy)：<br />
+若為改善其精度，可考慮採用sample code的mini-batch方式進行訓練，除增加運算速度外，<br />
+另可增加參數更新的次數。<br />
+（將資料分成數個batch，每看過一個batch之後就更新一次參數，同時改變learning rate）<br />
+接著亦可從原始資料的詳細內容著手，對影響重大的feature分開處理（如年齡與工作年資），<br />
 稱特徵工程 (feature engineering)  
 
 | Method          | Public  | Private |
