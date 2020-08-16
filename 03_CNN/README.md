@@ -133,7 +133,7 @@ test_transform = transforms.Compose([
 在__init__中匯入dataset (x)與其label (y)，此外若data有label存在 (如training/validation set)，則將y變為LongTensor的形式；最終再定義使用上述的transform流程。
 
 __len__定義該dataset的大小；__getitem__則定義當程式取值時，dataset應該要怎麼回傳資料。
-兩者為DataLoader函式在enumerate Dataset時會使用到，因此為必要項目。
+兩者為DataLoader函式在enumerate Dataset時會使用到，因此為必要項目。  
 
 參見：[https://pytorch.org/docs/stable/data.html#torch.utils.data.Dataset](https://pytorch.org/docs/stable/data.html#torch.utils.data.Dataset)
 　　　[https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader](https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader)
@@ -174,16 +174,16 @@ val_loader = DataLoader(val_set, batch_size=batch_size, shuffle=False)
 
 定義CNN model並設定其forward()。
 
-在nn.Conv2d()中宣告input與output的dimension、convolution中kernel的大小、每次kernel的步進大小 (stride)，以及zero-padding在input兩邊補0的column數量 (padding)。
+在nn.Conv2d()中宣告input與output的dimension、convolution中kernel的大小、每次kernel的步進大小 (stride)，以及zero-padding在input兩邊補0的column數量 (padding)。  
 參見：[https://pytorch.org/docs/stable/generated/torch.nn.Conv2d.html](https://pytorch.org/docs/stable/generated/torch.nn.Conv2d.html)
 
-nn.BatchNorm2d()表示在該層layer中是否使用Batch Normalization，藉此確保每層layer的input保持相同分佈。
+nn.BatchNorm2d()表示在該層layer中是否使用Batch Normalization，藉此確保每層layer的input保持相同分佈。  
 參見：[https://zhuanlan.zhihu.com/p/88347589](https://zhuanlan.zhihu.com/p/88347589)
 
-nn.MaxPool2d()中宣告需要做max pooling的範圍 (kernel_size, n*n)，以及zero-padding的數量 (padding)。
+nn.MaxPool2d()中宣告需要做max pooling的範圍 (kernel_size, n*n)，以及zero-padding的數量 (padding)。  
 參見：[https://pytorch.org/docs/master/generated/torch.nn.MaxPool2d.html](https://pytorch.org/docs/master/generated/torch.nn.MaxPool2d.html)
 
-最終通過linear layer預測其分類，nn.Linear()分別設定input與output feature大小。
+最終通過linear layer預測其分類，nn.Linear()分別設定input與output feature大小。  
 參見：[https://pytorch.org/docs/stable/generated/torch.nn.Linear.html](https://pytorch.org/docs/stable/generated/torch.nn.Linear.html)
 
 另外在pytorch終須自行設定network的forward方向。
