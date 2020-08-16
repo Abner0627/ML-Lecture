@@ -1,4 +1,4 @@
-# HW 2
+# Binary Classification
 
 > data:  
 [https://www.kaggle.com/c/ml2020spring-hw2](https://www.kaggle.com/c/ml2020spring-hw2)
@@ -18,7 +18,7 @@
 
 ## Training Data
 
-![https://abner0627.github.io/ML-Lecture/HW%202/img/Untitled.png](https://abner0627.github.io/ML-Lecture/HW%202/img/Untitled.png)
+![https://abner0627.github.io/ML-Lecture/02_Binary_Classification/img/Untitled.png](https://abner0627.github.io/ML-Lecture/02_Binary_Classification/img/Untitled.png)
 
 在training data的部分，row代表受試者的編號（共計54256位），
 column則包含該受試者的基本資料，並標註該受試者之年薪是否高於50,000美元。
@@ -28,7 +28,7 @@ column則包含該受試者的基本資料，並標註該受試者之年薪是�
 
 ## Testing Data
 
-![https://abner0627.github.io/ML-Lecture/HW%202/img/Untitled%201.png](https://abner0627.github.io/ML-Lecture/HW%202/img/Untitled%201.png)
+![https://abner0627.github.io/ML-Lecture/02_Binary_Classification/img/Untitled%201.png](https://abner0627.github.io/ML-Lecture/02_Binary_Classification/img/Untitled%201.png)
 
 testing data為另外27622位受試者的資料，與training data不同該筆資料並無data，
 是此次作業需要預測的目標。
@@ -82,7 +82,7 @@ with open(X_test_fpath) as f:
 前者為linear model並通過sigmoid function之後使其值介於0~1之間，如下示：
 i為受試者編號，n為510項input。
 
-![https://abner0627.github.io/ML-Lecture/HW%202/img/Untitled%202.png](https://abner0627.github.io/ML-Lecture/HW%202/img/Untitled%202.png)
+![https://abner0627.github.io/ML-Lecture/02_Binary_Classification/img/Untitled%202.png](https://abner0627.github.io/ML-Lecture/02_Binary_Classification/img/Untitled%202.png)
 
 "shuffle"在每次訓練迴圈之前會打亂X與Y的順序。但仍使每筆X的row皆對應到原先的Y，
 即受試者與其對應的label是固定的。
