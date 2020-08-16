@@ -1,4 +1,4 @@
-# HW 1
+# Regression
 
 > data:  
 [https://www.kaggle.com/c/ml2020spring-hw1](https://www.kaggle.com/c/ml2020spring-hw1)
@@ -22,7 +22,7 @@
 
 ## Training Data
 
-![https://abner0627.github.io/ML-Lecture/HW%201/img/Untitled.png](https://abner0627.github.io/ML-Lecture/HW%201/img/Untitled.png)
+![https://abner0627.github.io/ML-Lecture/01_Regression/img/Untitled.png](https://abner0627.github.io/ML-Lecture/01_Regression/img/Untitled.png)
 
 在training data的部分，row為每月前20天的18項觀測指標（計12 * 20 * 18 = 4320項）；
 column為其每天24小時量測的數值（計24項）。
@@ -31,7 +31,7 @@ column為其每天24小時量測的數值（計24項）。
 
 ## Testing Data
 
-![https://abner0627.github.io/ML-Lecture/HW%201/img/Untitled%201.png](https://abner0627.github.io/ML-Lecture/HW%201/img/Untitled%201.png)
+![https://abner0627.github.io/ML-Lecture/01_Regression/img/Untitled%201.png](https://abner0627.github.io/ML-Lecture/01_Regression/img/Untitled%201.png)
 
 testing data為剩下的資料sample出每筆連續10小時，共240筆的觀測數值（240 * 18 = 4320項）。
 而第10小時的PM2.5數值當作預測的答案。
@@ -74,7 +74,7 @@ for month in range(12):
     month_data[month] = sample
 ```
 
-![https://abner0627.github.io/ML-Lecture/HW%201/img/Untitled%202.png](https://abner0627.github.io/ML-Lecture/HW%201/img/Untitled%202.png)
+![https://abner0627.github.io/ML-Lecture/01_Regression/img/Untitled%202.png](https://abner0627.github.io/ML-Lecture/01_Regression/img/Untitled%202.png)
 
 ## Parameters and model
 
@@ -95,7 +95,7 @@ for month in range(12):
             y[month * 471 + day * 24 + hour,0] = month_data[month][9 ,day * 24 + hour + 9]
 ```
 
-![https://abner0627.github.io/ML-Lecture/HW%201/img/Untitled%203.png](https://abner0627.github.io/ML-Lecture/HW%201/img/Untitled%203.png)
+![https://abner0627.github.io/ML-Lecture/01_Regression/img/Untitled%203.png](https://abner0627.github.io/ML-Lecture/01_Regression/img/Untitled%203.png)
 
 對x取normalize 。
 
