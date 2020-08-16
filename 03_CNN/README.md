@@ -1,12 +1,12 @@
 # CNN
 
-> data:
+> data: 
 [https://www.kaggle.com/c/ml2020spring-hw3](https://www.kaggle.com/c/ml2020spring-hw3)
 
-> into slide:
+> into slide: 
 [https://docs.google.com/presentation/d/1_6TJrFs3JGBsJpdRGLK1Fy_EiJlNvLm_lTZ9sjLsaKE/edit#slide=id.p1](https://docs.google.com/presentation/d/1_6TJrFs3JGBsJpdRGLK1Fy_EiJlNvLm_lTZ9sjLsaKE/edit#slide=id.p1)
 
-> sample code:
+> sample code: 
 [https://colab.research.google.com/drive/16a3G7Hh8Pv1X1PhZAUBEnZEkXThzDeHJ](https://colab.research.google.com/drive/16a3G7Hh8Pv1X1PhZAUBEnZEkXThzDeHJ)
 
 註：下列內容皆為sample code擷取過來的，我嘗試用自己的方式解釋其運作方式。
