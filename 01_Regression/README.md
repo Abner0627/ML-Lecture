@@ -17,14 +17,14 @@
 
 ## Data
 
-主要分train.csv與test.csv，前者是豐原站每個月的前 20 天所有資料；
+主要分train.csv與test.csv，前者是豐原站每個月的前 20 天所有資料；<br />
 後者則是從豐原站剩下的資料中取樣出來。
 
 ## Training Data
 
 ![https://abner0627.github.io/ML-Lecture/01_Regression/img/Untitled.png](https://abner0627.github.io/ML-Lecture/01_Regression/img/Untitled.png)
 
-在training data的部分，row為每月前20天的18項觀測指標（計12 * 20 * 18 = 4320項）；
+在training data的部分，row為每月前20天的18項觀測指標（計12 * 20 * 18 = 4320項）；<br />
 column為其每天24小時量測的數值（計24項）。
 
 因此training data為4320 * 24的矩陣。
@@ -33,7 +33,7 @@ column為其每天24小時量測的數值（計24項）。
 
 ![https://abner0627.github.io/ML-Lecture/01_Regression/img/Untitled%201.png](https://abner0627.github.io/ML-Lecture/01_Regression/img/Untitled%201.png)
 
-testing data為剩下的資料sample出每筆連續10小時，共240筆的觀測數值（240 * 18 = 4320項）。
+testing data為剩下的資料sample出每筆連續10小時，共240筆的觀測數值（240 * 18 = 4320項）。<br />
 而第10小時的PM2.5數值當作預測的答案。
 
 因此testing data為4320 * 9的矩陣。
@@ -62,7 +62,7 @@ data = raw_data[:,3:]
 data[data=="NR"] = 0
 ```
 
-接著把每個月20天的資料以18項量測指標為row重新排列，如下圖示，最終得到18 * 480的矩陣。
+接著把每個月20天的資料以18項量測指標為row重新排列，如下圖示，最終得到18 * 480的矩陣。<br />
 而另將1~12月的所有18 * 480的矩陣以dictionary的方式儲存 (month_data)。
 
 ```python
@@ -78,7 +78,7 @@ for month in range(12):
 
 ## Parameters and model
 
-將每個月矩陣中480個columns，每隔1小時以10小時為一組（共471組，多餘的捨去）進行分類。
+將每個月矩陣中480個columns，每隔1小時以10小時為一組（共471組，多餘的捨去）進行分類。<br />
 前9小時為input x的值；第10小時為training target y的值。
 
 ```python
@@ -173,8 +173,8 @@ ans_y = np.dot(test_x, w_array) + b_array
 np.savetxt("ansy.csv", ans_y, delimiter=",")
 ```
 
-最終成果如下 (RMSE)：
-可將training data分作training set與validation set，以便在上傳kaggle前就能評估model的效能，
+最終成果如下 (RMSE)：<br />
+可將training data分作training set與validation set，以便在上傳kaggle前就能評估model的效能，<br />
 藉此改善其在private score的精度。  
 
 | Method          | Public  | Private |
