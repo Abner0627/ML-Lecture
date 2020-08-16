@@ -43,7 +43,7 @@ validation data與training data以相同方式命名，主要用來評估該mode
 
 ![https://abner0627.github.io/ML-Lecture/03_CNN/img/Untitled%202.png](https://abner0627.github.io/ML-Lecture/03_CNN/img/Untitled%202.png)
 
-testing data不具label，僅是單純將圖片以收集的順序命名，總計3347張。
+testing data不具label，僅是單純將圖片以收集的順序命名，總計3347張。<br />
 因此machine任務就是將該3347張食物圖片分作11項類別。
 
 ## Read Data
@@ -105,7 +105,7 @@ print("Size of Testing data = {}".format(len(test_x)))
 
 ## Pack as Dataset
 
-為將現有的training data性能發揮到最大，盡可能彌補資料量較少造成over-fitting的情形。
+為將現有的training data性能發揮到最大，盡可能彌補資料量較少造成over-fitting的情形。<br />
 詳細參閱：[https://reurl.cc/0OzrX6](https://reurl.cc/0OzrX6)
 
 基於該需求，data augmentation僅需使用在training上即可。
@@ -130,12 +130,13 @@ test_transform = transforms.Compose([
 
 定義ImgDataset function，並將training set與validation set打包為batch size為128的dataset。
 
-在__init__中匯入dataset (x)與其label (y)，此外若data有label存在 (如training/validation set)，則將y變為LongTensor的形式；最終再定義使用上述的transform流程。
+在__init__中匯入dataset (x)與其label (y)，此外若data有label存在 (如training/validation set)，<br />
+則將y變為LongTensor的形式；最終再定義使用上述的transform流程。
 
-__len__定義該dataset的大小；__getitem__則定義當程式取值時，dataset應該要怎麼回傳資料。
+__len__定義該dataset的大小；__getitem__則定義當程式取值時，dataset應該要怎麼回傳資料。<br />
 兩者為DataLoader函式在enumerate Dataset時會使用到，因此為必要項目。  
 
-參見：[https://pytorch.org/docs/stable/data.html#torch.utils.data.Dataset](https://pytorch.org/docs/stable/data.html#torch.utils.data.Dataset)  
+參見：[https://pytorch.org/docs/stable/data.html#torch.utils.data.Dataset](https://pytorch.org/docs/stable/data.html#torch.utils.data.Dataset)<br />
 &emsp;&emsp;&emsp;[https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader](https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader)
 
 ```python
@@ -174,16 +175,17 @@ val_loader = DataLoader(val_set, batch_size=batch_size, shuffle=False)
 
 定義CNN model並設定其forward()。
 
-在nn.Conv2d()中宣告input與output的dimension、convolution中kernel的大小、每次kernel的步進大小 (stride)，以及zero-padding在input兩邊補0的column數量 (padding)。  
+在nn.Conv2d()中宣告input與output的dimension、convolution中kernel的大小、每次kernel的步進大小 (stride)，<br />
+以及zero-padding在input兩邊補0的column數量 (padding)。<br />
 參見：[https://pytorch.org/docs/stable/generated/torch.nn.Conv2d.html](https://pytorch.org/docs/stable/generated/torch.nn.Conv2d.html)
 
-nn.BatchNorm2d()表示在該層layer中是否使用Batch Normalization，藉此確保每層layer的input保持相同分佈。  
+nn.BatchNorm2d()表示在該層layer中是否使用Batch Normalization，藉此確保每層layer的input保持相同分佈。<br />
 參見：[https://zhuanlan.zhihu.com/p/88347589](https://zhuanlan.zhihu.com/p/88347589)
 
-nn.MaxPool2d()中宣告需要做max pooling的範圍 (kernel_size, n*n)，以及zero-padding的數量 (padding)。  
+nn.MaxPool2d()中宣告需要做max pooling的範圍 (kernel_size, n*n)，以及zero-padding的數量 (padding)。<br />
 參見：[https://pytorch.org/docs/master/generated/torch.nn.MaxPool2d.html](https://pytorch.org/docs/master/generated/torch.nn.MaxPool2d.html)
 
-最終通過linear layer預測其分類，nn.Linear()分別設定input與output feature大小。  
+最終通過linear layer預測其分類，nn.Linear()分別設定input與output feature大小。<br />
 參見：[https://pytorch.org/docs/stable/generated/torch.nn.Linear.html](https://pytorch.org/docs/stable/generated/torch.nn.Linear.html)
 
 另外在pytorch終須自行設定network的forward方向。
@@ -239,9 +241,9 @@ class Classifier(nn.Module):
 
 ## Training
 
-設定model以及是否使用GPU加速；
-此處為多元分類的問題，因此loss function為Cross Entropy；
-Optimizer選用adam，且learning rate為0.001；
+設定model以及是否使用GPU加速；<br />
+此處為多元分類的問題，因此loss function為Cross Entropy；<br />
+Optimizer選用adam，且learning rate為0.001；<br />
 最終設定training epoch為30。
 
 ```python
@@ -252,10 +254,10 @@ optimizer = torch.optim.Adam(model.parameters(), lr=0.001) # optimizer 使用 Ad
 num_epoch = 30
 ```
 
-以epoch為30訓練model，並用train_acc與val_acc除以其set長度，
+以epoch為30訓練model，並用train_acc與val_acc除以其set長度，<br />
 評估該epoch中的準確率，loss值同理。
 
-另外用model.train()與model.eval()切換training與validation set，
+另外用model.train()與model.eval()切換training與validation set，<br />
 區別其是否使用back propagation。
 
 ```python
@@ -304,7 +306,7 @@ for epoch in range(num_epoch):
         # %2.2f: 保留2位整數及小數點後2位
 ```
 
-之後調整model參數並評估其性能，確認該model在當下參數表現最好後，
+之後調整model參數並評估其性能，確認該model在當下參數表現最好後，<br />
 再concatenate training與validation set重複訓練一遍，提升其性能。
 
 ```python
@@ -344,7 +346,7 @@ for epoch in range(num_epoch):
 
 ## Testing
 
-同樣將testing set打包為dataset，並預測其label。
+同樣將testing set打包為dataset，並預測其label。<br />
 最終將結果寫入csv並上傳kaggle。
 
 ```python
