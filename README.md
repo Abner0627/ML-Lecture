@@ -15,5 +15,6 @@ http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML20.html
   
   
 ## HW
-[1. Regression](https://github.com/Abner0627/ML-Lecture/tree/master/HW%201)  
-[2. Classification](https://github.com/Abner0627/ML-Lecture/tree/master/HW%202)
+[1. Regression](https://github.com/Abner0627/ML-Lecture/tree/master/01_Regression)  
+[2. Classification](https://github.com/Abner0627/ML-Lecture/tree/master/02_Binary_Classification)  
+[3. CNN](https://github.com/Abner0627/ML-Lecture/tree/master/03_CNN)
