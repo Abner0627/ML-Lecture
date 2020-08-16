@@ -135,7 +135,7 @@ test_transform = transforms.Compose([
 __len__定義該dataset的大小；__getitem__則定義當程式取值時，dataset應該要怎麼回傳資料。
 兩者為DataLoader函式在enumerate Dataset時會使用到，因此為必要項目。  
 
-參見：[https://pytorch.org/docs/stable/data.html#torch.utils.data.Dataset](https://pytorch.org/docs/stable/data.html#torch.utils.data.Dataset)
+參見：[https://pytorch.org/docs/stable/data.html#torch.utils.data.Dataset](https://pytorch.org/docs/stable/data.html#torch.utils.data.Dataset)  
 &emsp;&emsp;&emsp;[https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader](https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader)
 
 ```python
